@@ -8,7 +8,7 @@ require 'securerandom'
 
 def find_secret_token
   secret_file = Rails.root.join ".secret"
-  return File.read.chomp if File.exist?(secret_file)
+  return File.read(secret_file).chomp if File.exist?(secret_file)
   secret = SecureRandom.hex(64)
   File.write(secret_file, secret)
   secret
