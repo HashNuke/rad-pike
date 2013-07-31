@@ -1,4 +1,7 @@
 class Api::ConversationsController < ApplicationController
-  def index    
+  before_filter :authenticate_user!
+  respond_to :json
+
+  def index
   end
 end
