@@ -55,6 +55,11 @@ GEM
       orm_adapter (~> 0.1)
       railties (>= 3.2.6, < 5)
       warden (~> 1.2.3)
+    eco (1.0.0)
+      coffee-script
+      eco-source
+      execjs
+    eco-source (1.1.0.rc.1)
     em-http-request (1.0.3)
       addressable (>= 2.2.3)
       cookiejar
@@ -180,6 +185,7 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   debugger
   devise (= 3.0.0)
+  eco
   faye
   fog
   jquery-rails
