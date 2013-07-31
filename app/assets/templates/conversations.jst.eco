@@ -1,0 +1,12 @@
+<div class="conversations">
+
+  <div class="conversation" ng-repeat="conversation in conversations">
+    <div class="user">
+      <div class="name">{{conversation.user.name}}</div>
+      <div class="meta">
+        {{conversation.description}}
+      </div>
+    </div>
+  </div>
+
+</div>

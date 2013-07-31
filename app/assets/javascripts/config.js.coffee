@@ -11,27 +11,17 @@ App.config ($routeProvider, $locationProvider, $httpProvider)->
 
   $routeProvider
     .when(
-      "/login"
-      template:   JST["users/auth"]()
-      controller: "AuthCtrl"
-    )
-    .when(
-      "/account"
-      template:   JST["users/account"]()
-      controller: "AccountCtrl"
-      resolve:
-        account: (Account)-> Account.get()
-    )
-    .when(
       "/"
-      template:   JST["main"]()
-      controller: "MainCtrl"
-    )
-    .when(
-      "/"
-      template:   JST["conversations"]()
+      template:   JST["chat"]()
       controller: "ConversationsCtrl"
       resolve:
-        userWithConversation: App.resolvers.UserWithConversation
+        conversation: App.resolvers.Conversations
+    )
+    .when(
+      "/"
+      template:   JST["chat"]()
+      controller: "ChatCtrl"
+      resolve:
+        user: App.resolvers.UserWithMessages
     )
     .otherwise(template: "This doesn't exist")
