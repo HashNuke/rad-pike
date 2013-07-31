@@ -5,4 +5,5 @@ class Api::UsersController < ApplicationController
   def show
     respond_with :api, User.find(params[:id])
   end
+
 end
