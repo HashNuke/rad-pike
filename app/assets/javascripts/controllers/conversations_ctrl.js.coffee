@@ -1,1 +1,1 @@
-App.controller "ConversationsCtrl", (Auth, c)->
+App.controller "ConversationsCtrl", ($scope, Auth)->

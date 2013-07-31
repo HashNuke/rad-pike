@@ -12,13 +12,11 @@ App.config ($routeProvider, $locationProvider, $httpProvider)->
   $routeProvider
     .when(
       "/"
-      template:   JST["chat"]()
-      controller: "ConversationsCtrl"
-      resolve:
-        conversation: App.resolvers.Conversations
+      template:   JST["main"]()
+      controller: "MainCtrl"
     )
     .when(
-      "/"
+      "/chats/:id"
       template:   JST["chat"]()
       controller: "ChatCtrl"
       resolve:

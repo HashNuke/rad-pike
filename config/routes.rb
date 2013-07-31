@@ -2,6 +2,10 @@ RoverChat::Application.routes.draw do
   root to: "main#index"
   devise_for :users
 
+  namespace :api do
+    resources :users, only: :show
+  end
+
   class XHRConstraint
     def matches?(request)
       !request.xhr? && !(request.url =~ /\.json$/ && ::Rails.env == 'development')

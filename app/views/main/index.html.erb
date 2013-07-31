@@ -1,7 +1,10 @@
-<div class="container">
-
-  <div class="">
-
-  <div class="content" ng-view></div>
-  <div class="sidebar"></div>
+<div class="conversations" ng-controller="ConversationsCtrl">
+  <div class="conversation" ng-repeat="conversation in conversations">
+    <div class="user">
+      <div class="name">{{conversation.user.name}}</div>
+      <div class="meta">{{conversation.description}}</div>
+    </div>
+  </div>    
 </div>
+
+<div class="chat" ng-view></div>

@@ -9,4 +9,7 @@
     </div>
   </div>
 
+
+  <div class="chat" ng-view></div>
+
 </div>

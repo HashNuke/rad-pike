@@ -1,6 +1,4 @@
-<div class="chat">
-  <div class="user-info">{{user.name}}</div>
-  <div class="messages">
-    <div class="message" ng-repeat="message in user.messages"></div>
-  </div>
+<div class="user-info">{{user.name}}</div>
+<div class="messages">
+  <div class="message" ng-repeat="message in user.messages"></div>
 </div>
