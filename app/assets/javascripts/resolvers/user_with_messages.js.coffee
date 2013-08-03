@@ -1,16 +1,12 @@
 App.resolvers.UserWithMessages = (User, $q, $route)->
-  if !$route.current.params.post_id
-    return({post_type: "Link"});
 
   deferred = $q.defer()
-  successCallback = (post)->
-    deferred.resolve post
+  successCallback = (user)->
+    deferred.resolve user
   errorCallback = (errorData)-> deferred.reject()
 
   requestParams =
-    id: $route.current.params.post_id
-    username: $route.current.params.username
+    id: $route.current.params.id
 
-  Post.get(requestParams, successCallback, errorCallback)
+  User.withMessages(requestParams, successCallback, errorCallback)
   deferred.promise
-  

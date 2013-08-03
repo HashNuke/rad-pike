@@ -19,3 +19,5 @@
 
 * belongs_to :sender
 * belongs_to :receiver
+
+Each message has a reply field

@@ -3,5 +3,6 @@ class Api::ConversationsController < ApplicationController
   respond_to :json
 
   def index
+    respond_with :api, Message.conversations
   end
 end

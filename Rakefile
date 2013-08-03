@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Ranger::Application.load_tasks
+RoverChat::Application.load_tasks

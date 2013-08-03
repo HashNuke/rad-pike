@@ -1,0 +1,30 @@
+* { box-sizing: border-box; }
+
+div { float: left; }
+
+html, body {
+  height: 100%;
+  width: 100%;
+  color: #333;
+}
+
+body {
+  margin: 0px auto;
+  background: #F6F8F8;
+  font-family: Helvetica,Verdana,Arial,sans-serif;
+  font-size: 16px;
+}
+
+a {
+  color: #06C;
+}
+
+input {
+  font-size: 1em;
+}
+
+.container {
+  height: 100%;
+  width: 100%;
+  float: left;
+}

@@ -11,10 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130731123037) do
+ActiveRecord::Schema.define(version: 20130803120839) do
 
   create_table "messages", force: true do |t|
-    t.integer  "recipient_id"
+    t.integer  "receiver_id"
     t.integer  "sender_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20130731123037) do
     t.string   "role"
     t.integer  "sent_message_count",     default: 0
     t.integer  "received_message_count", default: 0
+    t.text     "name"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

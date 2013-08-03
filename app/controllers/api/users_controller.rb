@@ -8,6 +8,6 @@ class Api::UsersController < ApplicationController
 
 
   def with_messages
-    respond_with :api, User.find(params[:id])
+    respond_with :api, User.find(params[:id]), serializer: UserWithMessagesSerializer
   end
 end
