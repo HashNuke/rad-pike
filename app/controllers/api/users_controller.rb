@@ -6,4 +6,8 @@ class Api::UsersController < ApplicationController
     respond_with :api, User.find(params[:id])
   end
 
+
+  def with_messages
+    respond_with :api, User.find(params[:id])
+  end
 end
