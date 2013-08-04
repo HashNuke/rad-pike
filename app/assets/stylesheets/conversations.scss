@@ -9,9 +9,41 @@
   float: left;
   height: 100%;
   box-shadow: 0.15em 0em 0.1em 0.1em #CCC;
+  background: #FFF;
 }
 
-.chat {
-  float: right;
-  width: 70%;
+.conversation {
+  width: 100%;
+  padding: 1em 0.5em 1em 0.5em;
+  border-bottom: 1px solid #EEE;
+
+  &:hover {
+    background: #FFFAE6;
+    cursor: pointer;
+  }
+
+  .name {
+    width: 60%;
+    clear: both;
+    font-size: 1em;
+    color: #444;
+    font-weight: bold;
+  }
+
+  .time {
+    width: 40%;
+    clear: right;
+    float: right;
+    text-align: right;
+    font-size: 0.9em;
+    margin-top: 0.2em;
+    color: #06C;
+  }
+
+  .teaser {
+    clear: both;
+    margin-top: 0.5em;
+    font-size: 0.9em;
+    color: #888;
+  }
 }

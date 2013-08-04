@@ -11,4 +11,16 @@ class User < ActiveRecord::Base
   has_many :sent_messages,     class_name: "Message", foreign_key: "sender_id"
   has_many :received_messages, class_name: "Message", foreign_key: "receiver_id"
 
+  def email_required?
+    return false if self.role == "guest"
+    super
+  end
+
+  #TODO right now anybody can login without an email or password
+  # best bet is to disable login of guest & customer accounts
+  def password_required?
+    return false if ["guest", "customer"].include?(self.role)
+    super
+  end
+
 end

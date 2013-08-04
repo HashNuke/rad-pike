@@ -1,9 +1,8 @@
 <div class="conversations" ng-controller="ConversationsCtrl">
   <div class="conversation" ng-repeat="conversation in conversations">
-    <div class="user">
-      <div class="name">{{conversation.sender.name}}</div>
-      <div class="meta">description</div>
-    </div>
+    <div class="name">{{conversation.sender.name || "Guest"}}</div>
+    <div class="time">{{ conversation.created_at|readableTime }}</div>
+    <div class="teaser">{{ conversation.content|tease }}</div>
   </div>    
 </div>
 

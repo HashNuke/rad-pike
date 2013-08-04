@@ -12,6 +12,7 @@ RoverChat::Application.routes.draw do
   namespace :api do
     resources :users, only: :show
     resources :conversations, only: :index
+    resources :chats, only: [:show, :create]
   end
 
   class XHRConstraint

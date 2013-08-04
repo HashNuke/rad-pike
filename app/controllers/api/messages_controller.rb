@@ -1,8 +1,16 @@
-class Api::MessagesController < ApplicationController
+class Api::ChatController < ApplicationController
   before_filter :authenticate_user!
   respond_to :json
 
-  def index
+  def show
+    message_table = Message.arel_table
+    messages = Message.order("created_at DESC").
+    limit(25).
+    where(
+      message_table[:sender_id].eq(current_user.id).
+        or(message_table[:receiver_id].eq(current_user.id))
+    )
+    respond_with :api, messages
   end
 
   def create
