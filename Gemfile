@@ -19,9 +19,11 @@ gem 'jquery-rails'
 
 gem 'active_model_serializers'
 
+
 group :development, :test do
   gem 'debugger'
   gem 'shotgun'
+  gem 'example_app', path: './example_app'
 end
 
 group :doc do

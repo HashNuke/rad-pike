@@ -1,3 +1,9 @@
+PATH
+  remote: ./example_app
+  specs:
+    example_app (0.0.1)
+      rails (~> 4.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -191,6 +197,7 @@ DEPENDENCIES
   debugger
   devise (= 3.0.0)
   eco
+  example_app!
   faye
   fog
   jquery-rails
