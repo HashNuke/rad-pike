@@ -7,7 +7,7 @@ RoverChat::Application.routes.draw do
   root to: "main#index"
   devise_for :users
 
-  get "/widgets/default"
+  get "widgets/support" => "widgets#support"
 
   namespace :api do
     resources :users, only: :show

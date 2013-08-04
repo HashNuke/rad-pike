@@ -1,7 +1,7 @@
 class WidgetsController < ApplicationController
-  respond_to :js
+  layout false
 
-  def default
-    
+  def support
+    response.headers["X-Frame-Options"] = "ALLOW FROM http://roverchat.dev"
   end
 end
