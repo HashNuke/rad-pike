@@ -2,6 +2,8 @@ class WidgetsController < ApplicationController
   layout false
 
   def support
-    response.headers["X-Frame-Options"] = "ALLOW FROM http://roverchat.dev"
+    # TODO should only allow the widget for the domain
+    # response.headers["X-Frame-Options"] = "ALLOW-FROM http://roverchat.dev"
+    response.headers["X-Frame-Options"] = "ALLOWALL"
   end
 end

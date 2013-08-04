@@ -20,7 +20,7 @@ RoverChat::Application.routes.draw do
     end
   end
 
-  # get '(*url)' => 'main#index', constraints: XHRConstraint.new
+  get '(*url)' => 'main#index', constraints: XHRConstraint.new
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
