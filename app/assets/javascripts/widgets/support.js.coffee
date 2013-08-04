@@ -12,7 +12,7 @@ class SupportWidget
     template = "<iframe
       seamless='seamless'
       style='position: absolute; bottom: 0; right: 0; height: 20em; width: 20em; border: 1px solid #CCC; box-shadow: 0px 0px 3px 1px #CCC'
-      src='http://roverchat.dev:3000/widgets/support'>
+      src='http://radpike.dev:3000/widgets/support'>
     </iframe>"
     document.write(template)
 

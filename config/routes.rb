@@ -1,4 +1,4 @@
-RoverChat::Application.routes.draw do
+RadPike::Application.routes.draw do
 
   unless Rails.env.production?
     mount ExampleApp::Engine => "/example"

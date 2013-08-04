@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-RoverChat::Application.load_tasks
+RadPike::Application.load_tasks

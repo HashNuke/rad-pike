@@ -14,4 +14,4 @@ def find_secret_token
   secret
 end
 
-RoverChat::Application.config.secret_key_base = find_secret_token
+RadPike::Application.config.secret_key_base = find_secret_token
