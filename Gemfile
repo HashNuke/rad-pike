@@ -19,7 +19,10 @@ gem 'jquery-rails'
 
 gem 'active_model_serializers'
 
-gem 'debugger', group: [:development, :test]
+group :development, :test do
+  gem 'debugger'
+  gem 'shotgun'
+end
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

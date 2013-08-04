@@ -1,6 +1,14 @@
 RoverChat::Application.routes.draw do
+
+  unless Rails.env.production?
+    require Rails.root.join("lib/dev_tools/app.rb")
+    mount FunStack::DevTools::App, at: "dev/example"
+  end
+
   root to: "main#index"
   devise_for :users
+
+  get "/widgets/default"
 
   namespace :api do
     resources :users, only: :show
