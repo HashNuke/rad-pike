@@ -1,9 +1,17 @@
+#= require angular
+#= require angular-resource
+#= require ../init
+#= require_tree ../resolvers
+#= require ../config
+#= require_tree ../../templates
+
 class SupportWidget
   templateCache: {}
  
   constructor: ()->
     template = "<iframe
-      style='position: absolute; bottom: 0; right: 0'
+      seamless='seamless'
+      style='position: absolute; bottom: 0; right: 0; height: 20em; width: 20em; border: 1px solid #CCC; box-shadow: 0px 0px 3px 1px #CCC'
       src='http://roverchat.dev:3000/widgets/support'>
     </iframe>"
     document.write(template)
@@ -40,7 +48,6 @@ class SupportWidget
   #       .split("%>").join("p.push('")
   #       .split("\r").join("\\'")
   #   + "');}return p.join('');")
-
 
 
 new SupportWidget()

@@ -4,4 +4,4 @@
 #= require_tree ./resolvers
 #= require config
 #= require_tree ../templates
-#= require_tree .
+

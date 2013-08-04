@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="Ranger">
+<html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="RoverChat">
 <head>
   <title>RoverChat</title>
 
   <meta content="True" name="HandheldFriendly"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
 
-  <%= stylesheet_link_tag    "application", media: "all" %>
-  <%= javascript_include_tag "application" %>
+  <%= stylesheet_link_tag "widgets/support", media: "all" %>
+  <%= javascript_include_tag "widgets/support" %>
 
   <% if current_user %>
     <%= javascript_tag do %>

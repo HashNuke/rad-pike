@@ -1,2 +1,2 @@
-window.App = angular.module('Ranger', ['ngResource'])
+window.App = angular.module('RoverChat', ['ngResource'])
 App.resolvers = {}
