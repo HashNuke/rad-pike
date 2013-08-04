@@ -7,6 +7,6 @@ class Message < ActiveRecord::Base
     class_name: "User", inverse_of: :sent_messages
 
   scope :conversations, -> {
-    includes(:sender).limit(25).order(:created_at)
+    includes(:sender).order("created_at DESC").limit(25)
   }
 end
