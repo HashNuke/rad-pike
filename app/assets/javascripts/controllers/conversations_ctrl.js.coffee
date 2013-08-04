@@ -1,4 +1,4 @@
-App.controller "ConversationsCtrl", ($scope, Auth, Conversation)->
+App.controller "ConversationsCtrl", ($scope, $timeout, Auth, Conversation)->
   $scope.conversations = []
 
   successCallback = (conversations)->
@@ -9,3 +9,12 @@ App.controller "ConversationsCtrl", ($scope, Auth, Conversation)->
     console.log "error"
 
   Conversation.query(successCallback, errorCallback)
+
+
+  @updateTimes = =>
+    for conversation, i in $scope.conversations
+      #NOTE take a conversation's time and assign it back again to force a change
+      $scope.conversations[i].created_at = $scope.conversations[i].created_at
+    $timeout @updateTimes, 60000
+
+  $timeout @updateTimes, 60000
