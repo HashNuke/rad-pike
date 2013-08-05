@@ -1,4 +1,4 @@
-App.controller "ConversationsCtrl", ($scope, $timeout, Auth, Conversation)->
+App.controller "ConversationsCtrl", ($scope, $timeout, $location, Auth, Conversation)->
   $scope.conversations = []
 
   successCallback = (conversations)->
@@ -8,7 +8,9 @@ App.controller "ConversationsCtrl", ($scope, $timeout, Auth, Conversation)->
   errorCallback = (errorData)->
     console.log "error"
 
-  Conversation.query(successCallback, errorCallback)
+
+  $scope.openChat = (userId) ->
+    $location.path("/chats/#{userId}")
 
 
   @updateTimes = =>
@@ -17,4 +19,5 @@ App.controller "ConversationsCtrl", ($scope, $timeout, Auth, Conversation)->
       $scope.conversations[i].created_at = $scope.conversations[i].created_at
     $timeout @updateTimes, 60000
 
+  Conversation.query(successCallback, errorCallback)
   $timeout @updateTimes, 60000
