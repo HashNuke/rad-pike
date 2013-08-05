@@ -1,6 +1,10 @@
-class Api::ChatController < ApplicationController
+class Api::MessagesController < ApplicationController
   before_filter :authenticate_user!
   respond_to :json
+
+  def index
+    respond_with :api, Message.conversations
+  end
 
   def show
     message_table = Message.arel_table

@@ -1,13 +1,12 @@
 App.controller "ChatCtrl", ($scope, Auth, Message)->
-  $scope.messages = []
+  $scope.userWithMessages = {}
 
-  $scope.
-
-  successCallback = (messages)->
-    console.log "messages", messages
-    $scope.messages = $scope.messages.concat(messages)
+  successCallback = (userWithMessages)->
+    console.log "messages", userWithMessages
+    #TODO instead prepend the messages with the current list
+    $scope.userWithMessages = userWithMessages
 
   errorCallback = (errorData)->
     console.log "error"
 
-  Chat.query(successCallback, errorCallback)
+  # Message.query(successCallback, errorCallback)

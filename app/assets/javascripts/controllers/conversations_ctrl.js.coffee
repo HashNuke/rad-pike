@@ -1,4 +1,4 @@
-App.controller "ConversationsCtrl", ($scope, $timeout, $location, Auth, Conversation)->
+App.controller "ConversationsCtrl", ($scope, $timeout, $location, Auth, Message)->
   $scope.conversations = []
 
   successCallback = (conversations)->
@@ -19,5 +19,5 @@ App.controller "ConversationsCtrl", ($scope, $timeout, $location, Auth, Conversa
       $scope.conversations[i].created_at = $scope.conversations[i].created_at
     $timeout @updateTimes, 60000
 
-  Conversation.query(successCallback, errorCallback)
+  Message.query(successCallback, errorCallback)
   $timeout @updateTimes, 60000

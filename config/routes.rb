@@ -10,9 +10,8 @@ RadPike::Application.routes.draw do
   get "widgets/support" => "widgets#support"
 
   namespace :api do
-    resources :users, only: :show
-    resources :conversations, only: :index
-    resources :chats, only: [:show, :create]
+    resources :users,    only: :show
+    resources :messages, only: [:index, :show, :create]
   end
 
   class XHRConstraint
