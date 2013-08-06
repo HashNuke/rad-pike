@@ -16,6 +16,7 @@
       font-size: 0.8em;
       float: right;
       margin-top: 0.3em;
+      margin-right: 0.4em;
     }
 
     input {
@@ -25,7 +26,10 @@
   }
 }
 
-.conversations { overflow-y: scroll; }
+.conversations {
+  width: 100%;
+  overflow-y: scroll;
+}
 
 .conversation {
   width: 100%;
@@ -65,12 +69,11 @@
 
 
 .chat {
+  height: 100%;
   float: right;
   width: 70%;
-  height: 100%;
 
   .messages {
-    height: 90.5%;
   }
 
   .chat-input {
@@ -83,8 +86,8 @@
     textarea {
       width: 90%;
       min-height: 2.5em;
-      bottom: 0px;
-      height: 100%;
+      bottom: 0em;
+      height: 2em;
       margin-top: 1%;
       margin-left: 5%;
       margin-right: 5%;
@@ -118,19 +121,26 @@
   display: none;
 }
 
-@media screen and (min-width: 700px) {
+@media screen and (min-width: 960px) {
 }
 
-@media screen and (max-width: 699px) {
-  .list-view { width: 100%; }
-  .chat {
-    width: 100%;
-    .chat-input { width: 100%; }
-  }
-  .mobile-hide { display: none; }
-  .mobile-show { display: inline; }
+
+
+@media screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : landscape) {
+  @include mobile-styles;
 }
 
-// @media screen and (max-width: 480px) {
+@media screen 
+and (min-device-width : 768px) 
+and (max-device-width : 1024px) 
+and (orientation : portrait) {
+  @include mobile-styles;
+}
 
-// }
+
+@media screen and (max-width: 480px) {
+  @include mobile-styles;
+}

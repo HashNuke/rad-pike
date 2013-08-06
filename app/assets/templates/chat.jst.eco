@@ -1,6 +1,6 @@
 <div class="info-bar">
   <div class="nav mobile-show">
-    <a href="/">&lang; Back</a>
+    <a href="/">&laquo; Back</a>
   </div>
   <div class="user-info">{{userWithMessages.name}}</div>
   <div class="controls">

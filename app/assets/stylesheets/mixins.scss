@@ -17,3 +17,14 @@
   }
 
 }
+
+
+@mixin mobile-styles {
+  .list-view { width: 100%; }
+  .chat {
+    width: 100%;
+    .chat-input { width: 100%; }
+  }
+  .mobile-hide { display: none; }
+  .mobile-show { display: inline; }
+}
