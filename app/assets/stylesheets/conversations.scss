@@ -93,6 +93,9 @@
   }
 }
 
+.mobile-show {
+  display: none;
+}
 
 @media screen and (min-width: 700px) {
 }
@@ -103,9 +106,8 @@
     width: 100%;
     .chat-input { width: 100%; }
   }
-  .mobile-hide {
-    display: none;
-  }
+  .mobile-hide { display: none; }
+  .mobile-show { display: inline; }
 }
 
 // @media screen and (max-width: 480px) {
