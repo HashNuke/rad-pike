@@ -99,6 +99,7 @@
     .controls {
       float: right;
       @include chat-controls;
+      margin-left: 1em;
     }
     .nav {
       @include chat-controls;
