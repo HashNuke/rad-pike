@@ -35,10 +35,11 @@
 @mixin mobile-chat-options {
   .menu {
     .menu-switch { display: inline; }
+
     .chat-options {
+      display: none;
       margin-left: 0em;
       padding-left: 0em;
-      display: none;
 
       position: absolute;
       z-index: 10;
@@ -53,10 +54,11 @@
       }
     }
 
-    &:hover, &:active {
+    &:hover {
       .menu-switch {
         background: #FFF;
         color:#597DCE;
+        box-shadow: -1px 0px 0px 0px #CCC;
       }
       .chat-options {
         font-size: 1.5em;
