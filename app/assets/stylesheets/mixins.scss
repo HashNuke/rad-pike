@@ -42,8 +42,8 @@
 
       position: absolute;
       z-index: 10;
-      right: 0.5em;
-      top: 1.8em;
+      right: 0.35em;
+      top: 1.2em;
       background: #FFF;
       padding: 0.5em 0.5em 0.5em 0.5em;
       box-shadow: -1px 2px 1px 1px #CCC;
@@ -53,9 +53,18 @@
       }
     }
 
-    &:hover {
-      .menu-switch {background: #FFF; color:#597DCE;}
-      .chat-options { display: inline; }
+    &:hover, &:active {
+      .menu-switch {
+        background: #FFF;
+        color:#597DCE;
+      }
+      .chat-options {
+        font-size: 1.5em;
+        display: inline;
+        li, button {
+          width: 100%;
+        }
+      }
     }
   }
 }
