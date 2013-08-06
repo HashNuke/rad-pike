@@ -1,5 +1,6 @@
 class Api::MessagesController < ApplicationController
-  before_filter :authenticate_user!
+  before_action :authenticate_user!
+  before_action :set_user, only: :show
   respond_to :json
 
   def index
@@ -7,14 +8,7 @@ class Api::MessagesController < ApplicationController
   end
 
   def show
-    message_table = Message.arel_table
-    messages = Message.order("created_at DESC").
-    limit(25).
-    where(
-      message_table[:sender_id].eq(current_user.id).
-        or(message_table[:receiver_id].eq(current_user.id))
-    )
-    respond_with :api, messages
+    respond_with :api, @user, serializer: UserWithMessagesSerializer
   end
 
   def create
@@ -25,5 +19,9 @@ class Api::MessagesController < ApplicationController
 
   def message_params
     params.require(:message).permit(:recipient_id, :message)
+  end
+
+  def set_user
+    @user = User.find(params[:id])
   end
 end

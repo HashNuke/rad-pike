@@ -1,4 +1,4 @@
-App.resolvers.UserWithMessages = (User, $q, $route)->
+App.resolvers.UserWithMessages = (Message, $q, $route)->
 
   deferred = $q.defer()
   successCallback = (user)->
@@ -6,7 +6,7 @@ App.resolvers.UserWithMessages = (User, $q, $route)->
   errorCallback = (errorData)-> deferred.reject()
 
   requestParams =
-    id: $route.current.params.id
+    id: $route.current.params.user_id
 
-  User.withMessages(requestParams, successCallback, errorCallback)
+  Message.get(requestParams, successCallback, errorCallback)
   deferred.promise

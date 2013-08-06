@@ -16,10 +16,10 @@ App.config ($routeProvider, $locationProvider, $httpProvider)->
       controller: "MainCtrl"
     )
     .when(
-      "/chats/:id"
+      "/chats/:user_id"
       template:   JST["chat"]()
       controller: "ChatCtrl"
       resolve:
-        user: App.resolvers.UserWithMessages
+        userWithMessages: App.resolvers.UserWithMessages
     )
     .otherwise(template: "This doesn't exist")

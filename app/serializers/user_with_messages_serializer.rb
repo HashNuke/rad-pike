@@ -1,8 +1,14 @@
 class UserWithMessagesSerializer < UserSerializer
-  attributes :id, :authentication_token, :messages
+  #TODO authentication token must not be displayed
+  attributes :id, :messages
 
   def messages
-    Message.limit(30).
-      where("sender_id = :user_id OR recipient_id = :user_id", {user_id: object.id})
+    message_table = Message.arel_table
+    messages = Message.order("created_at DESC").
+    limit(25).
+    where(
+      message_table[:sender_id].eq(object.id).
+        or(message_table[:receiver_id].eq(object.id))
+    )
   end
 end
