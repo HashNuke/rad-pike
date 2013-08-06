@@ -120,39 +120,3 @@
 .mobile-show {
   display: none;
 }
-
-
-// ipad landscape
-@media screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) 
-and (orientation : landscape) {
-  @include mobile-styles;
-}
-
-// ipad portrait
-@media screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px) 
-and (orientation : portrait) {
-  @include mobile-styles;
-}
-
-// iphone-5 portrait & landscape
-@media screen 
-and (min-device-width : 320px) 
-and (max-device-width : 568px) {
-  @include mobile-styles;
-}
-
-// iphone 2G-4S in portrait & landscape
-@media screen 
-and (min-device-width : 320px) 
-and (max-device-width : 480px) {
-  @include mobile-styles;
-}
-
-// Other devices
-@media screen and (max-width: 480px) {
-  @include mobile-styles;
-}
