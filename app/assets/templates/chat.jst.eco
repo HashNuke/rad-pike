@@ -1,4 +1,7 @@
 <div class="info-bar">
+  <div class="nav">
+    <a href="/">&lang; Back</a>
+  </div>
   <div class="user-info">{{userWithMessages.name}}</div>
   <div class="controls">
     <a href="#">Bring to attention</a>

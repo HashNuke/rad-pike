@@ -1,15 +1,9 @@
 .conversations {
   overflow-y: scroll;
-}
-
-
-//TODO desktop only
-.conversations {
-  width: 30%;
-  float: left;
   height: 100%;
   box-shadow: 0.15em 0em 0.1em 0.1em #CCC;
   background: #FFF;
+  width: 30%;
 }
 
 .conversation {
@@ -46,5 +40,74 @@
     font-size: 0.9em;
     color: #888;
   }
-
 }
+
+
+.chat {
+  float: right;
+  width: 70%;
+  height: 100%;
+
+  .messages {
+    height: 90.5%;
+  }
+
+  .chat-input {
+    width: 70%;
+    position: absolute;
+    bottom: 0px;
+    min-height: 3em;
+    padding-bottom: 1%;
+
+    textarea {
+      width: 90%;
+      min-height: 2.5em;
+      bottom: 0px;
+      height: 100%;
+      margin-top: 1%;
+      margin-left: 5%;
+      margin-right: 5%;
+      font-size: 1em;
+    }
+  }
+
+  .info-bar {
+    .controls {
+      float: right;
+      @include chat-controls;
+    }
+    .nav {
+      @include chat-controls;
+      margin-right: 2%;
+    }
+
+    width: 100%;
+    padding: 1em;
+    background: #597DCE;
+    font-size: 1em;
+    color: #FFF;
+    letter-spacing: 0.1em;
+
+    .user-info {
+    }
+  }
+}
+
+
+@media screen and (min-width: 700px) {
+}
+
+@media screen and (max-width: 699px) {
+  .conversations { width: 100%; }
+  .chat {
+    width: 100%;
+    .chat-input { width: 100%; }
+  }
+  .mobile-hide {
+    display: none;
+  }
+}
+
+// @media screen and (max-width: 480px) {
+
+// }

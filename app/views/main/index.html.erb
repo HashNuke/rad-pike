@@ -1,4 +1,4 @@
-<div class="conversations" ng-controller="ConversationsCtrl">
+<div class="conversations" ng-class="{'mobile-hide': chatView}" ng-controller="ConversationsCtrl">
   <div class="conversation" ng-repeat="conversation in conversations" ng-click="openChat(conversation.sender.id)">
     <div class="name">{{conversation.sender.name || "Guest"}}</div>
     <div class="time">{{ conversation.created_at|readableTime }}</div>
@@ -6,4 +6,4 @@
   </div>    
 </div>
 
-<div class="chat" ng-view></div>
+<div class="chat" ng-class="{'mobile-hide': conversationsView}" ng-view></div>

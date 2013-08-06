@@ -1,0 +1,19 @@
+@mixin chat-controls {
+
+  a {
+    border-radius: 3px;
+    border: 1px solid #EEE;
+    text-transform: uppercase;
+    color: #FFF;
+    font-size: 0.7em;
+    text-decoration: none;
+    padding: 0.4em;
+    margin-left: 1em;
+
+    &:hover {
+      background: #FFF;
+      color: #597DCE;
+    }
+  }
+
+}
