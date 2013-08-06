@@ -73,8 +73,7 @@
   float: right;
   width: 70%;
 
-  .messages {
-  }
+  .messages {}
 
   .chat-input {
     width: 70%;
@@ -101,19 +100,22 @@
       @include chat-controls;
       margin-left: 1em;
     }
+
     .nav {
       @include chat-controls;
       margin-right: 2%;
     }
 
     width: 100%;
-    padding: 0.6em;
+    padding: 0.4em;
     background: #597DCE;
     font-size: 1em;
     color: #FFF;
     letter-spacing: 0.1em;
 
     .user-info {
+      margin-top: 0.2em;
+      margin-left: 0.5em;
     }
   }
 }

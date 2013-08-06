@@ -1,6 +1,6 @@
 @mixin chat-controls {
 
-  a {
+  button {
     border-radius: 3px;
     border: 1px solid #EEE;
     text-transform: uppercase;
@@ -8,6 +8,8 @@
     font-size: 0.7em;
     text-decoration: none;
     padding: 0.4em;
+    background: #597DCE;
+    cursor: pointer;
 
     &:hover {
       background: #FFF;
@@ -18,6 +20,55 @@
 }
 
 
+@mixin desktop-chat-options {
+  .menu {
+    .menu-switch { display: none; }
+    .chat-options {
+      margin-left: 0em;
+      padding-left: 0em;
+      display: inline;
+      li { float: left; }
+    }
+  }
+}
+
+@mixin mobile-chat-options {
+  .menu {
+    .menu-switch { display: inline; }
+    .chat-options {
+      margin-left: 0em;
+      padding-left: 0em;
+      display: none;
+
+      position: absolute;
+      z-index: 10;
+      right: 0.5em;
+      top: 1.8em;
+      background: #FFF;
+      padding: 0.5em 0.5em 0.5em 0.5em;
+      box-shadow: -1px 2px 1px 1px #CCC;
+
+      li {
+        clear: both;
+      }
+    }
+
+    &:hover {
+      .menu-switch {background: #FFF; color:#597DCE;}
+      .chat-options { display: inline; }
+    }
+  }
+}
+
+
+.controls .menu-wrapper {
+  margin: 0em;
+  li { list-style-type: none; }
+  @include desktop-chat-options;
+}
+
+
+
 @mixin mobile-styles {
   .list-view { width: 100%; }
   .chat {
@@ -26,4 +77,8 @@
   }
   .mobile-hide { display: none; }
   .mobile-show { display: inline; }
+
+  .controls .menu-wrapper {
+    @include mobile-chat-options;
+  }
 }

@@ -1,11 +1,27 @@
 <div class="info-bar">
   <div class="nav mobile-show">
-    <a href="/">&laquo; Back</a>
+    <button ng-click="navigateToConversationList()">&laquo; Back</button>
   </div>
+
   <div class="user-info">{{userWithMessages.name}}</div>
+
+
   <div class="controls">
-    <a href="#">Bring to attention</a>
-    <a href="#">&#10004; Mark as resolved</a>
+
+    <ul class="menu-wrapper">
+      <li class="menu">
+        <button class="menu-switch">Menu</button>
+        <ul class="chat-options">
+          <li>
+            <button>Bring to attention</button>
+          </li>
+          <li>
+            <button>&#10004; Mark as resolved</button>
+          </li>
+        </ul>
+      </li>
+    </ul>
+
   </div>
 </div>
 

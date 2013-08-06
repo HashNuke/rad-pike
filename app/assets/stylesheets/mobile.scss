@@ -28,7 +28,11 @@ and (max-device-width : 480px) {
   @include mobile-styles;
 }
 
-// Other devices
+// Other mobile devices
 @media screen and (max-width: 480px) {
   @include mobile-styles;
+}
+
+// Desktop
+@media screen and (min-width: 1024px) {
 }

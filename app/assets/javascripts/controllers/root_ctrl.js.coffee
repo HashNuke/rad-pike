@@ -1,4 +1,7 @@
 App.controller 'RootCtrl', ($scope, $location)->
+  $scope.navigateToConversationList = ->
+    $location.path("/")
+
   $scope.$on '$routeChangeSuccess', (event, current, prev)->
     if current.controller == "MainCtrl"
       $scope.chatView = false
