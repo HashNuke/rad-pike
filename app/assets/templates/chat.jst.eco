@@ -26,7 +26,15 @@
 </div>
 
 <div class="messages">
-  <div class="message" ng-repeat="message in user.messages"></div>
+  <chat-activity
+    ng-repeat="act in userWithMessages.messages"
+    activity-id="{{act.id}}"
+    activity-type="{{act.activity_type}}"
+    content="{{act.content}}"
+    sender-id="{{act.sender.id}}"
+    sender-name="{{act.sender.name}}"
+    receiver-id="{{act.receiver.id}}"
+    receiver-name="{{act.receiver.name}}"/>
 </div>
 
 <div class="chat-input">
