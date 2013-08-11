@@ -1,5 +1,6 @@
 App.controller "ConversationsCtrl", ($scope, $timeout, $location, Auth, Message)->
   $scope.conversations = []
+  console.log $scope.broadcaster
 
   successCallback = (conversations)->
     console.log "conversations", conversations

@@ -1,6 +1,7 @@
 #= require angular
 #= require angular-resource
 #= require moment
+#= require plugin_manager
 #= require init
 #= require_tree ./resolvers
 #= require config

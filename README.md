@@ -6,18 +6,19 @@
 
 * Unreplied conversations older than 3min is shown in the conversations list in reverse chronological order.
 
-* To keep track of guest users use the ID of the guest user in js.
+* To keep track of guest users use the ID of the guest user in js, if it's a guest.
 
-## Schema
+## TaskList
 
-#### User
 
-* has_many :sent_messages
-* belongs_to :received_messages
 
-#### Message
+## Extending RadPike
 
-* belongs_to :sender
-* belongs_to :receiver
+Formatters
+Interactive Widget
 
-Each message has a reply field
+App.widget('', function(activity){
+
+})
+
+App.plugin
