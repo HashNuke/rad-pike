@@ -2,8 +2,14 @@ class MembersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user, only: [:edit, :update, :destroy]
 
+  layout 'manage'
+
   def index
     @users = User.support_team
+  end
+
+  def new
+    @user = User.new role: "agent"
   end
 
   def create
@@ -16,11 +22,6 @@ class MembersController < ApplicationController
   end
 
   def edit
-    if @user.save
-      redirect_to members_path
-    else
-      render 'edit'
-    end
   end
 
   def update

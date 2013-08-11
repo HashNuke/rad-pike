@@ -22,6 +22,9 @@ Work-In-Progress
 * Widget embed
 * Detect if platform is heroku and use in-process Faye
 * A proper query for listing conversations
+* Rake tasks for initial setup
+  * should create an admin user
+  * set faye as broadcaster depending on the hosting platform
 
 ## Extending RadPike (TODO)
 

@@ -1,0 +1,60 @@
+@import "mixins";
+@import "members";
+
+* { box-sizing: border-box; }
+
+div { float: left; }
+
+html, body {
+  width: 100%;
+  color: #333;
+  font-size: 16px;
+}
+
+body {
+  margin: 0px auto;
+  background: #F6F8F8;
+  font-family: 'PT Sans', Helvetica, Verdana, Arial, sans-serif;
+  font-size: 16px;
+}
+
+a {
+  color: #06C;
+}
+
+input {
+  font-size: 1em;
+}
+
+.container {
+  width: 100%;
+  float: left;
+  padding: 1em;
+}
+
+header {
+  width: 100%;
+  background: #597DCE;
+  color: #FFF;
+  padding: 0.5em 1em;
+  float: left;
+
+  .appname {
+    font-size: 1.2em;
+  }
+}
+
+.nav {
+  line-height: 1.4em;
+  margin-left: 1em;
+  a {
+    color: #FFF;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+h2.title {
+  border-bottom: 1px solid #666;
+}

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:ng="http://angularjs.org">
+<head>
+  <title>RadPike</title>
+
+  <meta content="True" name="HandheldFriendly"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+  <meta name="viewport" content="width=device-width"/>
+
+  <%= stylesheet_link_tag    "manage", media: "all" %>
+  <%= javascript_include_tag "manage" %>
+  <%= csrf_meta_tags %>
+
+</head>
+<body>
+
+  <header>
+    <div class="appname">RadPike</div>
+    <div class="nav">
+      <% if current_user.try(:role) == "admin" %>
+        <%= link_to "Members", members_path %>
+        /
+      <% end %>
+      <%= link_to "My account", edit_member_path(current_user) %>
+      /
+      <%= link_to "Logout", "/logout" %>
+    </div>
+  </header>
+  <div class="container"><%= yield %></div>
+
+</body>
+</html>

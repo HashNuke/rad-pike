@@ -1,0 +1,20 @@
+<%= form_for @user, url: member_path(@user) do |f| %>
+  <div class="field">
+    <%= f.label :email %>:
+    <%= f.text_field :email %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password %>:
+    <%= f.password_field :password %>
+  </div>
+
+  <div class="field">
+    <%= f.label :Role %>:
+    <%= f.select :role, ["admin", "agent"] %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Save" %>
+  </div>
+<% end %>

@@ -6,46 +6,78 @@
     border: 1px solid #DDD;
     background: #FFF;
     border-radius: 0.2em;
-    padding: 0.4em;
-    margin: 0.5em;
+    padding: 1em;
+    margin-top: 1em;
 
-    .name {
-      font-weight: bold;
-      margin-right: 0.5em;
-      margin-left: 0.5em;
+    .meta {
+      width: 100%;
+      border-bottom: 1px solid #DDD;
+      margin-bottom: 1em;
+
+      .name {
+        font-weight: bold;
+        margin-right: 0.5em;
+        font-size: 1.1em;
+      }
     }
 
-    .email   {
-      color: #777;
-      margin-right: 0.5em;
-      margin-left: 0.5em;
+    .field {
+      clear: both;
+      margin-top: 0.2em;
     }
 
     .actions {
-      .edit   {
-        background: #414A54;
-        color: #FFF;
-        padding: 0.2em;
-        text-decoration: none;
+      clear: both;
+      margin-top: 1em;
+
+      .edit, .remove   {
+        text-decoration: underline;
         border-radius: 0.2em;
         text-transform: uppercase;
         font-size: 0.8em;
+        margin-right: 1em;
       }
-      .remove {
-        background: #D04648;
-        color: #FFF;
-        padding: 0.2em;
-        text-decoration: none;
-        border-radius: 0.2em;
-        text-transform: uppercase;
-        font-size: 0.8em;
-      }
+      .remove { color: #D04648; }
     }
   }
+}
 
-  .odd {
+
+.new_user, .edit_user {
+  float: left;
+  width: 100%;
+  border: 1px solid #DDD;
+  background: #FFF;
+  border-radius: 0.2em;
+  padding: 1em;
+
+  .field {
+    clear: both;
+    float: left;
+    margin-top: 1em;
+
+    label { color: #777; }
+
+    input {
+      float: left;
+      clear: both;
+      font-size: 1.2em;
+    }
+
+    select { font-size: 1.2em; }
   }
 
-  .even {
+  .actions {
+    clear: both;
+    width: 100%;
+    margin-top: 1em;
+    padding-top: 1em;
+
+    input {
+      background: #EEE;
+      font-size: 1.2em;
+      border-radius: 0.2em;
+      color: #555;
+    }
   }
 }
