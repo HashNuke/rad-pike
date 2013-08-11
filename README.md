@@ -1,5 +1,7 @@
 # RadPike
 
+Work-In-Progress
+
 ## Notes on views
 
 #### Maintaining the concept of conversations without database table
@@ -8,17 +10,44 @@
 
 * To keep track of guest users use the ID of the guest user in js, if it's a guest.
 
-## TaskList
+## TaskList for v1
+
+* Member management
+* Posting messages
+* Authentication/Authorization
+* Running messages thru plugins
+* Faye for websockets
+* Widget embed
+* Detect if platform is heroku and use in-process Faye
+* A proper query for listing conversations
+
+## Extending RadPike (TODO)
+
+To extend RadPike you can create the following kinds of plugins
+
+* **Formatters**
+  Used to replace parts of a message with anything else. For example: replacing strings like ':)' with emoticons, replacing youtube links with youtube embeds, etc.
+
+* **Interactive Widget**
+  Used to create simple messages that contain elements with which the user can interact with - for example a survey form.
+
+* **Chat action**
+  Used to add actions to the chat options menu. Like a "Call" button or a "Send to CRM" button.
 
 
+```javascript
+// Adds a widget
+App.plugins.widget('HelloWidget', function(activity){
 
-## Extending RadPike
+});
 
-Formatters
-Interactive Widget
+// Adds a formatter
+App.plugins.formatter('HelloPlugin', function(activity){
+  
+});
 
-App.widget('', function(activity){
-
-})
-
-App.plugin
+// Adds action to the chat menu
+App.plugins.action('HelloAction', function(user, agent){
+  
+});
+```

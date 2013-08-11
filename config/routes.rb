@@ -9,6 +9,8 @@ RadPike::Application.routes.draw do
 
   get "widgets/support" => "widgets#support"
 
+  resources :members
+
   namespace :api do
     resources :users,    only: :show
     resources :messages, only: [:index, :show, :create]
