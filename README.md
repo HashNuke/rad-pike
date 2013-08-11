@@ -13,6 +13,8 @@ Work-In-Progress
 ## TaskList for v1
 
 * Member management
+  * Errors on member form
+  * Check if password change works
 * Fix right margin on members management page (.member right margin)
 * Define User#is_active? to block deactivated-agents form logging in
 * Posting messages
@@ -25,6 +27,7 @@ Work-In-Progress
 * Rake tasks for initial setup
   * should create an admin user
   * set faye as broadcaster depending on the hosting platform
+* Layout for login form
 
 ## Extending RadPike (TODO)
 
