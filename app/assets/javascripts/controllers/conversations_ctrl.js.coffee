@@ -1,6 +1,12 @@
 App.controller "ConversationsCtrl", ($scope, $timeout, $location, Auth, Message)->
   $scope.conversations = []
-  console.log $scope.broadcaster
+
+  $scope.$watch 'broadcasterType', ->
+    if $scope.broadcasterType == "Faye"
+      $scope.broadcaster = new App.broadcasters.Faye(
+        Auth.user()["id"],
+        Auth.user()["authentication_token"])
+
 
   successCallback = (conversations)->
     console.log "conversations", conversations
