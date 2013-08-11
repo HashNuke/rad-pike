@@ -1,16 +1,18 @@
 <div class="members">
-    <% @users.each do |user| %>
-      <div class="member">
-        <div class="name">
-          <%= user.name %>
-        </div>
-        <div class="email">
-          <%= user.email %>
-        </div>
-        <div class="actions">
-          <%= link_to "Edit", edit_member_path(user) %>
-          <%= link_to "Remove", edit_member_path(user) %>
-        </div>
+  <% @users.each do |user| %>
+    <div class="member <%= cycle('odd', 'even') %>">
+      <div class="name">
+        <%= user.name %>
       </div>
-    <% end %>
+      <div class="email">
+        (<%= user.email %>)
+      </div>
+      <div class="actions">
+        <%= link_to "Edit", edit_member_path(user), class: "edit" %>
+        <% if user.id != current_user.id %>
+          <%= link_to "Remove", edit_member_path(user), class: "remove" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
 </div>

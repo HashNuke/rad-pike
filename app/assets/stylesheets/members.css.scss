@@ -1,0 +1,51 @@
+.members {
+  width: 100%;
+
+  .member {
+    width: 100%;
+    border: 1px solid #DDD;
+    background: #FFF;
+    border-radius: 0.2em;
+    padding: 0.4em;
+    margin: 0.5em;
+
+    .name {
+      font-weight: bold;
+      margin-right: 0.5em;
+      margin-left: 0.5em;
+    }
+
+    .email   {
+      color: #777;
+      margin-right: 0.5em;
+      margin-left: 0.5em;
+    }
+
+    .actions {
+      .edit   {
+        background: #414A54;
+        color: #FFF;
+        padding: 0.2em;
+        text-decoration: none;
+        border-radius: 0.2em;
+        text-transform: uppercase;
+        font-size: 0.8em;
+      }
+      .remove {
+        background: #D04648;
+        color: #FFF;
+        padding: 0.2em;
+        text-decoration: none;
+        border-radius: 0.2em;
+        text-transform: uppercase;
+        font-size: 0.8em;
+      }
+    }
+  }
+
+  .odd {
+  }
+
+  .even {
+  }
+}

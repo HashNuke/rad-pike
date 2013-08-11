@@ -13,6 +13,8 @@ Work-In-Progress
 ## TaskList for v1
 
 * Member management
+* Fix right margin on members management page (.member right margin)
+* Define User#is_active? to block deactivated-agents form logging in
 * Posting messages
 * Authentication/Authorization
 * Running messages thru plugins

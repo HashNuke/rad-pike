@@ -3,7 +3,7 @@ class MembersController < ApplicationController
   before_action :set_user, only: [:edit, :update, :destroy]
 
   def index
-    @users = User.staff
+    @users = User.support_team
   end
 
   def create
@@ -33,10 +33,12 @@ class MembersController < ApplicationController
   end
 
   def destroy
+    msg = {error: "The user could not be deleted ~!"}
     if @user
       @user.update_attributes role: "deactivated-agent", email: ""
+      msg = {notice: "The user has been deleted."}
     end
-    redirect_to members_path, notice: "The user has been deleted."
+    redirect_to members_path, msg
   end
 
   private
