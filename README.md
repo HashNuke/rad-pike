@@ -21,6 +21,8 @@ Work-In-Progress
 * Authentication/Authorization
 * Running messages thru plugins
 * Faye for websockets
+* Auto-scrolling on new message
+* Scroll to end on opening a conversation
 * Support widget embed
 * Filters for conversation list
 * Detect if platform is heroku and use in-process Faye
