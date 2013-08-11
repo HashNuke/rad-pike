@@ -21,7 +21,8 @@ Work-In-Progress
 * Authentication/Authorization
 * Running messages thru plugins
 * Faye for websockets
-* Widget embed
+* Support widget embed
+* Filters for conversation list
 * Detect if platform is heroku and use in-process Faye
 * A proper query for listing conversations
 * Rake tasks for initial setup
@@ -59,3 +60,15 @@ App.plugins.action('HelloAction', function(user, agent){
   
 });
 ```
+
+## Roadmap
+
+In order of priority
+
+* [Heroku] one-click install
+* [Heroku] Updating RadPike from within the admin panel
+* [VPS] Salt states for deploying RadPike on a VPS
+* [VPS] Updating RadPike from within the admin panel
+* [Plugins] Use Bullet (<https://github.com/extend/bullet>) for broadcasting instead of Faye on VPS
+* [Plugins] Plugin management
+* [Plugins] Central plugin repository (based on static files)
