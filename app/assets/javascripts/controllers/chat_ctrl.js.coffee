@@ -1,6 +1,9 @@
 App.controller "ChatCtrl", ($scope, userWithMessages, Auth, Message)->
   $scope.userWithMessages = userWithMessages
 
+  $scope.postMsg = ()->
+    console.log "posting", $scope.chatInput
+
   #TODO required only for loading history
   # successCallback = (userWithMessages)->
   #   console.log "messages", userWithMessages

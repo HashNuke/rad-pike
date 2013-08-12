@@ -40,6 +40,6 @@
   </div>
 </div>
 
-<div class="chat-input">
-  <textarea></textarea>
-</div>
+<form class="chat-input-wrapper" ng-submit="postMsg()">
+  <input type="text" class="chat-input" ng-model="chatInput" placeholder="Enter your message here..."/>
+</form>
