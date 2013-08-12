@@ -52,3 +52,8 @@ In order of priority
 * [Plugins] Use Bullet (<https://github.com/extend/bullet>) for broadcasting instead of Faye on VPS
 * [Plugins] Plugin management
 * [Plugins] Central plugin repository (based on static files)
+
+
+## Features
+
+Create an issue for a feature or send a pull request. Else don't whine about it.

@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130811134628) do
+ActiveRecord::Schema.define(version: 20130812041550) do
+
+  create_table "issue_state_types", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "issue_states", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "issue_state_type_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "messages", force: true do |t|
     t.integer  "receiver_id"
@@ -46,6 +59,7 @@ ActiveRecord::Schema.define(version: 20130811134628) do
     t.integer  "sent_message_count",     default: 0
     t.integer  "received_message_count", default: 0
     t.text     "name"
+    t.integer  "current_issue_state_id"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
