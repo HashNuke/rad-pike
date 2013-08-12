@@ -1,5 +1,6 @@
 class IssueState < ActiveRecord::Base
   belongs_to :issue_state_type
+  has_many :participations, dependent: :destroy
 
   #NOTE cache issue state type. There must be only a few anyway
   def issue_state_type

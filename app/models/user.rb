@@ -18,6 +18,7 @@ class User < ActiveRecord::Base
     if: Proc.new{ ["guest", "customer"].include?(self.role) })
 
   has_many :issue_states, dependent: :destroy
+  has_many :participations, dependent: :destroy
 
   def email_required?
     return false if self.role == "guest" || self.role == "deactivated-agent"
