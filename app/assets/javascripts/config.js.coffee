@@ -1,11 +1,11 @@
 App.config ($routeProvider, $locationProvider, $httpProvider)->
 
-  #TODO Set CSRF token
-  # metaTags = document.getElementsByTagName('meta')
-  # for metaTag in metaTags
-  #   if (metaTag.name == 'csrf-token')
-  #     $httpProvider.defaults.headers.common['X-CSRF-Token'] = metaTag.content
-  #     break
+  #NOTE Set CSRF token
+  metaTags = document.getElementsByTagName('meta')
+  for metaTag in metaTags
+    if (metaTag.name == 'csrf-token')
+      $httpProvider.defaults.headers.common['X-CSRF-Token'] = metaTag.content
+      break
 
   $locationProvider.html5Mode(true)
 
