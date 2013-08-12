@@ -20,6 +20,15 @@ class User < ActiveRecord::Base
   has_many :issue_states, dependent: :destroy
   has_many :participations, dependent: :destroy
 
+  # Don't allow deactivated agents to login
+  def active_for_authentication?
+    super && self.role != "deactivated-agent"
+  end
+
+  def inactive_message
+    (self.role != "deactivated-agent") ? super : :account_has_been_deactivated
+  end
+
   def email_required?
     return false if self.role == "guest" || self.role == "deactivated-agent"
     super
