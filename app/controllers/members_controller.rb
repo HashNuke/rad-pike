@@ -25,8 +25,13 @@ class MembersController < ApplicationController
   end
 
   def update
-    @user = User.new user_params
-    if @user.save
+    updatable_params = user_params
+    if updatable_params[:password].blank? && updatable_params[:password_confirmation].blank?
+      updatable_params.delete(:password)
+      updatable_params.delete(:password_confirmation)
+    end
+
+    if @user.update_attributes updatable_params
       redirect_to members_path, notice: "The user has been updated."
     else
       render 'edit'

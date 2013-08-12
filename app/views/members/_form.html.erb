@@ -1,17 +1,46 @@
 <%= form_for @user, url: member_path(@user) do |f| %>
+
+  <% if @user.errors.full_messages.any? %>
+    <div class="errors">
+    <% @user.errors.full_messages.each do |error_message| %>
+      <% if @user.errors.full_messages.first == error_message %>
+        <span><%= error_message %></span>
+      <% end %>
+    <% end %>
+    </div>
+  <% end %>
+
+
+  <div class="field">
+    <%= f.label :name %>:
+    <%= f.text_field :name %>
+  </div>
+
   <div class="field">
     <%= f.label :email %>:
     <%= f.text_field :email %>
   </div>
 
   <div class="field">
-    <%= f.label :password %>:
-    <%= f.password_field :password %>
+    <%= f.label :Role %>:
+    <%= f.select :role, ["admin", "agent"] %>
   </div>
 
   <div class="field">
-    <%= f.label :Role %>:
-    <%= f.select :role, ["admin", "agent"] %>
+    <h3>Change password</h3>
+    <div>
+      <small>Leave the fields blank if you do not want to change the password</small>
+    </div>
+
+    <div class="field">
+      <%= f.label :password %>:
+      <%= f.password_field :password %>
+    </div>
+
+    <div class="field">
+      <%= f.label :password_confirmation %>:
+      <%= f.password_field :password_confirmation %>
+    </div>
   </div>
 
   <div class="actions">

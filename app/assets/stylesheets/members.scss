@@ -51,12 +51,30 @@
   border-radius: 0.2em;
   padding: 1em;
 
+  .errors {
+    background: #D04648;
+    color: #fff;
+    padding: 0.5em;
+    width: 100%;
+    border-radius: 0.3em;
+
+    span {clear: both;}
+  }
+
+  .field_with_errors {
+    input { border: 1px solid #D04648; }
+  }
+
+  h3 {
+    text-decoration: underline;
+  }
+
   .field {
     clear: both;
     float: left;
     margin-top: 1em;
 
-    label { color: #777; }
+    label { color: #777; clear: both }
 
     input {
       float: left;
