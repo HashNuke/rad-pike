@@ -22,8 +22,8 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Message, Faye)->
   #Faye.publish("/conversations/#{$scope.conversation.id}")
 
   # Subscribe
-  Faye.subscribe "/conversations/#{$scope.conversation.id}", (activity) ->
-    console.log "activity", activity
+  Faye.subscribe "/conversations/#{$scope.conversation.id}", (activity)->
+    $scope.conversation.messages.push activity
 
 # f = new Faye.Client(); f.publish("/conversations/3", "akash")
 
