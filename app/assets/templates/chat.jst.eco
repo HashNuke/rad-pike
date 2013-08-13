@@ -26,11 +26,9 @@
 </div>
 
 <div class="messages">
-  <div class="message" ng-repeat="activity in conversation.messages"
-    <p>debugging = {{activity.id}}</p>
+  <div class="message-wrapper" ng-repeat="activity in conversation.messages">
     <chat-activity
-      name="whatever"
-      aid="{{activity.id}}"
+      activity-id="{{activity.id}}"
       type="{{activity.activity_type}}"
       content="{{activity.content}}"
       sender-id="{{activity.sender.id}}"
