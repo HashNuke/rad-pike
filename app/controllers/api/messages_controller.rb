@@ -5,7 +5,7 @@ class Api::MessagesController < ApplicationController
   before_action :set_conversation_for_user, only: :user_conversation
   respond_to :json
 
-
+  #TODO to query messages, latest, unread/read
   def index
     respond_with :api, Conversation.all
   end

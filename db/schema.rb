@@ -11,12 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130813002809) do
+ActiveRecord::Schema.define(version: 20130813122402) do
 
   create_table "conversations", force: true do |t|
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "last_updated_by_user_id"
+    t.boolean  "op_updated"
   end
 
   create_table "issue_state_types", force: true do |t|
@@ -26,10 +28,10 @@ ActiveRecord::Schema.define(version: 20130813002809) do
   end
 
   create_table "issue_states", force: true do |t|
-    t.integer  "user_id"
     t.integer  "issue_state_type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "conversation_id"
   end
 
   create_table "messages", force: true do |t|
@@ -43,7 +45,22 @@ ActiveRecord::Schema.define(version: 20130813002809) do
 
   create_table "participations", force: true do |t|
     t.integer  "issue_state_id"
-    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "conversation_id"
+  end
+
+  create_table "registered_webhook_events", force: true do |t|
+    t.integer  "registered_webhook_id"
+    t.integer  "webhook_event_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "registered_webhooks", force: true do |t|
+    t.string   "name"
+    t.text     "url"
+    t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -79,5 +96,11 @@ ActiveRecord::Schema.define(version: 20130813002809) do
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "webhook_events", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
