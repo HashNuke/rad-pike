@@ -34,6 +34,10 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
+    angular-faye-rails (0.2.0)
+      angularjs-rails
+      faye
+    angularjs-rails (1.0.7)
     arel (4.0.0)
     atomic (1.1.10)
     bcrypt-ruby (3.1.1)
@@ -192,6 +196,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  angular-faye-rails
   carrierwave
   coffee-rails (~> 4.0.0)
   debugger

@@ -20,6 +20,6 @@ App.config ($routeProvider, $locationProvider, $httpProvider)->
       template:   JST["chat"]()
       controller: "ChatCtrl"
       resolve:
-        userWithMessages: App.resolvers.UserWithMessages
+        conversation: App.resolvers.Conversation
     )
     .otherwise(template: "This doesn't exist")

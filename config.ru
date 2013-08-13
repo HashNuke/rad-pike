@@ -1,4 +1,11 @@
-# This file is used by Rack-based servers to start the application.
-
+require 'faye'
 require ::File.expand_path('../config/environment',  __FILE__)
-run Rails.application
+
+faye_server = Faye::RackAdapter.new(:mount => "/faye", :timeout => 10)
+
+FAYE_CLIENT = faye_server.get_client
+
+run Rack::URLMap.new({
+    "/remote"  => faye_server,
+    "/"        => Rails.application
+  })

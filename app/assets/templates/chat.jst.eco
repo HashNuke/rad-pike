@@ -3,7 +3,7 @@
     <button ng-click="navigateToConversationList()">&laquo; Back</button>
   </div>
 
-  <div class="user-info">{{userWithMessages.name}}</div>
+  <div class="user-info">{{conversation.user.name}}</div>
 
 
   <div class="controls">
@@ -26,7 +26,7 @@
 </div>
 
 <div class="messages">
-  <div class="message" ng-repeat="activity in userWithMessages.messages"
+  <div class="message" ng-repeat="activity in conversation.messages"
     <p>debugging = {{activity.id}}</p>
     <chat-activity
       name="whatever"

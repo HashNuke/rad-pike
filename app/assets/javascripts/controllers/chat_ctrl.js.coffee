@@ -1,5 +1,6 @@
-App.controller "ChatCtrl", ($scope, userWithMessages, Auth, Message)->
-  $scope.userWithMessages = userWithMessages
+App.controller "ChatCtrl", ($scope, conversation, Auth, Message, Faye)->
+  console.log conversation
+  $scope.conversation = conversation
 
   $scope.postMsg = ()->
     successCallback = (data)->
@@ -9,7 +10,25 @@ App.controller "ChatCtrl", ($scope, userWithMessages, Auth, Message)->
       console.log "error"
 
     console.log "posting", $scope.chatInput
-    Message.save({message: {receiver_id: $scope.userWithMessages.id, content: $scope.chatInput}}, successCallback, errorCallback)
+    Message.save({
+        message: {
+          conversation_id: $scope.conversation.id,
+          receiver_id:     $scope.conversation.user.id,
+          content:         $scope.chatInput
+        }
+      }, successCallback, errorCallback)
+
+
+  #Faye.publish("/conversations/#{$scope.conversation.id}")
+
+  # Subscribe
+  Faye.subscribe "/conversations/#{$scope.conversation.id}", (activity) ->
+    console.log "activity", activity
+
+# f = new Faye.Client(); f.publish("/conversations/3", "akash")
+
+  # Get just once (using $q - promise)
+  # $scope.data = Faye.get("/channel-3")
 
 
   #TODO required only for loading history

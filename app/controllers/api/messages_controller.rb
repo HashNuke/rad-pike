@@ -1,14 +1,14 @@
 class Api::MessagesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_user, only: :show
+  before_action :set_conversation, only: [:create, :show]
   respond_to :json
 
   def index
-    respond_with :api, Message.conversations
+    respond_with :api, Conversation.all
   end
 
   def show
-    respond_with :api, @user, serializer: UserWithMessagesSerializer
+    respond_with :api, @conversation, serializer: ConversationWithMessagesSerializer
   end
 
   def create
@@ -21,7 +21,7 @@ class Api::MessagesController < ApplicationController
     params.require(:message).permit(:recipient_id, :message)
   end
 
-  def set_user
-    @user = User.find(params[:id])
+  def set_conversation
+    @conversation = Conversation.find(params[:id] || params[:message][:conversation_id])
   end
 end

@@ -1,8 +1,8 @@
-App.resolvers.UserWithMessages = (Message, $q, $route)->
+App.resolvers.Conversation = (Message, $q, $route)->
 
   deferred = $q.defer()
-  successCallback = (user)->
-    deferred.resolve user
+  successCallback = (conversation)->
+    deferred.resolve conversation
   errorCallback = (errorData)-> deferred.reject()
 
   requestParams =

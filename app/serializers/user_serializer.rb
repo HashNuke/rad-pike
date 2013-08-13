@@ -1,5 +1,5 @@
 class UserSerializer < ActiveModel::Serializer
-  attributes :id, :authentication_token, :name
+  attributes :id, :authentication_token, :name, :conversation
 
   def name
     return "Guest-#{object.id}" if object.role == "guest"
@@ -7,4 +7,8 @@ class UserSerializer < ActiveModel::Serializer
     object.name
   end
 
+
+  def conversation
+    object.conversations.first
+  end
 end

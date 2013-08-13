@@ -9,7 +9,6 @@ App.controller "ConversationsCtrl", ($scope, $timeout, $location, Auth, Message)
 
 
   successCallback = (conversations)->
-    console.log "conversations", conversations
     $scope.conversations = $scope.conversations.concat(conversations)
 
   errorCallback = (errorData)->
