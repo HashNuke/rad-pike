@@ -41,7 +41,7 @@ App.config ($routeProvider, $locationProvider, $httpProvider)->
   $routeProvider
     .when(
       "/widgets/support"
-      template:   JST["chat"]()
+      template:   JST["conversation"]()
       controller: "ChatCtrl"
       resolve:
         conversation: App.resolvers.Conversation

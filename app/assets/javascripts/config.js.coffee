@@ -17,7 +17,7 @@ App.config ($routeProvider, $locationProvider, $httpProvider)->
     )
     .when(
       "/conversations/:conversation_id"
-      template:   JST["chat"]()
+      template:   JST["conversation"]()
       controller: "ChatCtrl"
       resolve:
         conversation: App.resolvers.Conversation
