@@ -16,7 +16,7 @@ App.controller "ConversationsCtrl", ($scope, $timeout, $location, Auth, Message)
 
 
   $scope.openChat = (userId) ->
-    $location.path("/chats/#{userId}")
+    $location.path("/conversations/#{conversation.id}")
 
 
   @updateTimes = =>

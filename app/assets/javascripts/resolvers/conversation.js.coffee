@@ -6,7 +6,7 @@ App.resolvers.Conversation = (Message, $q, $route)->
   errorCallback = (errorData)-> deferred.reject()
 
   requestParams =
-    id: $route.current.params.user_id
+    id: $route.current.params.conversation_id
 
   Message.get(requestParams, successCallback, errorCallback)
   deferred.promise

@@ -9,7 +9,9 @@
   </div>
 
   <div class="conversations">
-    <div class="conversation" ng-repeat="conversation in conversations" ng-click="openChat(conversation.id)">
+    <div class="conversation"
+      ng-repeat="conversation in conversations"
+      ng-click="openChat(conversation.id)">
       <div class="name">{{conversation.user.name || "Guest"}}</div>
       <div class="time">{{ conversation.updated_at|readableTime }}</div>
     </div>

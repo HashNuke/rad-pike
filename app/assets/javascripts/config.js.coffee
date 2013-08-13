@@ -16,7 +16,7 @@ App.config ($routeProvider, $locationProvider, $httpProvider)->
       controller: "MainCtrl"
     )
     .when(
-      "/chats/:user_id"
+      "/conversations/:conversation_id"
       template:   JST["chat"]()
       controller: "ChatCtrl"
       resolve:
