@@ -4,7 +4,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Message, Faye)->
 
   $scope.postMsg = ()->
     successCallback = (data)->
-      console.log "success"
+      $scope.chatInput = ""
 
     errorCallback = ()->
       console.log "error"
@@ -24,6 +24,8 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Message, Faye)->
   # Subscribe
   Faye.subscribe "/conversations/#{$scope.conversation.id}", (activity)->
     $scope.conversation.messages.push activity
+    $('.messages-wrapper').scrollTop($('.messages-wrapper').prop('scrollHeight'))
+
 
 # f = new Faye.Client(); f.publish("/conversations/3", "akash")
 

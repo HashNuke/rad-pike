@@ -1,7 +1,33 @@
-.messages {
-  width: 100%;
+.messages-wrapper {
+  position: absolute;
+  width:  70%;
+  height: 100%;
+  margin-top: -3em;
+  z-index: -1;
+  overflow-y: scroll;
+
+  .messages {
+    padding-top: 3em;
+    padding-bottom: 3em;
+  }
 
   .message-wrapper {
     width: 100%;
+
+    .message {
+      width: 90%;
+      margin-top: 1%;
+      margin-left: 5%;
+      margin-right: 5%;
+      font-size: 0.9em;
+
+      .sender {
+        font-weight: bold;
+        margin-right: 0.5em;
+      }
+    }
   }
+}
+
+.messages {
 }

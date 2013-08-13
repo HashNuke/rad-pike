@@ -14,7 +14,7 @@ App.directive 'chatActivity', ()->
     attrs.$observe('activityId senderName content', (val)->
       element.html """
         <div class="message">
-          <div class="sender">#{attrs.senderName}</div>
+          <div class="sender">#{attrs.senderName}:</div>
           <div class="content">#{attrs.content}</div>
         </div>
       """
