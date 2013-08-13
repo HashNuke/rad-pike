@@ -6,8 +6,9 @@
   <meta content="True" name="HandheldFriendly"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
 
-  <%= stylesheet_link_tag "widgets/support", media: "all" %>
-  <%= javascript_include_tag "widgets/support" %>
+  <%= stylesheet_link_tag    "embeds/support", media: "all" %>
+  <%= javascript_include_tag "/remote/faye/client.js" %>
+  <%= javascript_include_tag "embeds/base" %>
 
   <% if current_user %>
     <%= javascript_tag do %>
@@ -17,9 +18,10 @@
 
   <%= csrf_meta_tags %>
 </head>
-<body>
 
-  <div class="chat" ng-controller="ChatCtrl"></div>
+<body ng-app="RadPike">
+
+  <div class="chat" ng-view></div>
 
 </body>
 </html>

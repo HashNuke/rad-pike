@@ -1,13 +1,20 @@
 class Api::MessagesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: :user_conversation
+
   before_action :set_conversation, only: [:create, :show]
+  before_action :set_conversation_for_user, only: :user_conversation
   respond_to :json
+
 
   def index
     respond_with :api, Conversation.all
   end
 
   def show
+    respond_with :api, @conversation, serializer: ConversationWithMessagesSerializer
+  end
+
+  def user_conversation
     respond_with :api, @conversation, serializer: ConversationWithMessagesSerializer
   end
 
@@ -23,5 +30,10 @@ class Api::MessagesController < ApplicationController
 
   def set_conversation
     @conversation = Conversation.find(params[:id] || params[:message][:conversation_id])
+  end
+
+  def set_conversation_for_user
+    @user = User.includes(:conversations)find(params[:id])
+    @conversation = @user.try(:conversations).try(:first)
   end
 end
