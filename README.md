@@ -45,15 +45,12 @@ App.plugins.action('HelloAction', function(user, agent){
 
 In order of priority
 
-* [Heroku] one-click install
-* [Heroku] Updating RadPike from within the admin panel
-* [VPS] Salt states for deploying RadPike on a VPS
 * [VPS] Updating RadPike from within the admin panel
-* [Plugins] Use Bullet (<https://github.com/extend/bullet>) for broadcasting instead of Faye on VPS
+* [VPS] Use Bullet (<https://github.com/extend/bullet>) for broadcasting instead of Faye on VPS
 * [Plugins] Plugin management
 * [Plugins] Central plugin repository (based on static files)
 
 
 ## Features
 
-Create an issue for a feature or send a pull request. Else don't whine about it.
+Create an issue for a feature or send a pull request. We'll see if it can be squeezed in.
