@@ -9,8 +9,18 @@ class Message < ActiveRecord::Base
     class_name: "User", inverse_of: :sent_messages
 
   after_create :broadcast
+  after_create :update_conversation!
 
   def broadcast
     Broadcaster.broadcast(self)
   end
+
+  #TODO check if it's a manually sent msg
+  def update_coversation!
+    self.conversation.update_attributes(
+      last_updated_by_user_id: self.sender_id,
+      op_updated: (self.conversation.user_id == self.sender_id)
+    )
+  end
+
 end
