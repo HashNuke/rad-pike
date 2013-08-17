@@ -33,7 +33,7 @@ class Api::MessagesController < ApplicationController
   end
 
   def set_conversation_for_user
-    @user = User.includes(:conversations)find(params[:id])
+    @user = User.includes(:conversations).find(params[:id])
     @conversation = @user.try(:conversations).try(:first)
   end
 end

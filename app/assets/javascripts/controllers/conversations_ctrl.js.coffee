@@ -15,8 +15,8 @@ App.controller "ConversationsCtrl", ($scope, $timeout, $location, Auth, Message)
     console.log "error"
 
 
-  $scope.openChat = (userId) ->
-    $location.path("/conversations/#{conversation.id}")
+  $scope.openChat = (conversationId) ->
+    $location.path("/conversations/#{conversationId}")
 
 
   @updateTimes = =>

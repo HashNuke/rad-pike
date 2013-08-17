@@ -16,7 +16,7 @@ class Message < ActiveRecord::Base
   end
 
   #TODO check if it's a manually sent msg
-  def update_coversation!
+  def update_conversation!
     self.conversation.update_attributes(
       last_updated_by_user_id: self.sender_id,
       op_updated: (self.conversation.user_id == self.sender_id)
