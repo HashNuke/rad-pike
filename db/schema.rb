@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130813122402) do
+ActiveRecord::Schema.define(version: 20130818154908) do
 
   create_table "conversations", force: true do |t|
     t.integer  "user_id"
@@ -65,6 +65,12 @@ ActiveRecord::Schema.define(version: 20130813122402) do
     t.datetime "updated_at"
   end
 
+  create_table "roles", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "setting_stores", force: true do |t|
     t.string   "name"
     t.text     "value"
@@ -86,11 +92,11 @@ ActiveRecord::Schema.define(version: 20130813122402) do
     t.string   "authentication_token"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "role"
     t.integer  "sent_message_count",     default: 0
     t.integer  "received_message_count", default: 0
     t.text     "name"
     t.integer  "current_issue_state_id"
+    t.integer  "role_id"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree

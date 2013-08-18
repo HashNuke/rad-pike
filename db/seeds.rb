@@ -11,3 +11,8 @@ User.find_or_create_by_email "admin@example.com", password: "password", role: "a
 ["Resolved", "Unresolved"].each do |issue_state_type|
   IssueStateType.find_or_create_by_name issue_state_type
 end
+
+
+["Admin", "Staff", "Deactivated Agent", "Customer", "Guest"].each do |role_name|
+  Role.find_or_create_by_name role_name
+end
