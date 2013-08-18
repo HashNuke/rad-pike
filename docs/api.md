@@ -1,5 +1,13 @@
 # RadPike API
 
+## Authentication for API calls
+
+To make API calls, you'll need the auth token. You can find it on your account settings page. Login to RadPike, click the "account" link on top. On the resulting page, you will then find your auth token.
+
+For all API calls, you have to pass your auth token, with the parameter name `auth_token`.
+
+Access to the API calls depends on the kind of role that you've been assigned on RadPike. Admin role can make all API calls.
+
 ## Roles
 
 #### GET /roles
