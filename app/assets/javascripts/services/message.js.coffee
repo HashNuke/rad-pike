@@ -9,5 +9,5 @@ App.factory 'Message', ($resource)->
       action: "user_conversation"
       params: {collectionRoute: "user_conversation"}
 
-  $resource("/api/messages/:collectionRoute:id/:memberRoute",
+  $resource("/api/conversations/:collectionRoute:id/:memberRoute",
     { id: "@id", collectionRoute: '@collectionRoute', memberRoute: '@memberRoute'}, customActions)

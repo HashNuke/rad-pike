@@ -1,4 +1,4 @@
-class Api::MessagesController < ApplicationController
+class Api::ConversationsController < ApplicationController
   respond_to :json
 
   before_action :find_or_create_user_for_embed,  only: :user_conversation
