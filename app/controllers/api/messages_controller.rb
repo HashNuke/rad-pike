@@ -1,9 +1,13 @@
 class Api::MessagesController < ApplicationController
+  respond_to :json
   before_action :authenticate_user!, except: :user_conversation
 
-  before_action :set_conversation, only: [:create, :show]
-  before_action :set_conversation_for_user, only: :user_conversation
-  respond_to :json
+  before_action :set_conversation,                only: [:create, :show]
+
+  before_action :find_or_create_user_if_possible, only: :user_conversation
+  before_action :sign_in_user_if_possible,        only: :user_conversation
+  before_action :set_conversation_if_possible,    only: :user_conversation
+
 
   #TODO to query messages, latest, unread/read
   def index
@@ -15,7 +19,11 @@ class Api::MessagesController < ApplicationController
   end
 
   def user_conversation
-    respond_with :api, @conversation, serializer: ConversationWithMessagesSerializer
+    respond_to do |format|
+      format.json {
+        render json: @conversation, serializer: ConversationWithMessagesSerializer
+      }
+    end
   end
 
   def create
@@ -32,8 +40,19 @@ class Api::MessagesController < ApplicationController
     @conversation = Conversation.find(params[:id] || params[:message][:conversation_id])
   end
 
-  def set_conversation_for_user
-    @user = User.includes(:conversations).find(params[:id])
+  def set_conversation_if_possible
     @conversation = @user.try(:conversations).try(:first)
+  end
+
+  def find_or_create_user_if_possible
+    if !params[:unique_user_id].blank? && !params[:user_name].blank?
+      @user = User.find_or_create_customer(params[:unique_user_id], params[:user_name])
+    else
+      @user = User.create_guest
+    end
+  end
+
+  def sign_in_user_if_possible
+    sign_in @user if @user
   end
 end

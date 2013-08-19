@@ -1,6 +1,11 @@
 App.controller "ChatCtrl", ($scope, conversation, Auth, Message, Faye)->
+  $scope.isInfobarVisible = true
+
   console.log "whatever", conversation
   $scope.conversation = conversation
+
+  if $scope.conversation.user.id == Auth.user()["id"]
+    $scope.isInfobarVisible = false
 
   $scope.postMsg = ()->
     successCallback = (data)->

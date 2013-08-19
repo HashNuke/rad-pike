@@ -17,13 +17,9 @@ class User < ActiveRecord::Base
   scope :support_team, -> { where(role_id: [Role.admin.id, Role.staff.id]) }
 
 
-  after_create(:ensure_current_issue_state!,
-    if: Proc.new{ ["guest", "customer"].include?(self.role) })
-
   after_create(:ensure_conversation!,
-    if: Proc.new{ ["guest", "customer"].include?(self.role) })
+    if: Proc.new{ self.customer? || self.guest? })
 
-  has_many :issue_states,   dependent: :destroy
   has_many :participations, dependent: :destroy
 
   # Don't allow deactivated agents to login
@@ -47,15 +43,26 @@ class User < ActiveRecord::Base
     super
   end
 
-  def ensure_current_issue_state!
-    issue_state = self.issue_states.create(issue_state_type_id: IssueStateType.unresolved.id)
-    self.update_attribute :current_issue_state_id, issue_state.id
+  def ensure_authentication_token
+    super if self.admin? || self.staff?
   end
 
   def ensure_conversation!
-    self.conversation.create
+    self.conversations.create
   end
 
+
+  def self.create_guest
+    self.create role_id: Role.guest.id
+  end
+
+  def self.find_or_create_customer(unique_id, name)
+    self.find_or_create_by_unique_id(
+      unique_id,
+      name:    name,
+      role_id: Role.customer.id
+    )
+  end
 
   #TODO replace these with define_method
   def admin?

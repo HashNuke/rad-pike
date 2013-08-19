@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130819031006) do
+ActiveRecord::Schema.define(version: 20130819053110) do
 
   create_table "conversations", force: true do |t|
     t.integer  "user_id"
@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(version: 20130819031006) do
     t.text     "name"
     t.integer  "current_issue_state_id"
     t.integer  "role_id"
+    t.string   "unique_id"
   end
 
   add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", unique: true, using: :btree

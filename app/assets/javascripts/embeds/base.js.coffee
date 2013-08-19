@@ -32,7 +32,7 @@ App.config ($routeProvider, $locationProvider, $httpProvider)->
     requestParams =
       id: $route.current.params.user_id
 
-    Message.get(requestParams, successCallback, errorCallback)
+    Message.user_conversation(requestParams, successCallback, errorCallback)
     deferred.promise
 
 
