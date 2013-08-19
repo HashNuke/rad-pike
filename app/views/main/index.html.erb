@@ -4,9 +4,12 @@
   ng-init="broadcaster='Faye'">
 
   <div class="nav-panel">
-    <a href="/members/<%= current_user.id %>/edit" target="_self" class="nav-btn">
-      <%= current_user.name %>
-    </a>
+    <%= link_to(
+      current_user.name,
+      "/members/#{current_user.id}/edit",
+      target: "_self",
+      class: "nav-btn")
+    %>
     /
     <% if current_user.admin? %>
       <a href="/members" target="_self" class="nav-btn">Members</a>
