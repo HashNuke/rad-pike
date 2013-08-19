@@ -13,6 +13,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Message, Faye)->
 
   $scope.postMsg = ()->
     successCallback = (data)->
+      $scope.conversation.messages.push data
       $scope.chatInput = ""
 
     errorCallback = ()->
@@ -27,7 +28,8 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Message, Faye)->
       }, successCallback, errorCallback)
 
 
-  # Subscribe
+  Faye.subscribe "/conversations/#{$scope.conversation.id}", (msg)->
+    $scope.conversation.messages.push(msg) if msg.sender.id != Auth.user()["id"]
 
 # f = new Faye.Client(); f.publish("/conversations/3", "akash")
 
