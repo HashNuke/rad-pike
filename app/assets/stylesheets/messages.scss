@@ -1,16 +1,60 @@
-.messages-wrapper {
-  width:  100%;
-  height: 90%;
-  z-index: -1;
-  overflow-y: scroll;
-  // add margin-top -3em for scrolling to work
+$main-width: 70%;
+
+.chat {
+  height: 100%;
+  float: right;
+  width: $main-width;
+
+  .chat-input-wrapper {
+    width: $main-width;
+    position: absolute;
+    bottom: 0em;
+    height: 3em;
+    padding-bottom: 0.2em;
+
+    .chat-input {
+      width: 90%;
+      margin-left: 5%;
+      margin-right: 5%;
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+      font-size: 1em;
+    }
+  }
+
+  .info-bar {
+    .controls {
+      float: right;
+      @include chat-controls;
+      margin-left: 1em;
+    }
+
+    .nav {
+      @include chat-controls;
+      margin-right: 2%;
+    }
+
+    width: 100%;
+    padding: 0.4em;
+    background: #597DCE;
+    font-size: 1em;
+    color: #FFF;
+    letter-spacing: 0.1em;
+
+    .user-info {
+      margin-top: 0.2em;
+      margin-left: 0.5em;
+    }
+  }
 }
 
-
 .messages {
-  width:  100%;
-  z-index: -1;
-  padding-bottom: 5em;
+  overflow-y: scroll;
+  width:  70%;
+  position: absolute;
+  top: 3em;
+  right: 0em;
+  bottom: 4em;
 }
 
 

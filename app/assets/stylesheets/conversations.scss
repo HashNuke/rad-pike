@@ -1,8 +1,10 @@
+$sidebar-width: 30%;
+
 .list-view {
   height: 100%;
   box-shadow: 0.1em 0em 0.5em 0.05em #EEE;
   background: #FFF;
-  width: 30%;
+  width: $sidebar-width;
   border-right: 1px solid #DDD;
 
   .nav-panel, .filters-panel {
@@ -32,8 +34,11 @@
 }
 
 .conversations {
-  width: 100%;
-  height: 90%;
+  top: 4em;
+  bottom: 0em;
+  width: $sidebar-width;
+  position: absolute;
+  z-index: 0;
   overflow-y: scroll;
 }
 
@@ -71,60 +76,4 @@
     font-size: 0.9em;
     color: #888;
   }
-}
-
-
-.chat {
-  height: 100%;
-  float: right;
-  width: 70%;
-
-  .messages {}
-
-  .chat-input-wrapper {
-    width: 70%;
-    position: absolute;
-    bottom: 0px;
-    height: 3em;
-    padding-bottom: 1%;
-
-    .chat-input {
-      width: 90%;
-      height: 2.5em;
-      bottom: 0em;
-      margin-top: 1%;
-      margin-left: 5%;
-      margin-right: 5%;
-      font-size: 1em;
-    }
-  }
-
-  .info-bar {
-    .controls {
-      float: right;
-      @include chat-controls;
-      margin-left: 1em;
-    }
-
-    .nav {
-      @include chat-controls;
-      margin-right: 2%;
-    }
-
-    width: 100%;
-    padding: 0.4em;
-    background: #597DCE;
-    font-size: 1em;
-    color: #FFF;
-    letter-spacing: 0.1em;
-
-    .user-info {
-      margin-top: 0.2em;
-      margin-left: 0.5em;
-    }
-  }
-}
-
-.mobile-show {
-  display: none;
 }
