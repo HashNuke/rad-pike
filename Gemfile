@@ -19,7 +19,7 @@ gem 'jquery-rails'
 
 gem 'angular-faye-rails'
 gem 'active_model_serializers'
-
+gem 'tire'
 
 group :development, :test do
   gem 'debugger'
