@@ -1,13 +1,11 @@
 class Api::MessagesController < ApplicationController
   respond_to :json
-  before_action :authenticate_user!, except: :user_conversation
 
-  before_action :set_conversation,                only: [:create, :show]
-
-  before_action :find_or_create_user_if_possible, only: :user_conversation
-  before_action :sign_in_user_if_possible,        only: :user_conversation
-  before_action :set_conversation_if_possible,    only: :user_conversation
-
+  before_action :find_or_create_user_for_embed,  only: :user_conversation
+  before_action :sign_in_user_from_embed,        only: :user_conversation
+  before_action :set_conversation_for_embed,     only: :user_conversation
+  before_action :authenticate_user!
+  before_action :set_conversation,               only: [:create, :show]
 
   #TODO to query messages, latest, unread/read
   def index
@@ -40,11 +38,11 @@ class Api::MessagesController < ApplicationController
     @conversation = Conversation.find(params[:id] || params[:message][:conversation_id])
   end
 
-  def set_conversation_if_possible
+  def set_conversation_for_embed
     @conversation = @user.try(:conversations).try(:first)
   end
 
-  def find_or_create_user_if_possible
+  def find_or_create_user_for_embed
     if !params[:unique_user_id].blank? && !params[:user_name].blank?
       @user = User.find_or_create_customer(params[:unique_user_id], params[:user_name])
     else
@@ -52,7 +50,7 @@ class Api::MessagesController < ApplicationController
     end
   end
 
-  def sign_in_user_if_possible
+  def sign_in_user_from_embed
     sign_in @user if @user
   end
 end

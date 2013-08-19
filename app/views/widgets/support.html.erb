@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:ng="http://angularjs.org" id="ng-app" ng-app="RadPike">
+<html xmlns:ng="http://angularjs.org">
 <head>
   <title>RadPike</title>
 
@@ -19,8 +19,9 @@
   <%= csrf_meta_tags %>
 </head>
 
-<body ng-app="RadPike">
+<body>
 
+  <div onclick="angular.bootstrap(document.body, ['RadPike'])">start</div>
   <div class="chat" ng-view></div>
 
 </body>
