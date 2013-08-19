@@ -31,7 +31,13 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Message, F
 
   Faye.subscribe "/conversations/#{$scope.conversation.id}", (msg)->
     $scope.conversation.messages.push(msg) if msg.sender.id != Auth.user()["id"]
+    #TODO scroll only if the scrolled diff is very little
+    console.log "trying to scroll"
+    $('.messages').scrollTop($('.messages-wrapper').prop('scrollHeight') + 50)
+    console.log "scrolled ~!"
 
+  console.log "scrolling...", $('.messages').prop('scrollHeight')
+  $('.messages').scrollTop($('.messages-wrapper').prop('scrollHeight'))
 
   #TODO required only for loading history
   # successCallback = (conversation)->
