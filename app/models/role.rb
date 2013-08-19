@@ -30,4 +30,8 @@ class Role < ActiveRecord::Base
       self.find_by_name("Guest")
     end
   end
+
+  def self.team_roles
+    [Role.admin, Role.staff, Role.deactivated_staff]
+  end
 end

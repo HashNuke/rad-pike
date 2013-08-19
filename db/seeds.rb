@@ -6,13 +6,17 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-User.find_or_create_by_email "admin@example.com", password: "password", role: "admin", name: "Support Tom"
 
 ["Resolved", "Unresolved"].each do |issue_state_type|
   IssueStateType.find_or_create_by_name issue_state_type
 end
 
 
-["Admin", "Staff", "Deactivated Agent", "Customer", "Guest"].each do |role_name|
+["Admin", "Staff", "Deactivated Staff", "Customer", "Guest"].each do |role_name|
   Role.find_or_create_by_name role_name
 end
+
+User.find_or_create_by_email("admin@example.com",
+  password: "password",
+  role_id:  Role.admin.id,
+  name: "Support Tom")

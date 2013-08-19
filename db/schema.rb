@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130818154908) do
+ActiveRecord::Schema.define(version: 20130819031006) do
 
   create_table "conversations", force: true do |t|
     t.integer  "user_id"
@@ -71,9 +71,18 @@ ActiveRecord::Schema.define(version: 20130818154908) do
     t.datetime "updated_at"
   end
 
-  create_table "setting_stores", force: true do |t|
+  create_table "setting_options", force: true do |t|
+    t.text     "name"
+    t.integer  "setting_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "settings", force: true do |t|
     t.string   "name"
     t.text     "value"
+    t.boolean  "options_available",   default: false
+    t.integer  "selected_setting_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

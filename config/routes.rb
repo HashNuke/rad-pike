@@ -10,12 +10,13 @@ RadPike::Application.routes.draw do
   get "widgets/support" => "widgets#support"
 
   resources :members
+  resource  :settings
 
   namespace :api do
     resources :users,    only: :show
     resources :messages, only: [:index, :show, :create] do
       member do
-        get "user_conversation"
+        get :user_conversation
       end
     end
   end

@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
   has_many   :received_messages,   class_name: "Message", foreign_key: "receiver_id"
   belongs_to :current_issue_state, class_name: "IssueState"
 
-  scope :support_team, -> { where(role: ["admin", "staff"]) }
+  scope :support_team, -> { where(role_id: [Role.admin.id, Role.staff.id]) }
 
 
   after_create(:ensure_current_issue_state!,
@@ -56,9 +56,25 @@ class User < ActiveRecord::Base
     self.conversation.create
   end
 
-  [:admin, :staff, :deactivated_staff, :customer, :guest].each do |role_method|
-    define_method "#{role_method}?" do
-      self.role_id == Role.send(role_method).id
-    end
+
+  #TODO replace these with define_method
+  def admin?
+    self.role_id == Role.admin.id
+  end
+
+  def staff?
+    self.role_id == Role.staff.id
+  end
+
+  def deactivated_staff?
+    self.role_id == Role.deactivated_staff.id
+  end
+
+  def customer?
+    self.role_id == Role.customer.id
+  end
+
+  def guest?
+    self.role_id == Role.guest.id
   end
 end

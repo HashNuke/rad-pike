@@ -9,7 +9,7 @@ class MembersController < ApplicationController
   end
 
   def new
-    @user = User.new role: "agent"
+    @user = User.new role_id: Role.staff.id
   end
 
   def create

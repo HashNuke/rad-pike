@@ -21,10 +21,13 @@
     <%= f.text_field :email %>
   </div>
 
-  <div class="field">
-    <%= f.label :Role %>:
-    <%= f.select :role, ["admin", "agent"] %>
-  </div>
+
+  <% if current_user.id != f.object.id %>
+    <div class="field">
+      <%= f.label :Role %>:
+      <%= f.select :role, Role.team_roles.collect {|role| [role.name, role.id]} %>
+    </div>
+  <% end %>
 
   <div class="field">
     <h3>Change password</h3>
