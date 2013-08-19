@@ -45,6 +45,12 @@
   }
 }
 
+@mixin desktop-styles {
+  body {
+    overflow-y: hidden;
+  }
+}
+
 @mixin desktop-chat-options {
   .menu {
     .menu-switch { display: none; }
@@ -106,6 +112,7 @@
 
 
 @mixin mobile-styles {
+
   .list-view { width: 100%; }
   .chat {
     width: 100%;

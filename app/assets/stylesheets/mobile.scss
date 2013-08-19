@@ -1,3 +1,9 @@
+// desktop
+@media screen 
+and (min-device-width : 1024px) {
+  @include desktop-styles;
+}
+
 // ipad landscape
 @media screen 
 and (min-device-width : 768px) 
