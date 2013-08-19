@@ -1,6 +1,9 @@
 <h2 class="title">Members</h2>
 
 <div class="members">
+
+<a class="add-btn" href="/members/new">Add team member</a>
+
   <% @users.each do |user| %>
     <div class="member <%= cycle('odd', 'even') %>">
       <div class="meta">

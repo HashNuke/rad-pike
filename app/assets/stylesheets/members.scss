@@ -1,6 +1,8 @@
 .members {
   width: 100%;
 
+  @include admin_manage_controls;
+
   .member {
     width: 100%;
     border: 1px solid #DDD;
@@ -44,6 +46,8 @@
 
 
 .new_user, .edit_user {
+  @include admin_form_controls;
+
   float: left;
   width: 100%;
   border: 1px solid #DDD;
@@ -83,19 +87,5 @@
     }
 
     select { font-size: 1.2em; }
-  }
-
-  .actions {
-    clear: both;
-    width: 100%;
-    margin-top: 1em;
-    padding-top: 1em;
-
-    input {
-      background: #EEE;
-      font-size: 1.2em;
-      border-radius: 0.2em;
-      color: #555;
-    }
   }
 }

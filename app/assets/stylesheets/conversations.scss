@@ -5,19 +5,24 @@
   width: 30%;
   border-right: 1px solid #DDD;
 
-  .panel {
+  .nav-panel, .filters-panel {
     padding: 0.3em;
-    border-bottom: 1px solid #EEE;
     width: 100%;
-    box-shadow: 0.1em 0.1em 0.1em 0.05em #EEE;
+  }
+
+  .nav-panel {
+    .nav-btn, .logout {
+      font-size: 0.9em;
+      margin-top: 0.3em;
+    }
 
     .logout {
       color: #D04648;
-      font-size: 0.8em;
-      float: right;
-      margin-top: 0.3em;
-      margin-right: 0.4em;
     }
+  }
+
+  .filters-panel {
+    background: #E6E6E6;
 
     input {
       font-size: 1em;

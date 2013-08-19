@@ -19,6 +19,31 @@
 
 }
 
+@mixin admin_manage_controls {
+  .add-btn {
+    background: #696;
+    color: #FFF;
+    text-decoration: none;
+    padding: 4px;
+    border-radius: 0.15em;
+  }
+}
+
+@mixin admin_form_controls {
+  .actions {
+    clear: both;
+    width: 100%;
+    margin-top: 1em;
+    padding-top: 1em;
+
+    input {
+      background: #EEE;
+      font-size: 1.2em;
+      border-radius: 0.2em;
+      color: #555;
+    }
+  }
+}
 
 @mixin desktop-chat-options {
   .menu {

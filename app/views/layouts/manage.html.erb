@@ -17,7 +17,7 @@
   <header>
     <div class="appname">RadPike</div>
     <div class="nav">
-      <% if current_user.try(:role) == "admin" %>
+      <% if current_user.admin? %>
         <%= link_to "Members", members_path %>
         /
       <% end %>
