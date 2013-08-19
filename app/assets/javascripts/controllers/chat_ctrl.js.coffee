@@ -6,9 +6,8 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Message, Faye)->
   if !Auth.isAuthenticated()
     Auth.setUser(conversation.user)
 
-  console.log "whatever", $scope.conversation.user.id, Auth.user()["id"], conversation
 
-
+  #NOTE infobar not required if it's the widget
   if $scope.conversation.user.id == Auth.user()["id"]
     $scope.isInfobarVisible = false
 
