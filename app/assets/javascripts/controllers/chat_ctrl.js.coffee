@@ -1,12 +1,13 @@
 App.controller "ChatCtrl", ($scope, conversation, Auth, Message, Faye)->
   $scope.isInfobarVisible = true
+  $scope.conversation = conversation
 
   #NOTE If user isn't set on window object, then he isn't staff
   if !Auth.isAuthenticated()
     Auth.setUser(conversation.user)
 
-  console.log "whatever", conversation
-  $scope.conversation = conversation
+  console.log "whatever", $scope.conversation.user.id, Auth.user()["id"], conversation
+
 
   if $scope.conversation.user.id == Auth.user()["id"]
     $scope.isInfobarVisible = false

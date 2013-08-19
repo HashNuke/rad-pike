@@ -10,12 +10,6 @@
   <%= javascript_include_tag "/remote/faye/client.js" %>
   <%= javascript_include_tag "embeds/base" %>
 
-  <% if current_user %>
-    <%= javascript_tag do %>
-      window.currentUser = <%= json_for(current_user).html_safe %>;
-    <% end %>
-  <% end %>
-
   <%= csrf_meta_tags %>
 </head>
 
