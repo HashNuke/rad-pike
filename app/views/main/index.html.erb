@@ -22,6 +22,14 @@
 
   <div class="filters-panel">
     <input type="text" placeholder="Search"/>
+    Filter by
+    <select>
+      <% User.support_team.each do |user| %>
+        <option value="unassigned">-- Unassigned --</option>
+        <option value="all">-- All --</option>
+        <option value="<%= user.id %>"><%= user.name %></option>
+      <% end %>
+    </select>
   </div>
 
   <div class="conversations">
