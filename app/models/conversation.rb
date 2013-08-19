@@ -5,4 +5,8 @@ class Conversation < ActiveRecord::Base
   default_scope -> {
     includes(:user).order("created_at DESC")
   }
+
+  def is_for_user_id?(check_user_id)
+    self.user_id == check_user_id
+  end
 end

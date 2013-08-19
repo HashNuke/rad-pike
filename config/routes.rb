@@ -15,7 +15,9 @@ RadPike::Application.routes.draw do
   namespace :api do
     resources :users,    only: :show
     get "conversations/user_conversation" => "conversations#user_conversation"
-    resources :conversations, only: [:index, :show, :create]
+    resources :conversations, only: [:index, :show] do
+      resources :messages, only: :create
+    end
   end
 
   class XHRConstraint

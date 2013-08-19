@@ -1,4 +1,4 @@
-App.resolvers.Conversation = (Message, $q, $route)->
+App.resolvers.Conversation = (Conversation, $q, $route)->
 
   deferred = $q.defer()
   successCallback = (conversation)->
@@ -8,5 +8,5 @@ App.resolvers.Conversation = (Message, $q, $route)->
   requestParams =
     id: $route.current.params.conversation_id
 
-  Message.get(requestParams, successCallback, errorCallback)
+  Conversation.get(requestParams, successCallback, errorCallback)
   deferred.promise

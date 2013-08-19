@@ -22,7 +22,7 @@ App.config ($routeProvider, $locationProvider, $httpProvider)->
       $httpProvider.defaults.headers.common['X-CSRF-Token'] = metaTag.content
       break
 
-  App.resolvers.Conversation = (Message, $q, $route)->
+  App.resolvers.Conversation = (Conversation, $q, $route)->
 
     deferred = $q.defer()
     successCallback = (conversation)->

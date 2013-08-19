@@ -22,6 +22,14 @@ class User < ActiveRecord::Base
     return "Customer-#{self.id}" if self.customer?
   end
 
+  def support_team?
+    self.admin? || self.staff?
+  end
+
+  def recent_conversation
+    self.conversations.first
+  end
+
   after_create(:ensure_conversation!,
     if: Proc.new{ self.customer? || self.guest? })
 

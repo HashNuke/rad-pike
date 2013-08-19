@@ -1,4 +1,4 @@
-App.controller "ChatCtrl", ($scope, conversation, Auth, Message, Faye)->
+App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Message, Faye)->
   $scope.isInfobarVisible = true
   $scope.conversation = conversation
 
@@ -20,6 +20,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Message, Faye)->
       console.log "error"
 
     Message.save({
+        conversation_id: $scope.conversation.id
         message: {
           conversation_id: $scope.conversation.id,
           receiver_id:     $scope.conversation.user.id,
@@ -31,19 +32,12 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Message, Faye)->
   Faye.subscribe "/conversations/#{$scope.conversation.id}", (msg)->
     $scope.conversation.messages.push(msg) if msg.sender.id != Auth.user()["id"]
 
-# f = new Faye.Client(); f.publish("/conversations/3", "akash")
-
-  # Get just once (using $q - promise)
-  # $scope.data = Faye.get("/channel-3")
-
 
   #TODO required only for loading history
-  # successCallback = (userWithMessages)->
-  #   console.log "messages", userWithMessages
-  #   #TODO instead prepend the messages with the current list
-  #   $scope.userWithMessages = userWithMessages
+  # successCallback = (conversation)->
+  #  prepend result with current list
 
   # errorCallback = (errorData)->
   #   console.log "error"
 
-  # Message.query(successCallback, errorCallback)
+  # Conversation.query(successCallback, errorCallback)

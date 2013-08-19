@@ -5,7 +5,7 @@ class Api::ConversationsController < ApplicationController
   before_action :sign_in_user_from_embed,        only: :user_conversation
   before_action :set_conversation_for_embed,     only: :user_conversation
   before_action :authenticate_user!
-  before_action :set_conversation,               only: [:create, :show]
+  before_action :set_conversation,               only: [:create_message, :show]
 
   #TODO to query messages, latest, unread/read
   def index
@@ -24,18 +24,11 @@ class Api::ConversationsController < ApplicationController
     end
   end
 
-  def create
-    respond_with :api, current_user.sent_messages.create(message_params)
-  end
 
   private
 
-  def message_params
-    params.require(:message).permit(:receiver_id, :content, :conversation_id)
-  end
-
   def set_conversation
-    @conversation = Conversation.find(params[:id] || params[:message][:conversation_id])
+    @conversation = Conversation.find(params[:id])
   end
 
   def set_conversation_for_embed

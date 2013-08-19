@@ -1,13 +1,8 @@
 App.factory 'Message', ($resource)->
 
-  #TODO
-  #collection routes: conversations with pagination. Use default GET index action.
   customActions =
     update:  {method: "PUT"}
-    user_conversation:
-      method: "GET"
-      action: "user_conversation"
-      params: {collectionRoute: "user_conversation"}
 
-  $resource("/api/conversations/:collectionRoute:id/:memberRoute",
-    { id: "@id", collectionRoute: '@collectionRoute', memberRoute: '@memberRoute'}, customActions)
+
+  $resource("/api/conversations/:conversation_id/messages/:id",
+    { id: "@id", conversation_id: "@conversation_id"}, customActions)

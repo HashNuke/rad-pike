@@ -18,7 +18,7 @@
     <div class="appname">RadPike</div>
     <div class="nav">
       <% if user_signed_in? %>
-        <%= link_to "&laquo; Back to chat".html_safe, edit_member_path(current_user) %>
+        <%= link_to "&laquo; Back to chat".html_safe, "/" %>
         /
         <%= link_to "My account", edit_member_path(current_user) %>
         /
