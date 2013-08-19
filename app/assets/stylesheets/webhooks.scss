@@ -1,0 +1,92 @@
+.webhooks {
+  width: 100%;
+
+  @include admin_manage_controls;
+
+  .webhook {
+    width: 100%;
+    border: 1px solid #DDD;
+    background: #FFF;
+    border-radius: 0.2em;
+    padding: 1em;
+    margin-top: 1em;
+
+    .meta {
+      width: 100%;
+      border-bottom: 1px solid #DDD;
+      margin-bottom: 1em;
+
+      .name {
+        font-weight: bold;
+        margin-right: 0.5em;
+        font-size: 1.1em;
+      }
+    }
+
+    .field {
+      clear: both;
+      margin-top: 0.2em;
+    }
+
+    .actions {
+      clear: both;
+      margin-top: 1em;
+
+      .edit, .remove   {
+        text-decoration: underline;
+        border-radius: 0.2em;
+        text-transform: uppercase;
+        font-size: 0.8em;
+        margin-right: 1em;
+      }
+      .remove { color: #D04648; }
+    }
+  }
+}
+
+
+.new_registered_webhook, .edit_registered_webhook {
+  @include admin_form_controls;
+
+  float: left;
+  width: 100%;
+  border: 1px solid #DDD;
+  background: #FFF;
+  border-radius: 0.2em;
+  padding: 1em;
+  margin-bottom: 1em;
+
+  .errors {
+    background: #D04648;
+    color: #fff;
+    padding: 0.5em;
+    width: 100%;
+    border-radius: 0.3em;
+
+    span {clear: both;}
+  }
+
+  .field_with_errors {
+    input { border: 1px solid #D04648; }
+  }
+
+  h3 {
+    text-decoration: underline;
+  }
+
+  .field, .single-line {
+    clear: both;
+    float: left;
+    margin-top: 1em;
+
+    input {
+      float: left;
+      font-size: 1.2em;
+    }
+
+    select { font-size: 1.2em; }
+  }
+
+  .field label { color: #777; clear: both }
+  .field input { clear: both; }
+}

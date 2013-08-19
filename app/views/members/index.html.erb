@@ -14,7 +14,7 @@
       <div class="actions">
         <%= link_to "Edit", edit_member_path(user), class: "edit" %>
         <% if user.id != current_user.id %>
-          <%= link_to "Remove", edit_member_path(user), class: "remove" %>
+          <%= link_to "Remove", destroy_member_path(user), class: "remove" %>
         <% end %>
       </div>
     </div>

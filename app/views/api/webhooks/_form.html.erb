@@ -1,0 +1,26 @@
+<%= form_for @webhook, url: api_webhook_path(@webhook) do |f| %>
+
+  <% if @webhook.errors.full_messages.any? %>
+    <div class="errors">
+    <% @webhook.errors.full_messages.each do |error_message| %>
+      <% if @webhook.errors.full_messages.first == error_message %>
+        <span><%= error_message %></span>
+      <% end %>
+    <% end %>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>:
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :url %>:
+    <%= f.text_field :url %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Save" %>
+  </div>
+<% end %>

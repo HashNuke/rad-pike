@@ -18,6 +18,7 @@ RadPike::Application.routes.draw do
     resources :conversations, only: [:index, :show] do
       resources :messages, only: :create
     end
+    resources :webhooks, only: [:index, :new, :create, :destroy]
   end
 
   class XHRConstraint

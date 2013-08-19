@@ -1,0 +1,19 @@
+<h2 class="title">Webhooks</h2>
+
+<div class="webhooks">
+
+<%= link_to "Add webhook", new_api_webhook_path, class: "add-btn" %>
+
+  <% @webhooks.each do |webhook| %>
+    <div class="webhook <%= cycle('odd', 'even') %>">
+      <div class="meta">
+        <span class="name"><%= webhook.name %></span>
+      </div>
+      <div class="field"><%= webhook.url %></div>
+      <div class="field">added <%= time_ago_in_words(webhook.created_at) %> ago</div>
+      <div class="actions">
+        <%= link_to "Remove", api_webhook_path(webhook), method: :destroy, class: "remove" %>
+      </div>
+    </div>
+  <% end %>
+</div>
