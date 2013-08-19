@@ -16,13 +16,19 @@ class User < ActiveRecord::Base
 
   scope :support_team, -> { where(role_id: [Role.admin.id, Role.staff.id]) }
 
+  def name
+    return super unless super.blank?
+    return "Guest-#{self.id}"    if self.guest?
+    return "Customer-#{self.id}" if self.customer?
+  end
 
   after_create(:ensure_conversation!,
     if: Proc.new{ self.customer? || self.guest? })
 
   has_many :participations, dependent: :destroy
 
-  # Don't allow deactivated agents to login
+  #NOTE Don't allow deactivated agents to login
+  # This isn't the place to do authorization
   def active_for_authentication?
     super && !self.deactivated_staff?
   end
