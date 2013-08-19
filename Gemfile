@@ -25,6 +25,7 @@ group :development, :test do
   gem 'debugger'
   gem 'shotgun'
   gem 'example_app', path: './example_app'
+  gem 'foreman'
 end
 
 group :doc do
