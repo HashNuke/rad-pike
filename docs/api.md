@@ -10,53 +10,53 @@ Access to the API calls depends on the kind of role that you've been assigned on
 
 ## Roles
 
-#### GET /roles
+#### GET /api/roles
 
 TODO
 
 ## Users
 
-#### GET /members
+#### GET /api/members
 
 TODO
 
-#### POST /members
+#### POST /api/members
 
 This API call only allows you to create users of the role "customers".
 
 TODO
 
-#### GET /members/:id
+#### GET /api/members/:id
 
 TODO
 
-#### PATCH /members/:id
+#### PATCH /api/members/:id
 
 TODO
 
 ## Conversations
 
-#### GET /conversations
+#### GET /api/conversations
 
 TODO
 
-#### POST /conversations/:id
+#### POST /api/conversations/:id
 
 This will add message to a conversation
 
 TODO
 
-#### DELETE /conversations/:id
+#### DELETE /api/conversations/:id
 
 TODO
 
 ## Participants
 
-#### GET /conversation/:conversation_id/participants
+#### GET /api/conversation/:conversation_id/participants
 
 TODO
 
-#### POST /conversation/:conversation_id/participants
+#### POST /api/conversation/:conversation_id/participants
 
 Add a participant to a conversation. This is call is not necessary in most of the cases. If you make an API call to post a message to a conversation and the user is not a participant already, then the user will be added to the conversation as a participant.
 
@@ -64,14 +64,14 @@ TODO
 
 ## Webhooks
 
-#### GET /webhooks
+#### GET /api/webhooks
 
 TODO
 
-#### POST /webhooks
+#### POST /api/webhooks
 
 TODO
 
-#### DELETE /webhooks/:id
+#### DELETE /api/webhooks/:id
 
 TODO
