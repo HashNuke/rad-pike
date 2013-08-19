@@ -17,12 +17,14 @@
   <header>
     <div class="appname">RadPike</div>
     <div class="nav">
+      <%= link_to "My account", edit_member_path(current_user) %>
+      /
       <% if current_user.admin? %>
         <%= link_to "Members", members_path %>
         /
+        <%= link_to "Settings", settings_path %>
+        /
       <% end %>
-      <%= link_to "My account", edit_member_path(current_user) %>
-      /
       <%= link_to "Logout", "/logout" %>
     </div>
   </header>

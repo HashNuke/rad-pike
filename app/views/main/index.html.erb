@@ -4,12 +4,14 @@
   ng-init="broadcaster='Faye'">
 
   <div class="nav-panel">
-    <a href="/members/<%= current_user.id %>/edit" target="_self" class="nav-btn"><%= current_user.name %></a>
+    <a href="/members/<%= current_user.id %>/edit" target="_self" class="nav-btn">
+      <%= current_user.name %>
+    </a>
     /
     <% if current_user.admin? %>
-      <a href="/settings" target="_self" class="nav-btn">Settings</a>
-      /
       <a href="/members" target="_self" class="nav-btn">Members</a>
+      /
+      <a href="/settings" target="_self" class="nav-btn">Settings</a>
       /
     <% end %>
     <a href="/logout" target="_self" class="logout">Logout</a>
