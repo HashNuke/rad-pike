@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130820032031) do
+ActiveRecord::Schema.define(version: 20130820064116) do
 
   create_table "conversations", force: true do |t|
     t.integer  "user_id"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20130820032031) do
     t.datetime "updated_at"
     t.integer  "last_updated_by_user_id"
     t.boolean  "op_updated"
+    t.string   "token"
   end
 
   create_table "issue_state_types", force: true do |t|

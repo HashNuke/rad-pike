@@ -15,13 +15,7 @@ class User < ActiveRecord::Base
   scope :support_team, -> { where(role_id: [Role.admin.id, Role.staff.id]) }
 
   before_save :ensure_authentication_token
-  after_save  :ensure_auth_token_for_chat!
   after_create(:ensure_conversation!, if: Proc.new{ !self.support_team? })
-
-
-  def ensure_auth_token_for_chat!
-    AppConfig.redis.set "user:#{self.id}:token", self.authentication_token
-  end
 
   def name
     return super unless super.blank?
