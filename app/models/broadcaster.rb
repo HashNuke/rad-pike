@@ -4,8 +4,8 @@ class Broadcaster
     # if defined?(FAYE_CLIENT)
     #   FAYE_CLIENT.publish "/conversations/#{message.conversation_id}", MessageSerializer.new(message)
     # end
-    AppConfig.faye_client(host).publish(
-      "/conversations/#{message.conversation_id}/#{conversation_token}", MessageSerializer.new(message)
-    )
+    # AppConfig.faye_client(host).publish(
+    #   "/conversations/#{message.conversation_id}/#{conversation_token}", MessageSerializer.new(message)
+    # )
   end
 end

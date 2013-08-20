@@ -1,11 +1,16 @@
-App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Message, Faye)->
+App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Message, $timeout)->
   $scope.isInfobarVisible = true
   $scope.conversation = conversation
+
+  lastMsg = $scope.conversation.messages[$scope.conversation.messages.length - 1]
+  if lastMsg?
+    $scope.lastMsgStamp = lastMsg.created_at
+  else
+    $scope.lastMsgStamp = $scope.conversation.created_at
 
   #NOTE If user isn't set on window object, then he isn't staff
   if !Auth.isAuthenticated()
     Auth.setUser(conversation.user)
-
 
   #NOTE infobar not required if it's the widget
   if $scope.conversation.user.id == Auth.user()["id"]
@@ -29,15 +34,25 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Message, F
       }, successCallback, errorCallback)
 
 
-  Faye.subscribe "/conversations/#{$scope.conversation.id}/#{$scope.conversation.token}", (msg)->
-    $scope.conversation.messages.push(msg) if msg.sender.id != Auth.user()["id"]
-    #TODO scroll only if the scrolled diff is very little
-    console.log "trying to scroll"
-    $('.messages').scrollTop($('.messages-wrapper').prop('scrollHeight') + 50)
-    console.log "scrolled ~!"
+  poller = (->
+    params = {conversation_id: $scope.conversation.id}
+    params['previous_stamp'] = $scope.lastMsgStamp
 
-  console.log "scrolling...", $('.messages').prop('scrollHeight')
-  $('.messages').scrollTop($('.messages-wrapper').prop('scrollHeight'))
+    console.log "curr", params['previous_stamp']
+    Message.query params, (msgs)=>
+      for msg in msgs
+        $scope.conversation.messages.push(msg) if msg.sender.id != Auth.user()["id"]
+        $scope.lastMsgStamp = params['previous_stamp'] = msg.created_at
+      $('.messages').scrollTop($('.messages-wrapper').prop('scrollHeight') + 50)
+    poller = $timeout arguments.callee, 3000
+  )()
+
+
+  $scope.$on "$destroy", ->
+    console.log poller
+    $timeout.cancel(poller)
+
+  $('.messages').scrollTop($('.messages-wrapper').prop('scrollHeight') + 50)
 
   #TODO required only for loading history
   # successCallback = (conversation)->

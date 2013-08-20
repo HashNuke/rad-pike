@@ -23,7 +23,7 @@
         <%= link_to "My account", edit_member_path(current_user) %>
         /
         <% if current_user.admin? %>
-          <%= link_to "Members", api_members_path %>
+          <%= link_to "Members", members_path %>
           /
           <%= link_to "Settings", settings_path %>
           /

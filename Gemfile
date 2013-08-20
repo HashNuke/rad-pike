@@ -12,9 +12,6 @@ gem 'carrierwave'
 gem 'redis'
 gem 'hiredis'
 
-gem 'faye'
-gem 'faye-redis'
-
 gem 'eco'
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'

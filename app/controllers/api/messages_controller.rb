@@ -5,12 +5,21 @@ class Api::MessagesController < ApplicationController
   before_action :authorize_user!
 
   def create
-    message = current_user.sent_messages.build(message_params)
-    Broadcaster.broadcast(request.host, message, @conversation.token) if message.save
-    #TODO respond appropriately
+    message = current_user.sent_messages.create(message_params)
     respond_to do |format|
      format.json { render json: message }
    end
+  end
+
+  def index
+    if params[:previous_stamp]
+      timestamp = DateTime.parse(params[:previous_stamp]) + 1.second
+      @messages = @conversation.messages.where("created_at > ?", timestamp)
+    end
+
+    respond_to do |format|
+      format.json { render json: @messages || [] }
+    end
   end
 
   private

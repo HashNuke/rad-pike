@@ -16,7 +16,7 @@ RadPike::Application.routes.draw do
     resources :users,    only: :show
     get "conversations/user_conversation" => "conversations#user_conversation"
     resources :conversations, only: [:index, :show] do
-      resources :messages, only: :create
+      resources :messages, only: [:create, :index]
     end
     resources :webhooks, only: [:index, :new, :create, :destroy]
   end

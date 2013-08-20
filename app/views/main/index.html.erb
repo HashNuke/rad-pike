@@ -1,7 +1,6 @@
 <div class="list-view"
   ng-class="{'mobile-hide': chatView}"
-  ng-controller="ConversationsCtrl"
-  ng-init="broadcaster='Faye'">
+  ng-controller="ConversationsCtrl">
 
   <div class="nav-panel">
     <%= link_to(
@@ -12,7 +11,7 @@
     %>
     /
     <% if current_user.admin? %>
-      <%= link_to "Members", api_members_path, class: "nav-btn" %>
+      <%= link_to "Members", members_path, class: "nav-btn" %>
       /
       <a href="/settings" target="_self" class="nav-btn">Settings</a>
       /

@@ -31,8 +31,4 @@ class AppConfig
     @redis ||= Redis.new(redis_opts)
   end
 
-  def self.faye_client(host)
-    Faye::Client.new("http://#{host}:#{values['faye']['port']}/faye")
-  end
-
 end

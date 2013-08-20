@@ -17,4 +17,8 @@ class Conversation < ActiveRecord::Base
   def ensure_token!
     self.token ||= SecureRandom.hex(3)
   end
+
+  def to_indexed_json
+    to_json()
+  end
 end
