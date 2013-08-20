@@ -12,7 +12,8 @@ class User < ActiveRecord::Base
   has_many   :sent_messages,       class_name: "Message", foreign_key: "sender_id"
   has_many   :received_messages,   class_name: "Message", foreign_key: "receiver_id"
 
-  scope :support_team, -> { where(role_id: [Role.admin.id, Role.staff.id]) }
+  scope :support_team,  -> { where(role_id: [Role.admin.id, Role.staff.id]) }
+  scope :matching, ->(str) { where("name ILIKE ?", "%#{str}%") }
 
   before_save :ensure_authentication_token
   after_create(:ensure_conversation!, if: Proc.new{ !self.support_team? })

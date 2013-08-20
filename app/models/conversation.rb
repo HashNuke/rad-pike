@@ -8,6 +8,11 @@ class Conversation < ActiveRecord::Base
     includes(:user).order("created_at DESC")
   }
 
+  scope :unassigned, -> { where("array_upper(current_participant_ids, 1) is ?", nil) }
+  scope :having_participant, ->(participant_id) {
+    where("? = ANY (current_participant_ids)", participant_id)
+  }
+
   after_create :ensure_issue_state
 
   def current_issue_state

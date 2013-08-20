@@ -1,11 +1,17 @@
 class MembersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_user, only: [:edit, :update, :destroy]
+  respond_to :json, :html
 
   layout 'manage'
 
   def index
     @users = User.support_team
+  end
+
+  def search
+    @users = User.support_team.matching(params[:query])
+    respond_with @users
   end
 
   def new
@@ -15,9 +21,9 @@ class MembersController < ApplicationController
   def create
     @user = User.new user_params
     if @user.save
-      redirect_to members_path, notice: "The user has been added."
+      respond_with @user, location: members_path, notice: "The user has been added."
     else
-      render 'edit'
+      respond_with @user
     end
   end
 
@@ -32,28 +38,34 @@ class MembersController < ApplicationController
     end
 
     if @user.update_attributes updatable_params
-      redirect_to members_path, notice: "The user has been updated."
+      flash[:notice] = "The user has been updated."
+      respond_with @user, location: members_path
     else
-      render 'edit'
+      respond_with @user
     end
   end
 
   def destroy
-    msg = {error: "The user could not be deleted ~!"}
     if @user
       @user.update_attributes role: "deactivated-agent", email: ""
-      msg = {notice: "The user has been deleted."}
+      flash[:notice] = "The user has been deleted."
+    else
+      flash[:error] = "The user could not be deleted ~!"
     end
-    redirect_to members_path, msg
+
+    respond_to do |format|
+      format.json {head :ok}
+      format.html {redirect_to members_path}
+    end
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:email, :name, :password, :role)
+    params.require(:user).permit(:email, :name, :password, :role_id)
   end
 
   def set_user
-    @user = User.find(params[:id])
+    @user = User.find_by_id!(params[:id])
   end
 end
