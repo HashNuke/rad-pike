@@ -13,11 +13,14 @@ redis = Redis.new(AppConfig.redis_opts.merge(driver: :hiredis))
 
 faye_server = Faye::RackAdapter.new(
   mount:   '/faye',
-  timeout: 3,
+  timeout: 5,
   engine:  engine_opts.merge(AppConfig.redis_opts)
 )
 
-#TODO using this extension slows down messaging 10x.
-# Find some other way. Shortcut: change channel conneec
+#TODO using the FayeAuth extension slows down messaging 10x when authing with redis.
 # faye_server.add_extension(FayeAuth.new(redis: redis))
+
+#TODO allow subscription only to channels with /conversations/:id/:token
+# and the conversation list channel
+
 run faye_server

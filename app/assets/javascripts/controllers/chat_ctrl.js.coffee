@@ -29,7 +29,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Message, F
       }, successCallback, errorCallback)
 
 
-  Faye.subscribe "/conversations/#{$scope.conversation.id}", (msg)->
+  Faye.subscribe "/conversations/#{$scope.conversation.id}/#{$scope.conversation.token}", (msg)->
     $scope.conversation.messages.push(msg) if msg.sender.id != Auth.user()["id"]
     #TODO scroll only if the scrolled diff is very little
     console.log "trying to scroll"
