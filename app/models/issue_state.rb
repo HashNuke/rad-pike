@@ -3,6 +3,10 @@ class IssueState < ActiveRecord::Base
   has_many   :participations, dependent: :destroy
   belongs_to :conversation
 
+  default_scope -> {
+    order("created_at DESC")
+  }
+
   #NOTE cache issue state type. There must be only a few anyway
   def issue_state_type
     issue_type = Rails.cache.fetch('issue-state-type-#{self.issue_state_type_id}')
