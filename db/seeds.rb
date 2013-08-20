@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-["Resolved", "Unresolved"].each do |issue_state_type|
+["Resolved", "Unresolved", "Unknown"].each do |issue_state_type|
   IssueStateType.find_or_create_by_name issue_state_type
 end
 
