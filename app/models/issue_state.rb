@@ -14,4 +14,16 @@ class IssueState < ActiveRecord::Base
     end
     issue_type
   end
+
+  def resolved_state?
+    self.issue_state_type_id == IssueStateType.resolved.id
+  end
+
+  def unresolved_state?
+    self.issue_state_type_id == IssueStateType.unresolved.id
+  end
+
+  def unknown_state?
+    self.issue_state_type_id == IssueStateType.unknown.id
+  end
 end

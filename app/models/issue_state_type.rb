@@ -10,4 +10,10 @@ class IssueStateType < ActiveRecord::Base
       self.find_by_name("Unresolved")
     end
   end
+
+  def self.unknown
+    Rails.cache.fetch('issue-state-type-unknown') do
+      self.find_by_name("Unknown")
+    end
+  end
 end

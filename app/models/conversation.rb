@@ -1,6 +1,8 @@
 class Conversation < ActiveRecord::Base
-  has_many   :messages, dependent: :destroy
+  has_many :messages, dependent: :destroy
   belongs_to :user
+
+  has_many :issue_states, dependent: :destroy
 
   default_scope -> {
     includes(:user).order("created_at DESC")
