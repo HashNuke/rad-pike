@@ -12,9 +12,6 @@
         <button class="menu-switch">Menu</button>
         <ul class="chat-options">
           <li>
-            <button>Bring to attention</button>
-          </li>
-          <li>
             <button>&#10004; Mark as resolved</button>
           </li>
         </ul>

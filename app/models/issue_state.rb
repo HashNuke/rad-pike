@@ -2,6 +2,7 @@ class IssueState < ActiveRecord::Base
   belongs_to :issue_state_type
   has_many   :participations, dependent: :destroy
   belongs_to :conversation
+  belongs_to :marked_by, class_name: "User", foreign_key: "user_id"
 
   default_scope -> {
     order("created_at DESC")
