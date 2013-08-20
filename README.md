@@ -1,16 +1,16 @@
 # RadPike
 
-Work-In-Progress
+[[Work-In-Progress]]
 
-## Notes on views
+## Requirements
 
-#### Maintaining the concept of conversations without database table
+* Ruby 2.0 or greater
+* Postgresql (with HStore)
 
-* Conversations with latest updates are displayed first.
-
-* To keep track of guest users, use the ID of the guest user in js, if it's a guest.
 
 ## Extending RadPike (TODO)
+
+TODO - plugin APIs haven't been fleshed out yet. Hold on.
 
 To extend RadPike you can create the following kinds of plugins
 
@@ -46,11 +46,9 @@ App.plugins.action('HelloAction', function(user, agent){
 In order of priority
 
 * [VPS] Updating RadPike from within the admin panel
-* [VPS] Use Bullet (<https://github.com/extend/bullet>) for broadcasting instead of Faye on VPS
 * [Plugins] Plugin management
 * [Plugins] Central plugin repository (based on static files)
 
-
 ## Features
 
-Create an issue for a feature or send a pull request. We'll see if it can be squeezed in.
+Create an issue for a feature or send a pull request. I'll see if it can be squeezed in.
