@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130819053110) do
+ActiveRecord::Schema.define(version: 20130820032031) do
 
   create_table "conversations", force: true do |t|
     t.integer  "user_id"
@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 20130819053110) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "conversation_id"
+    t.integer  "message_id"
   end
 
   create_table "messages", force: true do |t|
@@ -104,7 +105,6 @@ ActiveRecord::Schema.define(version: 20130819053110) do
     t.integer  "sent_message_count",     default: 0
     t.integer  "received_message_count", default: 0
     t.text     "name"
-    t.integer  "current_issue_state_id"
     t.integer  "role_id"
     t.string   "unique_id"
   end
