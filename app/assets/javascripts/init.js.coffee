@@ -24,4 +24,3 @@ class PluginManager
 
 App.resolvers    = {}
 App.plugins      = new PluginManager()
-App.broadcasters = {}

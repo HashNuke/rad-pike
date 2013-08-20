@@ -1,8 +1,6 @@
 class WidgetsController < ApplicationController
   layout false
 
-  before_action :set_broadcaster_host
-
   def support
     # TODO should only allow the widget for the domain
     # response.headers["X-Frame-Options"] = "ALLOW-FROM http://radpike.dev"

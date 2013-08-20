@@ -5,10 +5,6 @@ class ApplicationController < ActionController::Base
 
   layout :layout_by_resource
 
-  def set_broadcaster_host
-    @broadcaster_host = "http://#{request.host}:#{AppConfig.values["faye"]["port"]}"
-  end
-
   protected
 
   def layout_by_resource
