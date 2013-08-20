@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.0'
 
 gem 'pg'
+gem 'delayed_job_active_record'
+
 gem 'thin'
 gem 'devise', '3.0.0'
 gem 'fog'
@@ -42,5 +44,4 @@ end
 
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
-
 
