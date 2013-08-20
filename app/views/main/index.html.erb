@@ -12,12 +12,12 @@
     %>
     /
     <% if current_user.admin? %>
-      <a href="/members" target="_self" class="nav-btn">Members</a>
+      <%= link_to "Members", api_members_path, class: "nav-btn" %>
       /
       <a href="/settings" target="_self" class="nav-btn">Settings</a>
       /
     <% end %>
-    <a href="/logout" target="_self" class="logout">Logout</a>
+    <%= link_to "Logout", destroy_user_session_path, class: "logout", target: "_self", method: :delete %>
   </div>
 
   <div class="filters-panel">

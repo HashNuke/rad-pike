@@ -7,8 +7,8 @@ class User < ActiveRecord::Base
          :token_authenticatable
   belongs_to  :role
 
-  has_many   :conversations, dependent: :destroy
-  has_many :participations,  dependent: :destroy
+  has_many   :conversations,  dependent: :destroy
+  has_many   :participations, dependent: :destroy
   has_many   :sent_messages,       class_name: "Message", foreign_key: "sender_id"
   has_many   :received_messages,   class_name: "Message", foreign_key: "receiver_id"
 
@@ -29,10 +29,6 @@ class User < ActiveRecord::Base
 
   def recent_conversation
     self.conversations.first
-  end
-
-  def after_database_authentication
-    self.ensure_auth_token_for_chat!
   end
 
   #NOTE Don't allow deactivated agents to login

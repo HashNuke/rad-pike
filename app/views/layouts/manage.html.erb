@@ -23,12 +23,12 @@
         <%= link_to "My account", edit_member_path(current_user) %>
         /
         <% if current_user.admin? %>
-          <%= link_to "Members", members_path %>
+          <%= link_to "Members", api_members_path %>
           /
           <%= link_to "Settings", settings_path %>
           /
         <% end %>
-        <%= link_to "Logout", "/logout" %>
+        <%= link_to "Logout", destroy_user_session_path, target: "_self", method: :delete %>
       <% end %>
     </div>
   </header>
