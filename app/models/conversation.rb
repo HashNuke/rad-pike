@@ -8,7 +8,6 @@ class Conversation < ActiveRecord::Base
     includes(:user).order("created_at DESC")
   }
 
-  before_save :ensure_token!
   after_create :ensure_issue_state
 
   def current_issue_state
@@ -23,10 +22,6 @@ class Conversation < ActiveRecord::Base
 
   def is_for_user_id?(check_user_id)
     self.user_id == check_user_id
-  end
-
-  def ensure_token!
-    self.token ||= SecureRandom.hex(3)
   end
 
   def ensure_issue_state

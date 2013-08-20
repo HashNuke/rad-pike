@@ -3,6 +3,7 @@ source 'https://rubygems.org'
 gem 'rails', '4.0.0'
 
 gem 'pg'
+gem 'active_model_serializers'
 gem 'delayed_job_active_record'
 
 gem 'thin'
@@ -21,10 +22,6 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
 
-gem 'active_model_serializers'
-
-gem 'sidekiq'
-gem 'tire'
 gem 'toml'
 
 group :development, :test do

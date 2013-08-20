@@ -1,4 +1,4 @@
-@mixin chat-controls {
+@mixin chat-control-buttons {
 
   button {
     border-radius: 3px;
@@ -51,38 +51,20 @@
   }
 }
 
-@mixin desktop-chat-options {
-  .menu {
-    .menu-switch { display: none; }
-    .chat-options {
-      margin-left: 0em;
-      padding-left: 0em;
-      display: inline;
-      li { float: left; }
-    }
-  }
-}
+@mixin chat-controls {
+  @include chat-control-buttons;
 
-@mixin mobile-chat-options {
-  .menu {
-    .menu-switch { display: inline; }
-
-    .chat-options {
-      display: none;
-      margin-left: 0em;
-      padding-left: 0em;
-
+  .chat-actions-menu, .participations-menu {
+    .menu-switch  { display: inline; }
+    .chat-actions, .participations-options {
       position: absolute;
+      display: none;
       z-index: 10;
-      right: 0.35em;
-      top: 1.2em;
+      top: 3.9em;
       background: #FFF;
       padding: 0.5em 0.5em 0.5em 0.5em;
-      box-shadow: -1px 2px 1px 1px #CCC;
-
-      li {
-        clear: both;
-      }
+      box-shadow: 0px 2px 2px 1px #CCC;
+      color: #333;
     }
 
     &:hover {
@@ -91,28 +73,43 @@
         color:#597DCE;
         box-shadow: -1px 0px 0px 0px #CCC;
       }
-      .chat-options {
-        font-size: 1.5em;
+    }
+  }
+
+
+  //#NOTE optimize for mobile
+  .chat-actions-menu {
+    margin-left: 0.5em;
+    .chat-actions {
+      margin: 0em;
+      padding: 1em;
+
+      li { clear: both; list-style-type: none; }
+    }
+
+    &:hover {
+      .chat-actions {
         display: inline;
-        li, button {
-          width: 100%;
-        }
+        li, button { width: 100%; }
       }
     }
   }
+
+  .participations-menu {
+    .participations-options {
+      width: 25em;
+    }
+    &:hover {
+      .participations-options {
+        display: inline;
+      }
+    }
+  }
+
 }
-
-
-.controls .menu-wrapper {
-  margin: 0em;
-  li { list-style-type: none; }
-  @include desktop-chat-options;
-}
-
 
 
 @mixin mobile-styles {
-
   .list-view { width: 100%; }
   .chat {
     width: 100%;
@@ -120,8 +117,4 @@
   }
   .mobile-hide { display: none; }
   .mobile-show { display: inline; }
-
-  .controls .menu-wrapper {
-    @include mobile-chat-options;
-  }
 }

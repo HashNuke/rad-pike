@@ -24,9 +24,10 @@ $main-width: 70%;
 
   .info-bar {
     .controls {
-      float: right;
+      margin-top: 0.5em;
       @include chat-controls;
-      margin-left: 1em;
+      float: left;
+      clear: left;
     }
 
     .nav {
@@ -43,16 +44,16 @@ $main-width: 70%;
 
     .user-info {
       margin-top: 0.2em;
-      margin-left: 0.5em;
+      margin-left: 0.25em;
     }
   }
 }
 
 .messages {
   overflow-y: scroll;
-  width:  70%;
+  width:  $main-width;
   position: absolute;
-  top: 3em;
+  top: 5em;
   right: 0em;
   bottom: 4em;
 }

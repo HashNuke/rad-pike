@@ -7,16 +7,24 @@
 
   <div class="controls">
 
-    <ul class="menu-wrapper">
-      <li class="menu">
-        <button class="menu-switch">Menu</button>
-        <ul class="chat-options">
-          <li>
-            <button>&#10004; Mark as resolved</button>
-          </li>
-        </ul>
-      </li>
-    </ul>
+    <div class="participations-menu">
+      <button class="menu-switch">Add to conversation</button>
+      <div class="participations-options">
+        <input type="text" width="100%" placeholder="Enter name"/>
+        <div class="suggestions">
+
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-actions-menu">
+      <button class="menu-switch">Chat options</button>
+      <ul class="chat-actions">
+        <li>
+          <button>&#10004; Mark as resolved</button>
+        </li>
+      </ul>
+    </div>
 
   </div>
 </div>
