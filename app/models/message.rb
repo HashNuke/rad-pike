@@ -1,8 +1,5 @@
 class Message < ActiveRecord::Base
 
-  include Tire::Model::Search
-  include Tire::Model::Callbacks
-
   belongs_to :conversation
 
   belongs_to :receiver, counter_cache: :received_message_count,
