@@ -5,16 +5,23 @@ class User < ActiveRecord::Base
   devise :database_authenticatable,
          :recoverable, :rememberable, :trackable, :validatable,
          :token_authenticatable
-
-  before_save :ensure_authentication_token
   belongs_to  :role
 
-  has_many   :conversations,       dependent: :destroy
+  has_many   :conversations, dependent: :destroy
+  has_many :participations,  dependent: :destroy
   has_many   :sent_messages,       class_name: "Message", foreign_key: "sender_id"
   has_many   :received_messages,   class_name: "Message", foreign_key: "receiver_id"
-  belongs_to :current_issue_state, class_name: "IssueState"
 
   scope :support_team, -> { where(role_id: [Role.admin.id, Role.staff.id]) }
+
+  before_save :ensure_authentication_token
+  after_save  :ensure_auth_token_for_chat!
+  after_create(:ensure_conversation!, if: Proc.new{ !self.support_team? })
+
+
+  def ensure_auth_token_for_chat!
+    AppConfig.redis.set "user:#{self.id}:token", self.authentication_token
+  end
 
   def name
     return super unless super.blank?
@@ -30,10 +37,9 @@ class User < ActiveRecord::Base
     self.conversations.first
   end
 
-  after_create(:ensure_conversation!,
-    if: Proc.new{ self.customer? || self.guest? })
-
-  has_many :participations, dependent: :destroy
+  def after_database_authentication
+    self.ensure_auth_token_for_chat!
+  end
 
   #NOTE Don't allow deactivated agents to login
   # This isn't the place to do authorization
@@ -57,14 +63,9 @@ class User < ActiveRecord::Base
     super
   end
 
-  def ensure_authentication_token
-    super if self.admin? || self.staff?
-  end
-
   def ensure_conversation!
     self.conversations.create
   end
-
 
   def self.create_guest
     self.create role_id: Role.guest.id

@@ -5,14 +5,14 @@ class ApplicationController < ActionController::Base
 
   layout :layout_by_resource
 
+  def set_broadcaster_host
+    @broadcaster_host = "http://#{request.host}:#{AppConfig.values["faye"]["port"]}"
+  end
 
   protected
 
   def layout_by_resource
-    if devise_controller?
-      "manage"
-    else
-      "application"
-    end
+    return "manage" if devise_controller?
+    "application"
   end
 end

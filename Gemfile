@@ -8,7 +8,12 @@ gem 'devise', '3.0.0'
 gem 'fog'
 gem 'rmagick'
 gem 'carrierwave'
+
+gem 'redis'
+gem 'hiredis'
+
 gem 'faye'
+gem 'faye-redis'
 
 gem 'eco'
 gem 'sass-rails', '~> 4.0.0'
@@ -17,9 +22,11 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
 
-gem 'angular-faye-rails'
 gem 'active_model_serializers'
+
+gem 'sidekiq'
 gem 'tire'
+gem 'toml'
 
 group :development, :test do
   gem 'debugger'

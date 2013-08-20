@@ -34,19 +34,18 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
-    angular-faye-rails (0.2.0)
-      angularjs-rails
-      faye
-    angularjs-rails (1.0.7)
     ansi (1.4.3)
     arel (4.0.0)
     atomic (1.1.10)
     bcrypt-ruby (3.1.1)
+    blankslate (2.1.2.4)
     builder (3.1.4)
     carrierwave (0.9.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
       json (>= 1.7)
+    celluloid (0.14.1)
+      timers (>= 1.0.0)
     coffee-rails (4.0.0)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0.beta, < 5.0)
@@ -55,6 +54,7 @@ GEM
       execjs
     coffee-script-source (1.6.3)
     columnize (0.3.6)
+    connection_pool (1.1.0)
     cookiejar (0.3.0)
     daemons (1.1.9)
     debugger (1.6.1)
@@ -73,6 +73,8 @@ GEM
       eco-source
       execjs
     eco-source (1.1.0.rc.1)
+    em-hiredis (0.2.1)
+      hiredis (~> 0.4.0)
     em-http-request (1.0.3)
       addressable (>= 2.2.3)
       cookiejar
@@ -93,6 +95,10 @@ GEM
       faye-websocket (>= 0.4.0)
       rack (>= 1.0.0)
       yajl-ruby (>= 1.0.0)
+    faye-redis (0.1.1)
+      em-hiredis (>= 0.2.0)
+      eventmachine (>= 0.12.0)
+      yajl-ruby (>= 1.0.0)
     faye-websocket (0.4.7)
       eventmachine (>= 0.12.0)
     fog (1.14.0)
@@ -110,6 +116,7 @@ GEM
     formatador (0.2.4)
     hashr (0.0.22)
     hike (1.2.3)
+    hiredis (0.4.5)
     http_parser.rb (0.5.3)
     i18n (0.6.4)
     jquery-rails (3.0.4)
@@ -130,6 +137,8 @@ GEM
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     orm_adapter (0.4.0)
+    parslet (1.5.0)
+      blankslate (~> 2.0)
     pg (0.16.0)
     polyglot (0.3.3)
     rack (1.5.2)
@@ -151,6 +160,9 @@ GEM
     rake (10.1.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    redis (3.0.4)
+    redis-namespace (1.3.1)
+      redis (~> 3.0.0)
     ref (1.0.5)
     rest-client (1.6.7)
       mime-types (>= 1.16)
@@ -166,6 +178,12 @@ GEM
       rdoc (~> 3.10)
     shotgun (0.9)
       rack (>= 1.0)
+    sidekiq (2.13.1)
+      celluloid (>= 0.14.1)
+      connection_pool (>= 1.0.0)
+      json
+      redis (>= 3.0)
+      redis-namespace
     sprockets (2.10.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -186,6 +204,7 @@ GEM
     thread_safe (0.1.2)
       atomic
     tilt (1.4.1)
+    timers (1.1.0)
     tire (0.6.0)
       activemodel (>= 3.0)
       activesupport
@@ -194,6 +213,8 @@ GEM
       multi_json (~> 1.3)
       rake
       rest-client (~> 1.6)
+    toml (0.0.4)
+      parslet
     treetop (1.4.14)
       polyglot
       polyglot (>= 0.3.1)
@@ -210,7 +231,6 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
-  angular-faye-rails
   carrierwave
   coffee-rails (~> 4.0.0)
   debugger
@@ -218,16 +238,21 @@ DEPENDENCIES
   eco
   example_app!
   faye
+  faye-redis
   fog
   foreman
+  hiredis
   jquery-rails
   pg
   rails (= 4.0.0)
+  redis
   rmagick
   sass-rails (~> 4.0.0)
   sdoc
   shotgun
+  sidekiq
   therubyracer
   thin
   tire
+  toml
   uglifier (>= 1.3.0)

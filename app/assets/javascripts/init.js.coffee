@@ -1,4 +1,4 @@
-window.App = angular.module('RadPike', ['ngResource', 'faye'])
+window.App = angular.module('RadPike', ['ngResource'])
 
 class PluginManager
   widgets:    []

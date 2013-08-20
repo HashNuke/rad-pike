@@ -1,7 +1,6 @@
 #= require jquery
 #= require angular
 #= require angular-resource
-#= require angular-faye
 #= require moment
 #= require init
 #= require_tree ./resolvers

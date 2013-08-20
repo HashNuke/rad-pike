@@ -6,7 +6,8 @@ class Api::MessagesController < ApplicationController
 
   def create
     message = current_user.sent_messages.build(message_params)
-    message.save
+    Broadcaster.broadcast(request.host, message) if message.save
+    #TODO respond appropriately
     respond_to do |format|
      format.json { render json: message }
    end

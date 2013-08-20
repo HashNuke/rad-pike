@@ -1,0 +1,7 @@
+[redis]
+host = "localhost"
+port = ""
+password = ""
+
+[faye]
+port = 3001

@@ -10,8 +10,12 @@
   <meta name="google" value="notranslate" />
 
   <%= stylesheet_link_tag    "application", media: "all" %>
-  <%= javascript_include_tag "/remote/faye/client.js" %>
+  <%= javascript_include_tag "#{@broadcaster_host}/faye/client.js" %>
   <%= javascript_include_tag "application" %>
+
+  <%= javascript_tag do %>
+    window.broadcasterHost = "<%= @broadcaster_host %>";
+  <% end %>
 
   <% if current_user %>
     <%= javascript_tag do %>

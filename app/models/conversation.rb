@@ -8,7 +8,13 @@ class Conversation < ActiveRecord::Base
     includes(:user).order("created_at DESC")
   }
 
+  before_save :ensure_token!
+
   def is_for_user_id?(check_user_id)
     self.user_id == check_user_id
+  end
+
+  def ensure_token!
+    self.token ||= SecureRandom.hex(3)
   end
 end

@@ -8,12 +8,7 @@ class Message < ActiveRecord::Base
   belongs_to :sender,   counter_cache: :sent_message_count,
     class_name: "User", inverse_of: :sent_messages
 
-  after_create :broadcast
   after_create :update_conversation!
-
-  def broadcast
-    Broadcaster.broadcast(self)
-  end
 
   #TODO check if it's a manually sent msg
   def update_conversation!

@@ -1,7 +1,6 @@
 #= require jquery
 #= require angular
 #= require angular-resource
-#= require angular-faye
 #= require moment
 #= require init
 #= require_tree ../resolvers
@@ -32,9 +31,8 @@ App.config ($routeProvider, $locationProvider, $httpProvider)->
     requestParams =
       id: $route.current.params.user_id
 
-    Message.user_conversation(requestParams, successCallback, errorCallback)
+    Conversation.user_conversation(requestParams, successCallback, errorCallback)
     deferred.promise
-
 
 
   $locationProvider.html5Mode(true)
