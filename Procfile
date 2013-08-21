@@ -1,1 +1,1 @@
-web: bundle exec thin start -p $PORT -E $RAILS_ENV
+web: bundle exec thin start -p $PORT -e $RAILS_ENV
