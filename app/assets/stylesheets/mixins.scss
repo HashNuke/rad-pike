@@ -55,7 +55,7 @@
   @include chat-control-buttons;
 
   .chat-actions-menu, .participations-menu {
-    .menu-switch  { display: inline; }
+    .menu-switch  { display: block; }
     .chat-actions, .participations-options {
       position: absolute;
       display: none;
@@ -83,13 +83,12 @@
     .chat-actions {
       margin: 0em;
       padding: 1em;
-
       li { clear: both; list-style-type: none; }
     }
 
     &:hover {
       .chat-actions {
-        display: inline;
+        display: block;
         li, button { width: 100%; }
       }
     }
@@ -101,7 +100,7 @@
     }
     &:hover {
       .participations-options {
-        display: inline;
+        display: block;
       }
     }
   }
