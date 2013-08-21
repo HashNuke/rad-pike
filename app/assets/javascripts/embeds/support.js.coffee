@@ -1,34 +1,30 @@
-#= require angular
-#= require angular-resource
-#= require ../init
-#= require ../config
-#= require_tree ../resolvers
-#= require_tree ../../templates
-
 class window.RadPikeSupportWidget
   templateCache: {}
  
   constructor: (options={})->
-
-    options.unique_user_id = ""
-    options.agent_id       = ""
+    options.user = {} if !options.user?
 
     iframeStyle = """
       position: absolute;
       bottom: 0; right: 0;
       height: 20em;
-      width: 20em;
+      width: 18em;
+      right: 0em;
+      bottom: 0em;
       border: 1px solid #CCC;
-      box-shadow: 0px 0px 3px 1px #CCC
+      box-shadow: 0px 0px 3px 1px #CCC;
     """
 
-    template = """<iframe seamless='seamless' src='http://radpike.dev:3000/widgets/support'
+    template = """<iframe id="radpike-support-embed-widget" src='http://radpike.dev:3000/widgets/support'
       style='#{iframeStyle}'></iframe>
     """
+
     document.write(template)
+    document.write "akash"
+    iframe = document.getElementById("radpike-support-embed-widget")
 
 
-  #TODO note required. Maybe delete
+  #TODO not required. Maybe delete
   # tmpl: (str, data)->
   #   # Figure out if we're getting a template, or if we need to
   #   # load the template - and be sure to cache the result.

@@ -1,1 +1,24 @@
-//TODO
+$main-width: 100%;
+
+.chat {
+  height: 100%;
+  float: right;
+  width: $main-width;
+
+  .chat-input-wrapper {
+    width: $main-width;
+    position: absolute;
+    bottom: 0em;
+    height: 3em;
+    padding-bottom: 0.2em;
+
+    .chat-input {
+      width: 90%;
+      margin-left: 5%;
+      margin-right: 5%;
+      margin-top: 0.5em;
+      margin-bottom: 0.5em;
+      font-size: 1em;
+    }
+  }
+}
