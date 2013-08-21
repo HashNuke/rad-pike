@@ -26,7 +26,9 @@ class Api::ConversationsController < ApplicationController
   def update
     conversation_service = ConversationService.new(@conversation)
     conversation_service.change_state(conversation_params[:state_type], current_user)
-    respond_with(@conversation)
+    respond_to do |format|
+      format.json {render json: @conversation }
+    end
   end
 
   def user_conversation

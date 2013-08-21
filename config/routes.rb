@@ -19,7 +19,7 @@ RadPike::Application.routes.draw do
   namespace :api do
     resources :users,    only: :show
     get "conversations/user_conversation" => "conversations#user_conversation"
-    resources :conversations, only: [:index, :show] do
+    resources :conversations, only: [:index, :show, :update] do
       resources :messages, only: [:create, :index]
     end
     resources :webhooks, only: [:index, :new, :create, :destroy]

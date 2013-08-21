@@ -3,7 +3,7 @@ App.controller "ConversationsCtrl", ($scope, $timeout, $location, Auth, Conversa
   $scope.filterOption = "all"
 
   successCallback = (conversations)->
-    $scope.conversations = $scope.conversations = conversations
+    $scope.conversations = conversations
 
   errorCallback = (errorData)->
     console.log "error"

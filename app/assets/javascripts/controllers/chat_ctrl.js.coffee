@@ -17,6 +17,21 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Message, $
   if $scope.conversation.user.id == Auth.user()["id"]
     $scope.isInfobarVisible = false
 
+
+  $scope.changeState = (stateType)->
+    successCallback = (conversation)->
+      $scope.conversation.current_issue_state_type = conversation.current_issue_state_type
+
+    errorCallback = (errorData)->
+      console.log "error"
+
+    Conversation.update(
+      {id: $scope.conversation.id, conversation: {state_type: stateType}},
+      successCallback,
+      errorCallback
+    )
+
+
   $scope.postMsg = ()->
     successCallback = (data)->
       $scope.conversation.messages.push data
@@ -35,18 +50,18 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Message, $
       }, successCallback, errorCallback)
 
 
-  poller = (->
-    params = {conversation_id: $scope.conversation.id}
-    params['previous_stamp'] = $scope.lastMsgStamp
+  # poller = (->
+  #   params = {conversation_id: $scope.conversation.id}
+  #   params['previous_stamp'] = $scope.lastMsgStamp
 
-    console.log "curr", params['previous_stamp']
-    Message.query params, (msgs)=>
-      for msg in msgs
-        $scope.conversation.messages.push(msg) if msg.sender.id != Auth.user()["id"]
-        $scope.lastMsgStamp = params['previous_stamp'] = msg.created_at
-      $('.messages').scrollTop($('.messages-wrapper').prop('scrollHeight') + 50)
-    poller = $timeout arguments.callee, 3000
-  )()
+  #   console.log "curr", params['previous_stamp']
+  #   Message.query params, (msgs)=>
+  #     for msg in msgs
+  #       $scope.conversation.messages.push(msg) if msg.sender.id != Auth.user()["id"]
+  #       $scope.lastMsgStamp = params['previous_stamp'] = msg.created_at
+  #     $('.messages').scrollTop($('.messages-wrapper').prop('scrollHeight') + 50)
+  #   poller = $timeout arguments.callee, 3000
+  # )()
 
 
   $scope.$on "$destroy", ->
