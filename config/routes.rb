@@ -25,13 +25,7 @@ RadPike::Application.routes.draw do
     resources :webhooks, only: [:index, :new, :create, :destroy]
   end
 
-  class XHRConstraint
-    def matches?(request)
-      !request.xhr? && !(request.url =~ /\.json$/ && ::Rails.env == 'development')
-    end
-  end
-
-  get '(*url)' => 'main#index', constraints: XHRConstraint.new
+  get "conversations/:id" => 'main#index'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

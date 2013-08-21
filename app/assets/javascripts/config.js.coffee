@@ -22,4 +22,4 @@ App.config ($routeProvider, $locationProvider, $httpProvider)->
       resolve:
         conversation: App.resolvers.Conversation
     )
-    .otherwise(template: "This doesn't exist")
+    .otherwise(template: "This doesn't exist. #TODO replace this with a better template")
