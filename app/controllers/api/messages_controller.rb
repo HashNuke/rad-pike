@@ -6,7 +6,10 @@ class Api::MessagesController < ApplicationController
 
   def create
     message = current_user.sent_messages.create(message_params)
-    @conversation.add_participant(current_user) if current_user.support_team?
+    if current_user.support_team?
+      conversation_service = ConversationService.new(@conversation)
+      conversation_service.add_participant(current_user)
+    end
 
     respond_to do |format|
      format.json { render json: message }

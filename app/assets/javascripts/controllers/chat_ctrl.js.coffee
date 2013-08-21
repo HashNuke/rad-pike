@@ -1,5 +1,6 @@
 App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Message, $timeout)->
   $scope.isInfobarVisible = true
+  $scope.page = 1
   $scope.conversation = conversation
 
   lastMsg = $scope.conversation.messages[$scope.conversation.messages.length - 1]

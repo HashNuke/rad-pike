@@ -19,12 +19,6 @@ class Conversation < ActiveRecord::Base
     self.issue_states.limit(1).try(:first)
   end
 
-  def add_participant(user)
-    if current_issue_state.participations.where(user_id: user.id).count == 0
-      current_issue_state.participations.create conversation_id: self.id, user_id: user.id
-    end
-  end
-
   def is_for_user_id?(check_user_id)
     self.user_id == check_user_id
   end

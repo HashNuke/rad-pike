@@ -5,15 +5,13 @@ gem 'rails', '4.0.0'
 gem 'pg'
 gem 'active_model_serializers'
 gem 'delayed_job_active_record'
+gem 'kaminari'
 
 gem 'thin'
 gem 'devise', '3.0.0'
 gem 'fog'
 gem 'rmagick'
 gem 'carrierwave'
-
-gem 'redis'
-gem 'hiredis'
 
 gem 'eco'
 gem 'sass-rails', '~> 4.0.0'
