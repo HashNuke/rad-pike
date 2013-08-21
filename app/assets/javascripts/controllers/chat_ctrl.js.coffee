@@ -50,18 +50,18 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Message, $
       }, successCallback, errorCallback)
 
 
-  # poller = (->
-  #   params = {conversation_id: $scope.conversation.id}
-  #   params['previous_stamp'] = $scope.lastMsgStamp
+  poller = (->
+    params = {conversation_id: $scope.conversation.id}
+    params['previous_stamp'] = $scope.lastMsgStamp
 
-  #   console.log "curr", params['previous_stamp']
-  #   Message.query params, (msgs)=>
-  #     for msg in msgs
-  #       $scope.conversation.messages.push(msg) if msg.sender.id != Auth.user()["id"]
-  #       $scope.lastMsgStamp = params['previous_stamp'] = msg.created_at
-  #     $('.messages').scrollTop($('.messages-wrapper').prop('scrollHeight') + 50)
-  #   poller = $timeout arguments.callee, 3000
-  # )()
+    console.log "curr", params['previous_stamp']
+    Message.query params, (msgs)=>
+      for msg in msgs
+        $scope.conversation.messages.push(msg) if msg.sender.id != Auth.user()["id"]
+        $scope.lastMsgStamp = params['previous_stamp'] = msg.created_at
+      $('.messages').scrollTop($('.messages-wrapper').prop('scrollHeight') + 50)
+    poller = $timeout arguments.callee, 3000
+  )()
 
 
   $scope.$on "$destroy", ->
