@@ -23,6 +23,8 @@ gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
 gem 'ngmin-rails'
 
+gem 'rails_12factor' if ENV['PLATFORM'] == 'heroku'
+
 
 group :development, :test do
   gem 'debugger'
