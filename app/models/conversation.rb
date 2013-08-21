@@ -2,6 +2,10 @@ class Conversation < ActiveRecord::Base
   has_many :messages, dependent: :destroy
   belongs_to :user
 
+  belongs_to :current_issue_state_type,
+    class_name: 'IssueStateType',
+    foreign_key: :current_issue_state_type_id
+
   has_many :issue_states, dependent: :destroy
 
   default_scope -> {

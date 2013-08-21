@@ -23,6 +23,12 @@
         <li>
           <button>&#10004; Mark as resolved</button>
         </li>
+        <li>
+          <button>Mark as unresolved</button>
+        </li>
+        <li>
+          <button>Mark as unknown</button>
+        </li>
       </ul>
     </div>
 

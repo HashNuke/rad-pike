@@ -4,5 +4,5 @@ class ConversationWithMessagesSerializer < ActiveModel::Serializer
 
   has_one  :user
   has_many :messages
-
+  has_one  :current_issue_state_type
 end

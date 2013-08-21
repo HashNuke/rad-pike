@@ -20,7 +20,7 @@
   </div>
 
   <div class="filters-panel">
-    <select>
+    <select ng-model="filterOption" ng-change="applyFilter()">
       <option value="all">-- All --</option>
       <option value="unassigned">-- Unassigned --</option>
       <% User.support_team.each do |user| %>

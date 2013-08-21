@@ -9,7 +9,14 @@ class Api::ConversationsController < ApplicationController
 
   #TODO to query messages, latest, unread/read
   def index
-    respond_with :api, Conversation.all
+    if params[:filter] == "all" || params["filter"].blank?
+      @conversations = Conversation.all
+    elsif params[:filter] == "unassigned"
+      @conversations = Conversation.unassigned
+    else
+      @conversations = Conversation.having_participant(params[:filter])
+    end
+    respond_with :api, @conversations
   end
 
   def show

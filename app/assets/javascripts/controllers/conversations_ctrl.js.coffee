@@ -1,8 +1,9 @@
 App.controller "ConversationsCtrl", ($scope, $timeout, $location, Auth, Conversation)->
   $scope.conversations = []
+  $scope.filterOption = "all"
 
   successCallback = (conversations)->
-    $scope.conversations = $scope.conversations.concat(conversations)
+    $scope.conversations = $scope.conversations = conversations
 
   errorCallback = (errorData)->
     console.log "error"
@@ -11,6 +12,9 @@ App.controller "ConversationsCtrl", ($scope, $timeout, $location, Auth, Conversa
   $scope.openChat = (conversationId) ->
     $location.path("/conversations/#{conversationId}")
 
+  $scope.applyFilter = ->
+    console.log "filter", $scope.filterOption
+    Conversation.query({filter: $scope.filterOption}, successCallback, errorCallback)
 
   @updateTimes = =>
     for conversation, i in $scope.conversations
@@ -18,5 +22,5 @@ App.controller "ConversationsCtrl", ($scope, $timeout, $location, Auth, Conversa
       $scope.conversations[i].created_at = $scope.conversations[i].created_at
     $timeout @updateTimes, 60000
 
-  Conversation.query(successCallback, errorCallback)
+  Conversation.query({filter: $scope.filterOption}, successCallback, errorCallback)
   $timeout @updateTimes, 60000
