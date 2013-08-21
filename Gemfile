@@ -8,7 +8,6 @@ gem 'thin'
 gem 'pg'
 gem 'active_model_serializers'
 gem 'delayed_job_active_record'
-gem 'kaminari'
 
 gem 'devise', '3.0.0'
 gem 'fog'
