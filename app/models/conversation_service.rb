@@ -38,7 +38,7 @@ class ConversationService
   end
 
   def add_participant(user)
-    if current_user.support_team? && !current_participations.pluck(:user_id).include?(user.id)
+    if user.support_team? && !current_participations.pluck(:user_id).include?(user.id)
       current_participations.create conversation_id: @conversation.id, user_id: user.id
     end
   end
