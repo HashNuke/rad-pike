@@ -5,7 +5,7 @@ class Api::ConversationsController < ApplicationController
   before_action :sign_in_user_from_embed,        only: :user_conversation
   before_action :set_conversation_for_embed,     only: :user_conversation
   before_action :authenticate_user!
-  before_action :set_conversation,               only: [:create_message, :show]
+  before_action :set_conversation,               only: [:create_message, :show, :update]
 
   #TODO to query messages, latest, unread/read
   def index
@@ -14,6 +14,12 @@ class Api::ConversationsController < ApplicationController
 
   def show
     respond_with :api, @conversation, serializer: ConversationWithMessagesSerializer
+  end
+
+  def update
+    conversation_service = ConversationService.new(@conversation)
+    conversation_service.change_state(conversation_params[:state_type], current_user)
+    respond_with(@conversation)
   end
 
   def user_conversation
@@ -26,6 +32,10 @@ class Api::ConversationsController < ApplicationController
 
 
   private
+
+  def conversation_params
+    params.require(:conversation).permit(:state_type)
+  end
 
   def set_conversation
     @conversation = Conversation.find(params[:id])
