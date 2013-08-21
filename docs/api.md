@@ -16,21 +16,21 @@ TODO
 
 ## Users
 
-#### GET /api/members
+#### GET /members
 
 TODO
 
-#### POST /api/members
+#### POST /members
 
 This API call only allows you to create users of the role "customers".
 
 TODO
 
-#### GET /api/members/:id
+#### GET /members/:id
 
 TODO
 
-#### PATCH /api/members/:id
+#### PATCH /members/:id
 
 TODO
 
