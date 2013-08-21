@@ -15,7 +15,7 @@ class ConversationService
       user_id: user.id
     )
 
-    new_issue_state.participations.create(user_id: user)
+    new_issue_state.participations.create(user_id: user.id)
     @conversation.update_attributes(
       current_participant_ids: new_issue_state.participations.pluck(:user_id),
       current_issue_state_type_id: new_issue_state.issue_state_type_id
@@ -47,9 +47,15 @@ class ConversationService
       issue_state_type_id: IssueStateType.send(state_type).id,
       user_id: user.id
     )
-    update_params = { current_issue_state_type_id: IssueStateType.send(state_type).id }
+
     unless @conversation.current_participant_ids.include?(user.id)
-      update_params[:current_participant_ids] = @conversation.current_participant_ids.push(user.id)
+      @conversation.current_issue_state.participations.create(user_id: user.id)
+    end
+
+    update_params = { current_issue_state_type_id: IssueStateType.send(state_type).id }
+
+    unless @conversation.current_participant_ids.include?(user.id)
+      update_params[:current_participant_ids] = @conversation.current_issue_state.participations.pluck(:user_id)
     end
     @conversation.update_attributes(update_params)
   end
