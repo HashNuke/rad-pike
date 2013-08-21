@@ -21,9 +21,9 @@
 
   <div class="filters-panel">
     <select>
+      <option value="all">-- All --</option>
+      <option value="unassigned">-- Unassigned --</option>
       <% User.support_team.each do |user| %>
-        <option value="unassigned">-- Unassigned --</option>
-        <option value="all">-- All --</option>
         <option value="<%= user.id %>"><%= user.name %></option>
       <% end %>
     </select>
