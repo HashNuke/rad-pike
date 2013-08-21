@@ -17,7 +17,8 @@ class Conversation < ActiveRecord::Base
     where("? = ANY (current_participant_ids)", participant_id)
   }
 
-  after_create :ensure_issue_state
+  before_save  :ensure_current_issue_state_type
+  after_create :ensure_issue_state!
 
   def current_issue_state
     self.issue_states.limit(1).try(:first)
@@ -27,11 +28,12 @@ class Conversation < ActiveRecord::Base
     self.user_id == check_user_id
   end
 
-  def ensure_issue_state
-    self.issue_states.create issue_state_type_id: IssueStateType.unknown
+  def ensure_current_issue_state_type
+    self.current_issue_state_type_id = IssueStateType.unknown.id
   end
 
-  def to_indexed_json
-    to_json()
+  def ensure_issue_state!
+    self.issue_states.create
   end
+
 end

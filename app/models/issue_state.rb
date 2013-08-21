@@ -8,6 +8,8 @@ class IssueState < ActiveRecord::Base
     order("created_at DESC")
   }
 
+  before_save :ensure_issue_state_type
+
   #NOTE cache issue state type. There must be only a few anyway
   def issue_state_type
     issue_type = Rails.cache.fetch('issue-state-type-#{self.issue_state_type_id}')
@@ -30,5 +32,11 @@ class IssueState < ActiveRecord::Base
 
   def unknown_state?
     self.issue_state_type_id == IssueStateType.unknown.id
+  end
+
+  private
+
+  def ensure_issue_state_type
+    self.issue_state_type_id ||= IssueStateType.unknown.id
   end
 end
