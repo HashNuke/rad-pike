@@ -2,18 +2,19 @@ ruby '2.0.0'
 source 'https://rubygems.org'
 
 gem 'rails', '4.0.0'
+gem 'thin'
 
 gem 'pg'
 gem 'active_model_serializers'
 gem 'delayed_job_active_record'
 gem 'kaminari'
 
-gem 'thin'
 gem 'devise', '3.0.0'
 gem 'fog'
 gem 'rmagick'
 gem 'carrierwave'
 
+gem 'toml'
 gem 'eco'
 gem 'sass-rails', '~> 4.0.0'
 gem 'uglifier', '>= 1.3.0'
@@ -22,7 +23,6 @@ gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
 gem 'ngmin-rails'
 
-gem 'toml'
 
 group :development, :test do
   gem 'debugger'
