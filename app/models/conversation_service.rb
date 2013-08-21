@@ -24,13 +24,17 @@ class ConversationService
 
 
   def add_participant(user)
-    if user.support_team? && !current_participants.include?(user.id)
+
+    if !@conversation.current_participant_ids.include?(user.id)
       @conversation.
         current_issue_state.
         participations.create(conversation_id: @conversation.id, user_id: user.id)
 
+      new_participant_ids_list = @conversation.current_issue_state.
+        participations.pluck(:user_id).compact.uniq
+
       @conversation.update_attributes(
-        current_participant_ids: @conversation.current_participant_ids.push(user.id)
+        current_participant_ids: new_participant_ids_list
       )
     end
   end
@@ -48,11 +52,6 @@ class ConversationService
       update_params[:current_participant_ids] = @conversation.current_participant_ids.push(user.id)
     end
     @conversation.update_attributes(update_params)
-  end
-
-
-  def current_participations
-    @conversation.current_participant_ids
   end
 
 end
