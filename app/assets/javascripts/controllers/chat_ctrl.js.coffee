@@ -2,16 +2,25 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Message, $
   $scope.isInfobarVisible = true
   $scope.page = 1
   $scope.conversation = conversation
+  $scope.triggerWidgetEvents = false
+
+
+  scrollToRecentMsg = ->
+    $('.messages').scrollTop($('.messages-wrapper').prop('scrollHeight') + 50)
+
+
+  #NOTE If user isn't set on window object, then he isn't staff
+  if !Auth.isAuthenticated()
+    Auth.setUser(conversation.user)
+    if conversation.user.is_support_user
+      $scope.triggerWidgetEvents = true
+
 
   lastMsg = $scope.conversation.messages[$scope.conversation.messages.length - 1]
   if lastMsg?
     $scope.lastMsgStamp = lastMsg.created_at
   else
     $scope.lastMsgStamp = $scope.conversation.created_at
-
-  #NOTE If user isn't set on window object, then he isn't staff
-  if !Auth.isAuthenticated()
-    Auth.setUser(conversation.user)
 
   #NOTE infobar not required if it's the widget
   if $scope.conversation.user.id == Auth.user()["id"]
@@ -33,8 +42,11 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Message, $
 
 
   $scope.postMsg = ()->
+    console.log "message", $scope.chatInput
     successCallback = (data)->
       $scope.conversation.messages.push data
+      if $scope.triggerWidgetEvents && window.parent.RadPikeWidget && typeof(window.parent.RadPikeWidget.events.onNewChatMessage) == "function"
+        window.parent.RadPikeWidget.events.onNewChatMessage()
       $scope.chatInput = ""
 
     errorCallback = ()->
@@ -59,16 +71,14 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Message, $
       for msg in msgs
         $scope.conversation.messages.push(msg) if msg.sender.id != Auth.user()["id"]
         $scope.lastMsgStamp = params['previous_stamp'] = msg.created_at
-      $('.messages').scrollTop($('.messages-wrapper').prop('scrollHeight') + 50)
+        scrollToRecentMsg()
     poller = $timeout arguments.callee, 3000
   )()
 
 
-  $scope.$on "$destroy", ->
-    console.log poller
-    $timeout.cancel(poller)
+  $scope.$on '$destroy', -> $timeout.cancel(poller)
+  $scope.$on '$viewContentLoaded', scrollToRecentMsg
 
-  $('.messages').scrollTop($('.messages-wrapper').prop('scrollHeight') + 50)
 
   #TODO required only for loading history
   # successCallback = (conversation)->
