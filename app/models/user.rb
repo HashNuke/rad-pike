@@ -9,8 +9,8 @@ class User < ActiveRecord::Base
 
   has_many :conversations,  dependent: :destroy
   has_many :participations, dependent: :destroy
-  has_many :sent_activties,     class_name: "Activity", foreign_key: "sender_id"
-  has_many :received_activties, class_name: "Activity", foreign_key: "receiver_id"
+  has_many :sent_activities,     class_name: "Activity", foreign_key: "sender_id"
+  has_many :received_activities, class_name: "Activity", foreign_key: "receiver_id"
 
   scope :support_team,  -> { where(role_id: [Role.admin.id, Role.staff.id]) }
   scope :matching, ->(str) { where("name ILIKE ?", "%#{str}%") }
