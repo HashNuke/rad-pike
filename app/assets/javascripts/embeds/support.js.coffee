@@ -1,14 +1,17 @@
 class window.RadPikeWidget
-  @events: {}
+  @startWidget: false
+  @events:  {}
   templateCache: {}
  
   constructor: (options={})->
     # Options:
+    #   * startWidget: true/false
     #   * user_email
     #   * user_name
     #   * events: {onNewMessage, onChatStart, onChatClose}
 
     @constructor.events = options.events if options.events?
+    @constructor.startWidget = true if options.startWidget == true
 
     iframeStyle = """
       position: absolute;
@@ -25,37 +28,6 @@ class window.RadPikeWidget
     """
 
     document.write(template)
-    iframe = document.getElementById("radpike-support-widget")
-
-
-  #TODO not required. Maybe delete
-  # tmpl: (str, data)->
-  #   # Figure out if we're getting a template, or if we need to
-  #   # load the template - and be sure to cache the result.
-  #   fn = if !/\W/.test(str)
-  #     @templateCache[str] = @templateCache[str] || @tmpl(document.getElementById(str).innerHTML)
-  #   else @parser()
-
-  #   # Provide some basic currying to the user
-  #   if data then fn(data) else fn
-
-
-  # parser: ->
-  #   # Generates a reusable function that will serve as a template
-  #   # generator (and which will be cached).
-  #   new Function("obj",
-  #     "var p=[],print=function(){p.push.apply(p,arguments);};" +
-     
-  #     # Introduce the data as local variables using with(){}
-  #     "with(obj){p.push('" +
-
-  #     # Convert the template into pure JavaScript
-  #     str
-  #       .replace(/[\r\t\n]/g, " ")
-  #       .split("<\%").join("\t")
-  #       .replace(/((^|%>)[^\t]*)'/g, "$1\r")
-  #       .replace(/\t=(.*?)%>/g, "',$1,'")
-  #       .split("\t").join("');")
-  #       .split("%>").join("p.push('")
-  #       .split("\r").join("\\'")
-  #   + "');}return p.join('');")
+    # if options.startWidget
+    #   widgetIframe = document.getElementById("radpike-support-widget")
+    #   document.getElementById("radpike-support-widget").contentWindow.startWidget()

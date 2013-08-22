@@ -11,12 +11,23 @@
   <%= stylesheet_link_tag    "embeds/support", media: "all" %>
   <%= javascript_include_tag "embeds/base" %>
 
+  <%= javascript_tag do %>
+    $(document).ready(function(){
+      var startWidget = function() {
+        angular.bootstrap(document.body, ['RadPike']);
+        document.getElementById("support-intro").style.display="none";
+      }
+
+      if(window.parent.RadPikeWidget.startWidget) startWidget();
+    });
+  <% end %>
+
   <%= csrf_meta_tags %>
 </head>
 
 <body>
 
-  <div onclick="angular.bootstrap(document.body, ['RadPike']); this.style.display='none'">start</div>
+  <div id="support-intro" onclick="startWidget()">start</div>
   <div class="chat" ng-view></div>
 
 </body>

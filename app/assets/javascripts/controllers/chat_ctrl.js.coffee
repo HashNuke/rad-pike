@@ -12,7 +12,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Message, $
   #NOTE If user isn't set on window object, then he isn't staff
   if !Auth.isAuthenticated()
     Auth.setUser(conversation.user)
-    if conversation.user.is_support_user
+    if !conversation.user.is_support_user
       $scope.triggerWidgetEvents = true
 
 
@@ -42,7 +42,6 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Message, $
 
 
   $scope.postMsg = ()->
-    console.log "message", $scope.chatInput
     successCallback = (data)->
       $scope.conversation.messages.push data
       if $scope.triggerWidgetEvents && window.parent.RadPikeWidget && typeof(window.parent.RadPikeWidget.events.onNewChatMessage) == "function"
@@ -66,7 +65,6 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Message, $
     params = {conversation_id: $scope.conversation.id}
     params['previous_stamp'] = $scope.lastMsgStamp
 
-    console.log "curr", params['previous_stamp']
     Message.query params, (msgs)=>
       for msg in msgs
         $scope.conversation.messages.push(msg) if msg.sender.id != Auth.user()["id"]
