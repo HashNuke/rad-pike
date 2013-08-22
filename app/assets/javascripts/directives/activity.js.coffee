@@ -1,4 +1,4 @@
-App.directive 'chatActivity', ()->
+App.directive 'activity', ()->
   restrict: "E"
   transclude: true
   scope:
@@ -13,7 +13,7 @@ App.directive 'chatActivity', ()->
   link: (scope, element, attrs)->
     attrs.$observe('activityId senderName content', (val)->
       element.html """
-        <div class="message">
+        <div class="activity">
           <div class="sender">#{attrs.senderName}:</div>
           <div class="content">#{attrs.content}</div>
         </div>

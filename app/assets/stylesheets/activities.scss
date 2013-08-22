@@ -49,7 +49,7 @@ $main-width: 70%;
   }
 }
 
-.messages {
+.activities {
   overflow-y: scroll;
   width:  $main-width;
   position: absolute;
@@ -58,12 +58,12 @@ $main-width: 70%;
   bottom: 4em;
 }
 
-.messages-wrapper { width: 100%; }
+.activities-inner-wrapper { width: 100%; }
 
-.message-wrapper {
+.activity-wrapper {
   width: 100%;
 
-  .message {
+  .activity {
     width: 90%;
     margin-top: 1%;
     margin-left: 5%;

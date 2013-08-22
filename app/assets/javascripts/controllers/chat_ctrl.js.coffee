@@ -1,4 +1,4 @@
-App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Message, $timeout)->
+App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, $timeout)->
   $scope.isInfobarVisible = true
   $scope.page = 1
   $scope.conversation = conversation
@@ -6,7 +6,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Message, $
 
 
   scrollToRecentMsg = ->
-    $('.messages').scrollTop($('.messages-wrapper').prop('scrollHeight') + 50)
+    $('.activities').scrollTop($('.activities-inner-wrapper').prop('scrollHeight') + 50)
 
 
   #NOTE If user isn't set on window object, then he isn't staff
@@ -16,11 +16,11 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Message, $
       $scope.triggerWidgetEvents = true
 
 
-  lastMsg = $scope.conversation.messages[$scope.conversation.messages.length - 1]
+  lastActivity = $scope.conversation.activities[$scope.conversation.activities.length - 1]
   if lastMsg?
-    $scope.lastMsgStamp = lastMsg.created_at
+    $scope.lastActivityStamp = lastMsg.created_at
   else
-    $scope.lastMsgStamp = $scope.conversation.created_at
+    $scope.lastActivityStamp = $scope.conversation.created_at
 
   #NOTE infobar not required if it's the widget
   if $scope.conversation.user.id == Auth.user()["id"]
@@ -43,7 +43,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Message, $
 
   $scope.postMsg = ()->
     successCallback = (data)->
-      $scope.conversation.messages.push data
+      $scope.conversation.activities.push data
       if $scope.triggerWidgetEvents && window.parent.RadPikeWidget && typeof(window.parent.RadPikeWidget.events.onNewChatMessage) == "function"
         window.parent.RadPikeWidget.events.onNewChatMessage()
       $scope.chatInput = ""
@@ -51,9 +51,9 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Message, $
     errorCallback = ()->
       console.log "error"
 
-    Message.save({
+    Activity.save({
         conversation_id: $scope.conversation.id
-        message: {
+        activity: {
           conversation_id: $scope.conversation.id,
           receiver_id:     $scope.conversation.user.id,
           content:         $scope.chatInput
@@ -63,12 +63,12 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Message, $
 
   poller = (->
     params = {conversation_id: $scope.conversation.id}
-    params['previous_stamp'] = $scope.lastMsgStamp
+    params['previous_stamp'] = $scope.lastActivityStamp
 
-    Message.query params, (msgs)=>
+    Activity.query params, (msgs)=>
       for msg in msgs
-        $scope.conversation.messages.push(msg) if msg.sender.id != Auth.user()["id"]
-        $scope.lastMsgStamp = params['previous_stamp'] = msg.created_at
+        $scope.conversation.activities.push(msg) if msg.sender.id != Auth.user()["id"]
+        $scope.lastActivityStamp = params['previous_stamp'] = msg.created_at
         scrollToRecentMsg()
     poller = $timeout arguments.callee, 3000
   )()

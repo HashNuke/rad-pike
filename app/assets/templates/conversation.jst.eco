@@ -35,10 +35,10 @@
   </div>
 </div>
 
-<div class="messages">
-  <div class="messages-wrapper">
-    <div class="message-wrapper" ng-repeat="activity in conversation.messages">
-      <chat-activity
+<div class="activities">
+  <div class="activities-inner-wrapper">
+    <div class="activity-wrapper" ng-repeat="activity in conversation.activities">
+      <activity
         activity-id="{{activity.id}}"
         type="{{activity.activity_type}}"
         content="{{activity.content}}"
