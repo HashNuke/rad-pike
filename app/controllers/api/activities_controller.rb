@@ -3,6 +3,7 @@ class Api::ActivitiesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_conversation
   before_action :authorize_user!
+  before_action :force_activity_type_for_non_staff, only: :create
 
   def create
     activity = current_user.sent_activities.create(activity_params)
@@ -30,11 +31,17 @@ class Api::ActivitiesController < ApplicationController
   private
 
   def activities_params
-    params.require(:activity).permit(:receiver_id, :content, :conversation_id)
+    params.require(:activity).permit(:receiver_id, :content, :conversation_id, :activity_type)
   end
 
   def set_conversation
     @conversation = Conversation.find(params[:conversation_id])
+  end
+
+  def force_activity_type_for_non_staff
+    if !current_user.support_team? && params[:activity]
+      params[:activity][:activity_type] = "message"
+    end
   end
 
   def authorize_user!
