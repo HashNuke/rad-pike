@@ -45,7 +45,7 @@
 }
 
 
-.new_registered_webhook, .edit_registered_webhook {
+.new_webhook, .edit_webhook {
   @include admin_form_controls;
 
   float: left;
