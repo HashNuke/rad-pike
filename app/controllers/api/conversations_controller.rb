@@ -5,9 +5,9 @@ class Api::ConversationsController < ApplicationController
   before_action :sign_in_user_from_embed,        only: :user_conversation
   before_action :set_conversation_for_embed,     only: :user_conversation
   before_action :authenticate_user!
-  before_action :set_conversation,               only: [:create_message, :show, :update]
+  before_action :set_conversation,               only: [:show, :update]
 
-  #TODO to query messages, latest, unread/read
+  #TODO to query activities, latest, unread/read
   def index
     if params[:filter] == "all" || params["filter"].blank?
       @conversations = Conversation.all
@@ -20,7 +20,7 @@ class Api::ConversationsController < ApplicationController
   end
 
   def show
-    respond_with :api, @conversation, serializer: ConversationWithMessagesSerializer
+    respond_with :api, @conversation, serializer: ConversationWithActivitiesSerializer
   end
 
   def update
@@ -34,7 +34,7 @@ class Api::ConversationsController < ApplicationController
   def user_conversation
     respond_to do |format|
       format.json {
-        render json: @conversation, serializer: ConversationWithMessagesSerializer
+        render json: @conversation, serializer: ConversationWithActivitiesSerializer
       }
     end
   end

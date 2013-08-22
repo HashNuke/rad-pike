@@ -1,5 +1,5 @@
 class Conversation < ActiveRecord::Base
-  has_many :messages, dependent: :destroy
+  has_many :activities, dependent: :destroy
   belongs_to :user
 
   belongs_to :current_issue_state_type,

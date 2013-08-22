@@ -14,7 +14,7 @@ Access to the API calls depends on the kind of role that you've been assigned on
 
 TODO
 
-## Users
+## Members
 
 #### GET /members
 
@@ -34,15 +34,33 @@ TODO
 
 TODO
 
+## Customers
+
+#### GET /api/customers
+
+TODO
+
+#### POST /api/customers
+
+TODO
+
+#### PATCH /api/customers/:id
+
+If you are using the customer's unique ID instead of the customer ID, then the unique ID, then pass unique
+
+#### DELETE /api/customers/:id
+
+
+
 ## Conversations
 
 #### GET /api/conversations
 
 TODO
 
-#### POST /api/conversations/:id
+#### POST /api/conversations/:id/activities
 
-This will add message to a conversation
+This will add activity to a conversation
 
 TODO
 
@@ -58,7 +76,7 @@ TODO
 
 #### POST /api/conversation/:conversation_id/participants
 
-Add a participant to a conversation. This is call is not necessary in most of the cases. If you make an API call to post a message to a conversation and the user is not a participant already, then the user will be added to the conversation as a participant.
+Add a participant to a conversation. This is call is not necessary in most of the cases. If you make an API call to post a activity to a conversation and the user is not a participant already, then the user will be added to the conversation as a participant.
 
 TODO
 

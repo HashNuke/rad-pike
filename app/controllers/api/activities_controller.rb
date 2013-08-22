@@ -1,36 +1,36 @@
-class Api::MessagesController < ApplicationController
+class Api::ActivitiesController < ApplicationController
 
   before_action :authenticate_user!
   before_action :set_conversation
   before_action :authorize_user!
 
   def create
-    message = current_user.sent_messages.create(message_params)
+    activity = current_user.sent_activities.create(activity_params)
     if current_user.support_team?
       conversation_service = ConversationService.new(@conversation)
       conversation_service.add_participant(current_user)
     end
 
     respond_to do |format|
-     format.json { render json: message }
+     format.json { render json: activity }
     end
   end
 
   def index
     if params[:previous_stamp]
       timestamp = DateTime.parse(params[:previous_stamp]) + 1.second
-      @messages = @conversation.messages.where("created_at > ?", timestamp)
+      @activities = @conversation.activities.where("created_at > ?", timestamp)
     end
 
     respond_to do |format|
-      format.json { render json: @messages || [] }
+      format.json { render json: @activities || [] }
     end
   end
 
   private
 
-  def message_params
-    params.require(:message).permit(:receiver_id, :content, :conversation_id)
+  def activities_params
+    params.require(:activity).permit(:receiver_id, :content, :conversation_id)
   end
 
   def set_conversation

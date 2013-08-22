@@ -1,6 +1,4 @@
-class RegisteredWebhook < ActiveRecord::Base
-  has_many :registered_webhook_events
-
+class Webhook < ActiveRecord::Base
   validates :name, presence: true, length: { minimum: 3 }
   validates :url,  format: {
       with: /\Ahttp\:s?\/\/.+\z/,

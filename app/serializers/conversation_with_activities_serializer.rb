@@ -1,7 +1,7 @@
-class ConversationWithMessagesSerializer < ActiveModel::Serializer
+class ConversationWithActivitiesSerializer < ActiveModel::Serializer
   attributes :id, :created_at, :updated_at
 
   has_one  :user, serializer: PublicUserSerializer
   has_one  :current_issue_state_type
-  has_many :messages
+  has_many :activities
 end
