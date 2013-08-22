@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130822150209) do
+ActiveRecord::Schema.define(version: 20130822154435) do
 
   create_table "activities", force: true do |t|
     t.integer  "receiver_id"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20130822150209) do
     t.datetime "updated_at"
     t.text     "content"
     t.integer  "conversation_id"
+    t.string   "activity_type"
   end
 
   create_table "conversations", force: true do |t|
