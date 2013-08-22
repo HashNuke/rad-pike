@@ -5,26 +5,26 @@ class Api::WebhooksController < ApplicationController
   layout 'manage'
 
   def index
-    @webhooks = RegisteredWebhook.all
+    @webhooks = Webhook.all
   end
 
   def new
-    @webhook = RegisteredWebhook.new
+    @webhook = Webhook.new
   end
 
   def create
-    @webhook = RegisteredWebhook.create webhook_params
+    @webhook = Webhook.create webhook_params
     respond_with @webhook, location: api_webhooks_path
   end
 
   def destroy
-    RegisteredWebhook.destroy(params[:id])
+    Webhook.destroy(params[:id])
   end
 
   private
 
   def webhook_params
-    params.require(:registered_webhook).permit(:name, :url)
+    params.require(:webhook).permit(:name, :url)
   end
 
   def authenticate_user!
