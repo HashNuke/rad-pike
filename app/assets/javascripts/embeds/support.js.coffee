@@ -1,13 +1,18 @@
-class window.RadPikeSupportWidget
+class window.RadPikeWidget
+  @events: {}
   templateCache: {}
  
   constructor: (options={})->
-    options.user = {} if !options.user?
+    # Options:
+    #   * user_email
+    #   * user_name
+    #   * events: {onNewMessage, onChatStart, onChatClose}
+
+    @constructor.events = options.events if options.events?
 
     iframeStyle = """
       position: absolute;
       bottom: 0; right: 0;
-      height: 20em;
       width: 18em;
       right: 0em;
       bottom: 0em;
@@ -15,13 +20,12 @@ class window.RadPikeSupportWidget
       box-shadow: 0px 0px 3px 1px #CCC;
     """
 
-    template = """<iframe id="radpike-support-embed-widget" src='http://radpike.dev:3000/widgets/support'
+    template = """<iframe id="radpike-support-widget" src='http://radpike.dev:3000/widgets/support'
       style='#{iframeStyle}'></iframe>
     """
 
     document.write(template)
-    document.write "akash"
-    iframe = document.getElementById("radpike-support-embed-widget")
+    iframe = document.getElementById("radpike-support-widget")
 
 
   #TODO not required. Maybe delete

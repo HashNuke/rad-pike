@@ -3,7 +3,14 @@ This is an example page that has a support widget.
 
 <!-- <iframe src="/widgets/support"></frame> -->
 
+
 <script src="http://radpike.dev:3000/assets/embeds/support.js"></script>
 <script type="text/javascript">
-  new RadPikeSupportWidget()
+  new RadPikeWidget({
+    events: {
+      onNewChatMessage: function() {
+        console.log("This is awesome");
+      }
+    }
+  })
 </script>
