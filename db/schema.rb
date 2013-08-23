@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130823061238) do
+ActiveRecord::Schema.define(version: 20130823061638) do
 
   create_table "activities", force: true do |t|
     t.integer  "receiver_id"
@@ -27,8 +27,9 @@ ActiveRecord::Schema.define(version: 20130823061238) do
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "current_participant_ids", default: [], array: true
+    t.integer  "current_participant_ids",  default: [], array: true
     t.hstore   "properties"
+    t.datetime "last_customer_message_at"
   end
 
   create_table "delayed_jobs", force: true do |t|
