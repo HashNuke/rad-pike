@@ -9,7 +9,7 @@ App.controller "ConversationsCtrl", ($scope, $timeout, $location, Auth, Conversa
     console.log "error"
 
 
-  $scope.openChat = (conversationId) ->
+  $scope.openConversation = (conversationId) ->
     $location.path("/conversations/#{conversationId}")
 
   $scope.applyFilter = ->
