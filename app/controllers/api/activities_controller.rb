@@ -8,12 +8,8 @@ class Api::ActivitiesController < ApplicationController
   respond_to :json
 
   def create
-    activity = current_user.sent_activities.create(activity_params)
-    if current_user.support_team?
-      conversation_service = ConversationService.new(@conversation)
-      conversation_service.add_participant(current_user)
-    end
-
+    conversation_service = ConversationService.new(@conversation)
+    activity = conversation_service.create_activity!(activity_params, current_user)
     respond_with activity
   end
 
