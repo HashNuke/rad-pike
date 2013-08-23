@@ -7,6 +7,7 @@ class ConversationService
   def create_activity!(activity_params, user)
     activity = user.sent_activities.create!(activity_params)
     after_activity_create(activity)
+    return activity
   end
 
   def change_state!(state_type, user)
@@ -15,12 +16,12 @@ class ConversationService
       return
     end
 
-    new_issue_state = @conversation.issue_states.create(
+    new_issue_state = @conversation.issue_states.create!(
       issue_state_type_id: IssueStateType.send(state_type).id,
       user_id: user.id
     )
 
-    new_issue_state.participations.create(user_id: user.id)
+    new_issue_state.participations.create!(user_id: user.id)
     @conversation.update_attributes(
       current_participant_ids: new_issue_state.participations.pluck(:user_id),
       current_issue_state_type_id: new_issue_state.issue_state_type_id
@@ -34,7 +35,7 @@ class ConversationService
     if !@conversation.current_participant_ids.include?(user.id)
       @conversation.
         current_issue_state.
-        participations.create(user_id: user.id)
+        participations.create!(user_id: user.id)
     end
     if update_participant_list
       @conversation.update_attributes(current_participant_ids: updated_participant_list)
