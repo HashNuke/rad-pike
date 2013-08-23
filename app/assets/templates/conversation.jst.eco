@@ -20,13 +20,13 @@
     <div class="chat-actions-menu">
       <button class="menu-switch">Chat options</button>
       <ul class="chat-actions">
-        <li ng-hide="conversation.current_issue_state_type.name == 'Resolved'">
+        <li ng-hide="conversation.current_issue_state_type == 'Resolved'">
           <button ng-click="changeState('resolved')">&#10004; Mark as resolved</button>
         </li>
-        <li ng-hide="conversation.current_issue_state_type.name == 'Unresolved'">
+        <li ng-hide="conversation.current_issue_state_type == 'Unresolved'">
           <button ng-click="changeState('unresolved')">Mark as unresolved</button>
         </li>
-        <li ng-hide="conversation.current_issue_state_type.name == 'Unknown'">
+        <li ng-hide="conversation.current_issue_state_type == 'Unknown'">
           <button ng-click="changeState('unknown')">Mark as unknown</button>
         </li>
       </ul>

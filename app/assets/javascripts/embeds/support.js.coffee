@@ -23,7 +23,7 @@ class window.RadPikeWidget
       box-shadow: 0px 0px 3px 1px #CCC;
     """
 
-    template = """<iframe id="radpike-support-widget" src='http://rp-demo.herokuapp.com/widgets/support'
+    template = """<iframe id="radpike-support-widget" src='http://localhost:3000/widgets/support'
       style='#{iframeStyle}'></iframe>
     """
 

@@ -118,13 +118,6 @@ ActiveRecord::Schema.define(version: 20130823061638) do
   add_index "users", ["email"], name: "index_users_on_email", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
-  create_table "webhook_events", force: true do |t|
-    t.integer  "registered_webhook_id"
-    t.integer  "webhook_event_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "webhooks", force: true do |t|
     t.string   "name"
     t.text     "url"

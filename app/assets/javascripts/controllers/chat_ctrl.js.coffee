@@ -5,7 +5,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
   $scope.triggerWidgetEvents = false
 
 
-  scrollToRecentMsg = ->
+  scrollToRecentActivity = ->
     $('.activities').scrollTop($('.activities-inner-wrapper').prop('scrollHeight') + 50)
 
 
@@ -17,8 +17,8 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
 
 
   lastActivity = $scope.conversation.activities[$scope.conversation.activities.length - 1]
-  if lastMsg?
-    $scope.lastActivityStamp = lastMsg.created_at
+  if lastActivity?
+    $scope.lastActivityStamp = lastActivity.created_at
   else
     $scope.lastActivityStamp = $scope.conversation.created_at
 
@@ -61,21 +61,21 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
       }, successCallback, errorCallback)
 
 
-  poller = (->
-    params = {conversation_id: $scope.conversation.id}
-    params['previous_stamp'] = $scope.lastActivityStamp
+  # poller = (->
+  #   params = {conversation_id: $scope.conversation.id}
+  #   params['previous_stamp'] = $scope.lastActivityStamp
 
-    Activity.query params, (msgs)=>
-      for msg in msgs
-        $scope.conversation.activities.push(msg) if msg.sender.id != Auth.user()["id"]
-        $scope.lastActivityStamp = params['previous_stamp'] = msg.created_at
-        scrollToRecentMsg()
-    poller = $timeout arguments.callee, 3000
-  )()
+  #   Activity.query params, (msgs)=>
+  #     for msg in msgs
+  #       $scope.conversation.activities.push(msg) if msg.sender.id != Auth.user()["id"]
+  #       $scope.lastActivityStamp = params['previous_stamp'] = msg.created_at
+  #       scrollToRecentActivity()
+  #   poller = $timeout arguments.callee, 3000
+  # )()
 
 
   $scope.$on '$destroy', -> $timeout.cancel(poller)
-  $scope.$on '$viewContentLoaded', scrollToRecentMsg
+  $scope.$on '$viewContentLoaded', scrollToRecentActivity
 
 
   #TODO required only for loading history

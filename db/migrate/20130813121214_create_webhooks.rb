@@ -1,6 +1,6 @@
-class CreateRegisteredWebhooks < ActiveRecord::Migration
+class CreateWebhooks < ActiveRecord::Migration
   def change
-    create_table :registered_webhooks do |t|
+    create_table :webhooks do |t|
       t.string :name
       t.text :url
       t.boolean :active

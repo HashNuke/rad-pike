@@ -2,10 +2,6 @@ class Conversation < ActiveRecord::Base
   has_many :activities, dependent: :destroy
   belongs_to :user
 
-  belongs_to :current_issue_state_type,
-    class_name: 'IssueStateType',
-    foreign_key: :current_issue_state_type_id
-
   has_many :issue_states, dependent: :destroy
 
   default_scope -> {
@@ -39,7 +35,7 @@ class Conversation < ActiveRecord::Base
   end
 
   def ensure_current_issue_state_type
-    self.properties = properties_with(current_issue_state_type_id: IssueStateType.unknown.id)
+    self.properties = properties_with("current_issue_state_type_id" => IssueStateType.unknown.id)
   end
 
   def ensure_issue_state!

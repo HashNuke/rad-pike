@@ -1,6 +1,6 @@
 App.controller "ConversationsCtrl", ($scope, $timeout, $location, Auth, Conversation)->
   $scope.conversations = []
-  $scope.filterOption = "all"
+  $scope.filterOption  = "all"
 
   successCallback = (conversations)->
     $scope.conversations = conversations

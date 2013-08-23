@@ -13,6 +13,6 @@ class Activity < ActiveRecord::Base
   private
 
   def ensure_activity_type
-    self.ensure_activity_type ||= "message"
+    self.activity_type ||= "message"
   end
 end

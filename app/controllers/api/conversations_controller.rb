@@ -19,17 +19,20 @@ class Api::ConversationsController < ApplicationController
     respond_with :api, @conversations
   end
 
+
   def show
     respond_with :api, @conversation, serializer: ConversationWithActivitiesSerializer
   end
 
+
   def update
     conversation_service = ConversationService.new(@conversation)
-    conversation_service.change_state!(conversation_params[:state_type], current_user)
+    @conversation = conversation_service.change_state!(conversation_params[:state_type], current_user)
     respond_to do |format|
       format.json {render json: @conversation }
     end
   end
+
 
   def user_conversation
     respond_to do |format|
@@ -46,13 +49,16 @@ class Api::ConversationsController < ApplicationController
     params.require(:conversation).permit(:state_type)
   end
 
+
   def set_conversation
     @conversation = Conversation.find(params[:id])
   end
 
+
   def set_conversation_for_embed
     @conversation = @user.try(:conversations).try(:first)
   end
+
 
   def find_or_create_user_for_embed
     if !params[:unique_user_id].blank? && !params[:user_name].blank?
@@ -61,6 +67,7 @@ class Api::ConversationsController < ApplicationController
       @user = User.create_guest
     end
   end
+
 
   def sign_in_user_from_embed
     sign_in @user
