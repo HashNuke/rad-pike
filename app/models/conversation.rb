@@ -35,7 +35,9 @@ class Conversation < ActiveRecord::Base
   end
 
   def ensure_current_issue_state_type
-    self.properties = properties_with("current_issue_state_type_id" => IssueStateType.unknown.id)
+    if self.properties.respond_to?(:key?) && !self.properties.key?("current_issue_state_type_id")
+      self.properties = properties_with("current_issue_state_type_id" => IssueStateType.unknown.id)
+    end
   end
 
   def ensure_issue_state!

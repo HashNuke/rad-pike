@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130823061638) do
+ActiveRecord::Schema.define(version: 20130823113643) do
 
   create_table "activities", force: true do |t|
     t.integer  "receiver_id"
@@ -31,6 +31,8 @@ ActiveRecord::Schema.define(version: 20130823061638) do
     t.hstore   "properties"
     t.datetime "last_customer_message_at"
   end
+
+  add_index "conversations", ["properties"], name: "conversations_gin_properties", using: :gin
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false

@@ -14,19 +14,15 @@ class ConversationService
 
   def change_state!(state_type, user)
     issue_state_type = IssueStateType.send(state_type)
-    puts "ISSUE STATE TYPE: #{issue_state_type.id} #{issue_state_type.name}"
     issue_state = create_or_build_issue_state(issue_state_type)
     issue_state.user_id = user.id
     issue_state.save!
-
     add_participant_to_issue_state!(user, issue_state)
-    puts issue_state_type.id
-    puts @conversation.properties_with("current_issue_state_type_id" => issue_state_type.id).inspect
 
     @conversation.current_participant_ids = participant_ids_for_issue_state(issue_state)
     @conversation.properties = @conversation.
       properties_with("current_issue_state_type_id" => issue_state_type.id)
-    puts @conversation.properties.inspect
+    @conversation.save!
     @conversation
   end
 
