@@ -63,6 +63,6 @@ class Api::ConversationsController < ApplicationController
   end
 
   def sign_in_user_from_embed
-    sign_in @user if @user && !user_signed_in?
+    sign_in @user
   end
 end
