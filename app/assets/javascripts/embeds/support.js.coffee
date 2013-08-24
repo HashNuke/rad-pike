@@ -16,7 +16,8 @@ class window.RadPikeWidget
     iframeStyle = """
       position: absolute;
       bottom: 0; right: 0;
-      width: 18em;
+      width: 20em;
+      height: 20em;
       right: 0em;
       bottom: 0em;
       border: 1px solid #CCC;

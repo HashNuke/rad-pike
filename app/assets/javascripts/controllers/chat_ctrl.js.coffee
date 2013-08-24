@@ -47,6 +47,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
       if $scope.triggerWidgetEvents && window.parent.RadPikeWidget && typeof(window.parent.RadPikeWidget.events.onNewChatMessage) == "function"
         window.parent.RadPikeWidget.events.onNewChatMessage()
       $scope.chatInput = ""
+      scrollToRecentActivity()
 
     errorCallback = ()->
       console.log "error"
@@ -61,22 +62,23 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
       }, successCallback, errorCallback)
 
 
-  # poller = (->
-  #   params = {conversation_id: $scope.conversation.id}
-  #   params['previous_stamp'] = $scope.lastActivityStamp
+  poller = (->
+    params = {conversation_id: $scope.conversation.id}
+    params['previous_stamp'] = $scope.lastActivityStamp
 
-  #   Activity.query params, (msgs)=>
-  #     for msg in msgs
-  #       $scope.conversation.activities.push(msg) if msg.sender.id != Auth.user()["id"]
-  #       $scope.lastActivityStamp = params['previous_stamp'] = msg.created_at
-  #       scrollToRecentActivity()
-  #   poller = $timeout arguments.callee, 3000
-  # )()
+    Activity.query params, (msgs)=>
+      for msg in msgs
+        $scope.conversation.activities.push(msg) if msg.sender.id != Auth.user()["id"]
+        $scope.lastActivityStamp = params['previous_stamp'] = msg.created_at
+        scrollToRecentActivity()
+    poller = $timeout arguments.callee, 3000
+  )()
 
 
   $scope.$on '$destroy', -> $timeout.cancel(poller)
-  $scope.$on '$viewContentLoaded', scrollToRecentActivity
 
+  #NOTE give it 50ms of time to load the activities into the view
+  $scope.$on '$viewContentLoaded', -> $timeout(scrollToRecentActivity, 500)
 
   #TODO required only for loading history
   # successCallback = (conversation)->
