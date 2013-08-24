@@ -10,7 +10,7 @@ App.directive 'activity', ()->
     receiverId:   "@"
     receiverName: "@"
 
-  link: (scope, element, attrs)->
+  link: (scope, element, attrs, transclude)->
     attrs.$observe('activityId senderName content', (val)->
       element.html """
         <div class="activity">

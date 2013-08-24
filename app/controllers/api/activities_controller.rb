@@ -15,8 +15,8 @@ class Api::ActivitiesController < ApplicationController
 
 
   def index
-    if params[:previous_stamp]
-      timestamp = DateTime.parse(params[:previous_stamp]) + 1.second
+    if params[:after]
+      timestamp = DateTime.parse(params[:after]) + 1.second
       @activities = @conversation.activities.where("created_at > ?", timestamp)
     end
 

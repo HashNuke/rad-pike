@@ -4,32 +4,19 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
   $scope.conversation = conversation
   $scope.triggerWidgetEvents = false
 
+
   scrollToRecentActivity = ->
     angular.element('.activities').scrollTop(
       angular.element('.activities-inner-wrapper').prop('scrollHeight') + 100)
 
 
-  #NOTE If user isn't set on window object, then he isn't staff
-  if !Auth.isAuthenticated()
-    Auth.setUser(conversation.user)
-    if !conversation.user.is_support_user
-      $scope.triggerWidgetEvents = true
-
-
-  lastActivity = $scope.conversation.activities[$scope.conversation.activities.length - 1]
-  if lastActivity?
-    $scope.lastActivityStamp = lastActivity.created_at
-  else
-    $scope.lastActivityStamp = $scope.conversation.created_at
-
-  #NOTE infobar not required if it's the widget
-  if $scope.conversation.user.id == Auth.user()["id"]
-    $scope.isInfobarVisible = false
+  scrollToRecentActivityIfNecessary = ->
+    scrollToRecentActivity()
 
 
   $scope.changeState = (stateType)->
     successCallback = (conversation)->
-      $scope.conversation.current_issue_state_type = conversation.current_issue_state_type
+      $scope.conversation.attrs.current_issue_state_type = conversation.attrs.current_issue_state_type
 
     errorCallback = (errorData)->
       console.log "error"
@@ -44,13 +31,13 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
   $scope.postMsg = ()->
     if $scope.chatInput.trim() == ""
       $scope.chatInput = ""
-
       #NOTE force set because angular is checking against trimmer value
       angular.element(".chat-input").val('')
       return
 
-    successCallback = (data)->
-      $scope.conversation.activities.push data
+    successCallback = (activity)->
+      $scope.lastActivityStamp = activity.created_at
+      $scope.conversation.activities.push activity
       if $scope.triggerWidgetEvents && window.parent.RadPikeWidget && typeof(window.parent.RadPikeWidget.events.onNewChatMessage) == "function"
         window.parent.RadPikeWidget.events.onNewChatMessage()
       $scope.chatInput = ""
@@ -69,30 +56,83 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
       }, successCallback, errorCallback)
 
 
+  loadHistoryActivity = ->
+    {activityType: "load"}
+
+
+  updateConversation = (conversation, prepend = true)->
+    $scope.conversation.attrs = conversation.attrs
+    return if conversation.activities.length == 0
+
+    # remove the temporary "loading" msg before adding activities
+    $scope.conversation.activities.shift()
+
+    if prepend == true
+      $scope.conversation.activities = conversation.
+        activities.concat($scope.conversation.activities)
+    else
+      for activity in conversation.activities
+        $scope.conversation.activities.push(activity)
+        $scope.conversation.activities.shift()
+
+      $scope.lastActivityStamp =
+        conversation.activities[conversation.activities.length - 1].created_at
+
+    $scope.conversation.activities.unshift(loadHistoryActivity)
+    scrollToRecentActivityIfNecessary()
+
+
+  $scope.loadHistory = ->
+    params = {before: $scope.oldestActivityStamp}
+
+    successCallback = (conversation)->
+     updateConversation(conversation)
+
+    errorCallback = (errorData)->
+      console.log "error"
+
+    Conversation.query(successCallback, errorCallback)
+
+
+  setUserIfRequired = ->
+    return if Auth.isAuthenticated()
+    Auth.setUser(conversation.user)
+    $scope.triggerWidgetEvents = true if !conversation.user.is_support_user
+
+
+  hideInfobarIfWidget = ->
+    $scope.isInfobarVisible = false if $scope.conversation.user.id == Auth.user()["id"]
+
+
+  setActivityStamps = ->
+    lastActivity = $scope.conversation.activities[$scope.conversation.activities.length - 1]
+    if lastActivity?
+      $scope.lastActivityStamp = lastActivity.created_at
+    else
+      $scope.lastActivityStamp = $scope.conversation.attrs.created_at
+
+    if $scope.conversation.activities.length > 0
+      $scope.oldestActivityStamp = $scope.conversation.activities[0].created_at
+      $scope.conversation.activities.unshift(loadHistoryActivity)
+    else
+      $scope.oldestActivityStamp = $scope.conversation.attrs.created_at
+
+
+  setUserIfRequired()
+  hideInfobarIfWidget()
+  setActivityStamps()
+
+
   poller = (->
-    params = {conversation_id: $scope.conversation.id}
-    params['previous_stamp'] = $scope.lastActivityStamp
+    params = {id: $scope.conversation.id}
+    params['after'] = $scope.lastActivityStamp
     scrollToRecentActivity() #NOTE just making sure to scroll
 
-    Activity.query params, (msgs)=>
-      for msg in msgs
-        $scope.conversation.activities.push(msg) if msg.sender.id != Auth.user()["id"]
-        $scope.lastActivityStamp = params['previous_stamp'] = msg.created_at
-      scrollToRecentActivity()
+    Conversation.get params, (conversation)=> updateConversation(conversation, false)
     poller = $timeout arguments.callee, 3000
   )()
 
 
-  $scope.$on '$destroy', -> $timeout.cancel(poller)
-
   #NOTE give it 50ms of time to load the activities into the view
-  $scope.$on '$viewContentLoaded', -> $timeout(scrollToRecentActivity, 500)
-
-  #TODO required only for loading history
-  # successCallback = (conversation)->
-  #  prepend result with current list
-
-  # errorCallback = (errorData)->
-  #   console.log "error"
-
-  # Conversation.query(successCallback, errorCallback)
+  $scope.$on '$viewContentLoaded', -> $timeout(scrollToRecentActivity, 50)
+  $scope.$on '$destroy', -> $timeout.cancel(poller)

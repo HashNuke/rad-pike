@@ -10,6 +10,19 @@ class Activity < ActiveRecord::Base
 
   before_save  :ensure_activity_type
 
+  default_scope -> {
+    order("created_at DESC").limit(3)
+  }
+
+  scope :after_timestamp,  ->(timestamp) {
+    timestamp = DateTime.parse(timestamp) + 1.second
+    where("created_at > ?", timestamp)
+  }
+  scope :before_timestamp, ->(timestamp) {
+    timestamp = DateTime.parse(timestamp) - 1.second
+    where("created_at < ?", timestamp)
+  }
+
   private
 
   def ensure_activity_type

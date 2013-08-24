@@ -1,10 +1,12 @@
 class Api::ConversationsController < ApplicationController
   respond_to :json
 
-  before_action :set_user_by_find_or_create, only: :user_conversation
-  before_action :authenticate_user!
-  before_action :set_conversation, only: [:show, :user_conversation, :update]
+  before_action :set_user_by_find_or_create, only: [:show, :user_conversation]
+  before_action :authenticate_user!, except: :user_conversation
+  before_action :set_conversation,   only: [:show, :update, :user_conversation]
+  before_action :set_query_options,  only: [:show, :user_conversation]
   before_action :authorize_user!
+
 
   #TODO to query activities, latest, unread/read
   def index
@@ -28,15 +30,27 @@ class Api::ConversationsController < ApplicationController
   end
 
 
-  def show
+  def user_conversation
     respond_to do |format|
       format.json {
-        render json: @conversation, serializer: ConversationWithActivitiesSerializer
+        render(json: @conversation, serializer: ConversationWithActivitiesSerializer)
       }
     end
   end
 
-  alias_method :user_conversation, :show
+
+  def show
+    respond_to do |format|
+      format.json {
+        render(
+          json: @conversation,
+          serializer: ConversationWithActivitiesSerializer,
+          query_options: @query_options
+        )
+      }
+    end
+  end
+
 
   private
 
@@ -46,15 +60,17 @@ class Api::ConversationsController < ApplicationController
 
 
   def set_conversation
-    return (@conversation = Conversation.find_by_id!(params[:id])) if params[:id]
-
-    #NOTE incase the id isn't available as in the case of the embed widget
+    if !params[:id].blank? && @user.support_team?
+      @conversation = Conversation.find_by_id!(params[:id])
+      return
+    end
     @conversation = @user.recent_conversation
   end
 
 
   def set_user_by_find_or_create
-    return (@user = current_user) if user_signed_in?
+    @user = warden.authenticate(scope: :user)
+    return if @user
 
     if !params[:unique_user_id].blank? && !params[:user_name].blank?
       @user = User.find_or_create_customer(params[:unique_user_id], params[:user_name])
@@ -63,12 +79,26 @@ class Api::ConversationsController < ApplicationController
       @user = User.create_guest
       sign_in @user
     end
+
+    puts "*"*10
+    puts @user.inspect
+    puts "*"*10
+  end
+
+
+  def set_query_options
+    @query_options = {}
+    @query_options[:after]  = params[:after]  if params[:after]
+    @query_options[:before] = params[:before] if params[:before]
   end
 
 
   def authorize_user!
-    return if params[:action] == "user_conversation"
     return if current_user.support_team?
+    return if @user && ["user_conversation", "show"].include?(params[:action])
+    puts "REDIRECTING"
+    puts params[:action]
+    puts @user.inspect
     not_authorized
   end
 end
