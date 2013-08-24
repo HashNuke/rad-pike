@@ -22,7 +22,8 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
     bottomHiddenContentSize = 0 if bottomHiddenContentSize < 0
 
     # Assume that 16px == 1em. And if the scrolled lines are less than 4, then dont scroll
-    console.log bottomHiddenContentSize/16
+    #TODO use 32 if devicePixelRatio is 2
+
     if (bottomHiddenContentSize/16) < 4
       scrollToRecentActivity()
 
