@@ -1,11 +1,12 @@
 class Api::ConversationsController < ApplicationController
   respond_to :json
 
-  before_action :find_or_create_user_for_embed,  only: :user_conversation
-  before_action :sign_in_user_from_embed,        only: :user_conversation
-  before_action :set_conversation_for_embed,     only: :user_conversation
+  before_action :find_or_create_user_for_embed, only: :user_conversation
+  before_action :sign_in_user_from_embed,       only: :user_conversation
+  before_action :set_conversation_for_embed,    only: :user_conversation
   before_action :authenticate_user!
-  before_action :set_conversation,               only: [:show, :update]
+  before_action :set_conversation,              only: [:show, :update]
+  before_action :authorize_user!
 
   #TODO to query activities, latest, unread/read
   def index
@@ -71,5 +72,12 @@ class Api::ConversationsController < ApplicationController
 
   def sign_in_user_from_embed
     sign_in @user
+  end
+
+
+  def authorize_user!
+    return if params[:action] == "user_conversation"
+    return if current_user.support_team?
+    not_authorized
   end
 end

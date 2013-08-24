@@ -1,5 +1,6 @@
 class MembersController < ApplicationController
   before_action :authenticate_user!
+  before_action :authorize_user!
   before_action :set_user, only: [:edit, :update, :destroy]
   respond_to :json, :html
 
@@ -67,5 +68,11 @@ class MembersController < ApplicationController
 
   def set_user
     @user = User.find_by_id!(params[:id])
+  end
+
+  def authorize_user!
+    return if current_user.id == params[:id]
+    return if current_user.admin?
+    not_authorized
   end
 end

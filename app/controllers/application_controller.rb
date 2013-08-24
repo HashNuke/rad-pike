@@ -7,6 +7,10 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  def not_authorized
+    redirect_to root_path
+  end
+
   def layout_by_resource
     return "manage" if devise_controller?
     "application"

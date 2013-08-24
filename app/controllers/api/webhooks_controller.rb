@@ -1,6 +1,7 @@
 class Api::WebhooksController < ApplicationController
   respond_to :json, :html
   before_action :authenticate_user!
+  before_action :authorize_user!
 
   layout 'manage'
 
@@ -27,8 +28,7 @@ class Api::WebhooksController < ApplicationController
     params.require(:webhook).permit(:name, :url)
   end
 
-  def authenticate_user!
-    super
-    redirect_to root_path unless current_user.admin?
+  def authorize_user!
+    not_authorized unless current_user.admin?
   end
 end
