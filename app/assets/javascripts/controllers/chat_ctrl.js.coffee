@@ -6,7 +6,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
 
   scrollToRecentActivity = ->
     angular.element('.activities').scrollTop(
-      angular.element('.activities-inner-wrapper').prop('scrollHeight') + 50)
+      angular.element('.activities-inner-wrapper').prop('scrollHeight') + 100)
 
 
   #NOTE If user isn't set on window object, then he isn't staff
@@ -72,12 +72,13 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
   poller = (->
     params = {conversation_id: $scope.conversation.id}
     params['previous_stamp'] = $scope.lastActivityStamp
+    scrollToRecentActivity() #NOTE just making sure to scroll
 
     Activity.query params, (msgs)=>
       for msg in msgs
         $scope.conversation.activities.push(msg) if msg.sender.id != Auth.user()["id"]
         $scope.lastActivityStamp = params['previous_stamp'] = msg.created_at
-        scrollToRecentActivity()
+      scrollToRecentActivity()
     poller = $timeout arguments.callee, 3000
   )()
 

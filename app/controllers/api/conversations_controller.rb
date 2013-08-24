@@ -1,11 +1,9 @@
 class Api::ConversationsController < ApplicationController
   respond_to :json
 
-  before_action :find_or_create_user_for_embed, only: :user_conversation
-  before_action :sign_in_user_from_embed,       only: :user_conversation
-  before_action :set_conversation_for_embed,    only: :user_conversation
+  before_action :set_user_by_find_or_create, only: :user_conversation
   before_action :authenticate_user!
-  before_action :set_conversation,              only: [:show, :update]
+  before_action :set_conversation, only: [:show, :user_conversation, :update]
   before_action :authorize_user!
 
   #TODO to query activities, latest, unread/read
@@ -21,11 +19,6 @@ class Api::ConversationsController < ApplicationController
   end
 
 
-  def show
-    respond_with :api, @conversation, serializer: ConversationWithActivitiesSerializer
-  end
-
-
   def update
     conversation_service = ConversationService.new(@conversation)
     @conversation = conversation_service.change_state!(conversation_params[:state_type], current_user)
@@ -35,7 +28,7 @@ class Api::ConversationsController < ApplicationController
   end
 
 
-  def user_conversation
+  def show
     respond_to do |format|
       format.json {
         render json: @conversation, serializer: ConversationWithActivitiesSerializer
@@ -43,6 +36,7 @@ class Api::ConversationsController < ApplicationController
     end
   end
 
+  alias_method :user_conversation, :show
 
   private
 
@@ -52,26 +46,23 @@ class Api::ConversationsController < ApplicationController
 
 
   def set_conversation
-    @conversation = Conversation.find(params[:id])
+    return (@conversation = Conversation.find_by_id!(params[:id])) if params[:id]
+
+    #NOTE incase the id isn't available as in the case of the embed widget
+    @conversation = @user.recent_conversation
   end
 
 
-  def set_conversation_for_embed
-    @conversation = @user.try(:conversations).try(:first)
-  end
+  def set_user_by_find_or_create
+    return (@user = current_user) if user_signed_in?
 
-
-  def find_or_create_user_for_embed
     if !params[:unique_user_id].blank? && !params[:user_name].blank?
       @user = User.find_or_create_customer(params[:unique_user_id], params[:user_name])
+      sign_in @user
     else
       @user = User.create_guest
+      sign_in @user
     end
-  end
-
-
-  def sign_in_user_from_embed
-    sign_in @user
   end
 
 
