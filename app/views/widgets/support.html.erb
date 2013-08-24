@@ -18,7 +18,9 @@
         document.getElementById("support-intro").style.display="none";
       }
 
-      if(window.parent.RadPikeWidget.startWidget) startWidget();
+      $("#support-intro").on("click", startWidget);
+
+      if(window.parent.RadPikeWidget && window.parent.RadPikeWidget.startWidget) startWidget();
     });
   <% end %>
 
@@ -27,7 +29,7 @@
 
 <body>
 
-  <div id="support-intro" onclick="startWidget()">start</div>
+  <div id="support-intro">start</div>
   <div class="chat" ng-view></div>
 
 </body>
