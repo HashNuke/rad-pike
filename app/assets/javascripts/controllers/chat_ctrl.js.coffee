@@ -4,9 +4,9 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
   $scope.conversation = conversation
   $scope.triggerWidgetEvents = false
 
-
   scrollToRecentActivity = ->
-    $('.activities').scrollTop($('.activities-inner-wrapper').prop('scrollHeight') + 50)
+    angular.element('.activities').scrollTop(
+      angular.element('.activities-inner-wrapper').prop('scrollHeight') + 50)
 
 
   #NOTE If user isn't set on window object, then he isn't staff
@@ -42,6 +42,13 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
 
 
   $scope.postMsg = ()->
+    if $scope.chatInput.trim() == ""
+      $scope.chatInput = ""
+
+      #NOTE force set because angular is checking against trimmer value
+      angular.element(".chat-input").val('')
+      return
+
     successCallback = (data)->
       $scope.conversation.activities.push data
       if $scope.triggerWidgetEvents && window.parent.RadPikeWidget && typeof(window.parent.RadPikeWidget.events.onNewChatMessage) == "function"
