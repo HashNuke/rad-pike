@@ -58,10 +58,11 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
 
   updateConversation = (conversation, prepend = true)->
     $scope.conversation.attrs = conversation.attrs
-    return if conversation.activities.length == 0
 
-    # remove the temporary "loading" msg before adding activities
+    #TODO if no more activities also add a message for that
     $scope.conversation.activities.shift()
+
+    return if conversation.activities.length == 0
 
     if prepend == true
       $scope.conversation.activities = conversation.
