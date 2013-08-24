@@ -45,7 +45,9 @@
         sender-id="{{activity.sender.id}}"
         sender-name="{{activity.sender.name}}"
         receiver-id="{{activity.receiver.id}}"
-        receiver-name="{{activity.receiver.name}}"/>
+        receiver-name="{{activity.receiver.name}}"
+        test-log="testLog()"
+        load-history="loadHistory()"/>
     </div>
   </div>
 </div>

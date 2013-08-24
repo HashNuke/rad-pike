@@ -1,6 +1,5 @@
 App.directive 'activity', ()->
   restrict: "E"
-  transclude: true
   scope:
     activityId:   "@"
     type:         "@"
@@ -9,13 +8,10 @@ App.directive 'activity', ()->
     senderId:     "@"
     receiverId:   "@"
     receiverName: "@"
+    loadHistory:  "&"
+
 
   link: (scope, element, attrs, transclude)->
     attrs.$observe('activityId senderName content', (val)->
-      element.html """
-        <div class="activity">
-          <div class="sender">#{attrs.senderName}:</div>
-          <div class="content">#{attrs.content}</div>
-        </div>
-      """
+      element.html JST["activities/#{attrs.type}"]({activity: attrs})
     )

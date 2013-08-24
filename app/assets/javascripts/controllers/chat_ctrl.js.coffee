@@ -3,7 +3,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
   $scope.page = 1
   $scope.conversation = conversation
   $scope.triggerWidgetEvents = false
-
+  historyActivity = {activity_type: "load"}
 
   scrollToRecentActivity = ->
     angular.element('.activities').scrollTop(
@@ -56,10 +56,6 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
       }, successCallback, errorCallback)
 
 
-  loadHistoryActivity = ->
-    {activityType: "load"}
-
-
   updateConversation = (conversation, prepend = true)->
     $scope.conversation.attrs = conversation.attrs
     return if conversation.activities.length == 0
@@ -78,11 +74,12 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
       $scope.lastActivityStamp =
         conversation.activities[conversation.activities.length - 1].created_at
 
-    $scope.conversation.activities.unshift(loadHistoryActivity)
+    $scope.conversation.activities.unshift(historyActivity)
     scrollToRecentActivityIfNecessary()
 
 
   $scope.loadHistory = ->
+    console.log "load history..."
     params = {before: $scope.oldestActivityStamp}
 
     successCallback = (conversation)->
@@ -113,7 +110,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
 
     if $scope.conversation.activities.length > 0
       $scope.oldestActivityStamp = $scope.conversation.activities[0].created_at
-      $scope.conversation.activities.unshift(loadHistoryActivity)
+      $scope.conversation.activities.unshift(historyActivity)
     else
       $scope.oldestActivityStamp = $scope.conversation.attrs.created_at
 

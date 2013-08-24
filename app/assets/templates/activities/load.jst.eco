@@ -1,0 +1,1 @@
+<div class="activity" ng-click="loadHistory()">load previous messages</div>

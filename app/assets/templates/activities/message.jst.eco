@@ -1,0 +1,8 @@
+<div class="activity">
+  <div class="sender">
+    <%= @activity.senderName %>:
+  </div>
+  <div class="content">
+    <%= @activity.content %>
+  </div>
+</div>
