@@ -4,14 +4,27 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
   $scope.conversation = conversation
   $scope.triggerWidgetEvents = false
   historyActivity = {activity_type: "load"}
+  devicePixelRatio = window.devicePixelRatio || 1
+
 
   scrollToRecentActivity = ->
     angular.element('.activities').scrollTop(
-      angular.element('.activities-inner-wrapper').prop('scrollHeight') + 100)
+      angular.element('.activities-inner-wrapper').prop('scrollHeight'))
 
 
   scrollToRecentActivityIfNecessary = ->
-    scrollToRecentActivity()
+    viewableHeight   = angular.element('.activities').height()
+    coveredHeight    = angular.element('.activities').scrollTop()
+    scrollableHeight = angular.element('.activities-inner-wrapper').height()
+    coveredHeight    = 1 if coveredHeight < 1
+
+    bottomHiddenContentSize = scrollableHeight - (coveredHeight + viewableHeight)
+    bottomHiddenContentSize = 0 if bottomHiddenContentSize < 0
+
+    # Assume that 16px == 1em. And if the scrolled lines are less than 4, then dont scroll
+    console.log bottomHiddenContentSize/16
+    if (bottomHiddenContentSize/16) < 4
+      scrollToRecentActivity()
 
 
   $scope.changeState = (stateType)->
@@ -36,8 +49,11 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
       return
 
     successCallback = (activity)->
-      $scope.lastActivityParams = activity.created_at
-      $scope.conversation.activities.push activity
+      $scope.lastActivityParams =
+        after: activity.created_at
+        activityId: activity.id
+
+      $scope.conversation.activities.push(activity)
       if $scope.triggerWidgetEvents && window.parent.RadPikeWidget && typeof(window.parent.RadPikeWidget.events.onNewChatMessage) == "function"
         window.parent.RadPikeWidget.events.onNewChatMessage()
       $scope.chatInput = ""
@@ -60,7 +76,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
     $scope.conversation.attrs = conversation.attrs
 
     #TODO if no more activities also add a message for that
-    $scope.conversation.activities.shift()
+    $scope.conversation.activities.shift() if prepend == true
 
     return if conversation.activities.length == 0
 
@@ -140,8 +156,6 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
     params = {id: $scope.conversation.id}
     params['after'] = $scope.lastActivityParams['after']
     params['activityId'] = $scope.lastActivityParams['activityId']
-
-    scrollToRecentActivity() #NOTE just making sure to scroll
     Conversation.get params, (conversation)=> updateConversation(conversation, false)
     poller = $timeout arguments.callee, 3000
   )()
