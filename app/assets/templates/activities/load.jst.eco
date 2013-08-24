@@ -1,1 +1,1 @@
-<div class="load-activity" ng-click="loadHistory()">load previous messages</div>
+<div class="activity load-activity" ng-click="loadHistory()">Load previous messages</div>
