@@ -14,14 +14,9 @@ class Activity < ActiveRecord::Base
     order("created_at DESC").limit(3)
   }
 
-  scope :after_timestamp,  ->(timestamp) {
-    timestamp = DateTime.parse(timestamp) + 1.second
-    where("created_at > ?", timestamp)
-  }
-  scope :before_timestamp, ->(timestamp) {
-    timestamp = DateTime.parse(timestamp) - 1.second
-    where("created_at < ?", timestamp)
-  }
+  scope :after_timestamp,  ->(activityId) { where("id > ?", activityId) }
+
+  scope :before_timestamp, ->(activityId) { where("id < ?", activityId) }
 
   private
 

@@ -90,6 +90,7 @@ class Api::ConversationsController < ApplicationController
     @query_options = {}
     @query_options[:after]  = params[:after]  if params[:after]
     @query_options[:before] = params[:before] if params[:before]
+    @query_options[:activityId] = params[:activityId] if params[:activityId]
   end
 
 

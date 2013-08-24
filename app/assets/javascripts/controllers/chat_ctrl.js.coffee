@@ -36,7 +36,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
       return
 
     successCallback = (activity)->
-      $scope.lastActivityStamp = activity.created_at
+      $scope.lastActivityParams = activity.created_at
       $scope.conversation.activities.push activity
       if $scope.triggerWidgetEvents && window.parent.RadPikeWidget && typeof(window.parent.RadPikeWidget.events.onNewChatMessage) == "function"
         window.parent.RadPikeWidget.events.onNewChatMessage()
@@ -66,21 +66,29 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
     if prepend == true
       $scope.conversation.activities = conversation.
         activities.concat($scope.conversation.activities)
+      $scope.oldestActivityParams =
+        before: conversation.activities[0].created_at
+        activityId: conversation.activities[0].id
+
     else
       for activity in conversation.activities
         $scope.conversation.activities.push(activity)
         $scope.conversation.activities.shift()
 
-      $scope.lastActivityStamp =
-        conversation.activities[conversation.activities.length - 1].created_at
+      lastActivity = conversation.activities[conversation.activities.length - 1]
+      $scope.lastActivityParams =
+        after: lastActivity.created_at
+        activityId: lastActivity.id
 
     $scope.conversation.activities.unshift(historyActivity)
     scrollToRecentActivityIfNecessary()
 
 
   $scope.loadHistory = ->
-    console.log "load history..."
-    params = {before: $scope.oldestActivityStamp}
+    params =
+      id: $scope.conversation.id
+      before: $scope.oldestActivityParams.before
+      activityId: $scope.oldestActivityParams.activityId
 
     successCallback = (conversation)->
      updateConversation(conversation)
@@ -88,7 +96,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
     errorCallback = (errorData)->
       console.log "error"
 
-    Conversation.query(successCallback, errorCallback)
+    Conversation.get(params, successCallback, errorCallback)
 
 
   setUserIfRequired = ->
@@ -104,15 +112,22 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
   setActivityStamps = ->
     lastActivity = $scope.conversation.activities[$scope.conversation.activities.length - 1]
     if lastActivity?
-      $scope.lastActivityStamp = lastActivity.created_at
+      $scope.lastActivityParams =
+        after: lastActivity.created_at
+        activityId: lastActivity.id
     else
-      $scope.lastActivityStamp = $scope.conversation.attrs.created_at
+      $scope.lastActivityParams =
+        after: $scope.conversation.attrs.created_at
+        activityId: 0
 
     if $scope.conversation.activities.length > 0
-      $scope.oldestActivityStamp = $scope.conversation.activities[0].created_at
+      $scope.oldestActivityParams =
+        before: $scope.conversation.activities[0].created_at
+        activityId: $scope.conversation.activities[0].id
       $scope.conversation.activities.unshift(historyActivity)
     else
-      $scope.oldestActivityStamp = $scope.conversation.attrs.created_at
+      $scope.oldestActivityParams =
+        before: $scope.conversation.attrs.created_at
 
 
   setUserIfRequired()
@@ -122,9 +137,10 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
 
   poller = (->
     params = {id: $scope.conversation.id}
-    params['after'] = $scope.lastActivityStamp
-    scrollToRecentActivity() #NOTE just making sure to scroll
+    params['after'] = $scope.lastActivityParams['after']
+    params['activityId'] = $scope.lastActivityParams['activityId']
 
+    scrollToRecentActivity() #NOTE just making sure to scroll
     Conversation.get params, (conversation)=> updateConversation(conversation, false)
     poller = $timeout arguments.callee, 3000
   )()

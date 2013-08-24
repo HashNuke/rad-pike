@@ -14,4 +14,6 @@ App.directive 'activity', ()->
   link: (scope, element, attrs, transclude)->
     attrs.$observe('activityId senderName content', (val)->
       element.html JST["activities/#{attrs.type}"]({activity: attrs})
+      if attrs.type == "load"
+        element.bind 'click', (event)-> scope.loadHistory()
     )
