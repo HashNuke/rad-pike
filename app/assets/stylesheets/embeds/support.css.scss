@@ -1,4 +1,11 @@
+@import "../mixins";
+@include box-sizing;
+
 $main-width: 100%;
+
+body {
+  overflow-y: hidden;
+}
 
 .chat {
   height: 100%;
@@ -6,17 +13,19 @@ $main-width: 100%;
   width: $main-width;
 
   .chat-input-wrapper {
-    width: $main-width;
+    width: $main-width - 5%;
     position: absolute;
     bottom: 0em;
     height: 3em;
-    padding-bottom: 0.2em;
 
     .chat-input {
-      width: 100%;
+      width: 95%;
+      margin-left: 1%;
       margin-top: 0.5em;
-      margin-bottom: 0.5em;
       font-size: 1em;
+      margin-bottom: 0.25em;
     }
   }
 }
+
+@include conversation-activities(0em);

@@ -48,30 +48,4 @@ $main-width: 70%;
   }
 }
 
-.activities {
-  overflow-y: scroll;
-  width:  $main-width;
-  position: absolute;
-  top: 5em;
-  right: 0em;
-  bottom: 4em;
-}
-
-.activities-inner-wrapper { width: 100%; }
-
-.activity-wrapper {
-  width: 100%;
-
-  .activity {
-    width: 90%;
-    margin-top: 1%;
-    margin-left: 5%;
-    margin-right: 5%;
-    font-size: 0.9em;
-
-    .sender {
-      font-weight: bold;
-      margin-right: 0.5em;
-    }
-  }
-}
+@include conversation-activities(5em);

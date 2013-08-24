@@ -1,10 +1,4 @@
-* {
-  box-sizing: border-box;
-  -moz-box-sizing:border-box; /* Firefox */
-  -webkit-box-sizing:border-box; /* Safari */
-}
-
-div { float: left; }
+@include box-sizing;
 
 html, body {
   width: 100%;

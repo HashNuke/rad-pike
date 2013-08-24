@@ -1,3 +1,13 @@
+@mixin box-sizing {
+  * {
+    box-sizing: border-box;
+    -moz-box-sizing:border-box; /* Firefox */
+    -webkit-box-sizing:border-box; /* Safari */
+  }
+}
+
+div { float: left; }
+
 @mixin chat-control-buttons {
 
   button {
@@ -105,6 +115,37 @@
     }
   }
 
+}
+
+
+@mixin conversation-activities($top) {
+  .activities {
+    overflow-y: scroll;
+    width:  $main-width;
+    position: absolute;
+    top: $top;
+    right: 0em;
+    bottom: 4em;
+  }
+
+  .activities-inner-wrapper { width: 100%; }
+
+  .activity-wrapper {
+    width: 100%;
+
+    .activity {
+      width: 90%;
+      margin-top: 1%;
+      margin-left: 5%;
+      margin-right: 5%;
+      font-size: 0.9em;
+
+      .sender {
+        font-weight: bold;
+        margin-right: 0.5em;
+      }
+    }
+  }
 }
 
 
