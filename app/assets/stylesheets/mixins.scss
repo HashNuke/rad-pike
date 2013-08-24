@@ -128,7 +128,10 @@ div { float: left; }
     bottom: 4em;
   }
 
-  .activities-inner-wrapper { width: 100%; }
+  .activities-inner-wrapper {
+    width: 100%;
+    padding-bottom: 2em;
+  }
 
   .activity-wrapper {
     width: 100%;

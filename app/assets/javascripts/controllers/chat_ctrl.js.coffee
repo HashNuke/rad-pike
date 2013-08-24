@@ -9,7 +9,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
 
   scrollToRecentActivity = ->
     angular.element('.activities').scrollTop(
-      angular.element('.activities-inner-wrapper').prop('scrollHeight'))
+      angular.element('.activities-inner-wrapper').prop('scrollHeight') + 100)
 
 
   scrollToRecentActivityIfNecessary = ->
@@ -156,7 +156,11 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
     params = {id: $scope.conversation.id}
     params['after'] = $scope.lastActivityParams['after']
     params['activityId'] = $scope.lastActivityParams['activityId']
-    Conversation.get params, (conversation)=> updateConversation(conversation, false)
+    Conversation.get params, (conversation)=>
+      updateConversation(conversation, false)
+      #NOTE This is forced scrolling. Don't know why this works
+      scrollToRecentActivityIfNecessary() if conversation.activities.length > 0
+
     poller = $timeout arguments.callee, 3000
   )()
 
