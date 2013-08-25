@@ -14,9 +14,8 @@ class Activity < ActiveRecord::Base
     order("created_at DESC").limit(3)
   }
 
-  scope :after_timestamp,  ->(activityId) { where("id > ?", activityId) }
-
-  scope :before_timestamp, ->(activityId) { where("id < ?", activityId) }
+  scope :history, ->(activityId) { where("id < ?", activityId) }
+  scope :latest,  ->(activityId) { where("id > ?", activityId) }
 
   private
 

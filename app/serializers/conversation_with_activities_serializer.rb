@@ -7,13 +7,9 @@ class ConversationWithActivitiesSerializer < ActiveModel::Serializer
 
   def activities
     if @options[:query_options].key?(:after)
-      object.activities.after_timestamp(
-        @options[:query_options][:activityId]
-      ).reverse
+      object.activities.latest(@options[:query_options][:activityId]).reverse
     elsif @options[:query_options].key?(:before)
-      object.activities.before_timestamp(
-        @options[:query_options][:activityId]
-      ).reverse
+      object.activities.history(@options[:query_options][:activityId]).reverse
     else
       object.activities.reverse
     end

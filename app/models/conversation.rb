@@ -5,13 +5,19 @@ class Conversation < ActiveRecord::Base
   has_many :issue_states, dependent: :destroy
 
   default_scope -> {
-    includes(:user).order("last_customer_message_at DESC")
+    #TODO I think this should just be last_message_at or last_activity_at
+    includes(:user).order("last_customer_message_at DESC").limit(10)
   }
 
   scope :unassigned, -> { where("array_upper(current_participant_ids, 1) is ?", nil) }
+
   scope :having_participant, ->(participant_id) {
     where("? = ANY (current_participant_ids)", participant_id)
   }
+
+  scope :for_user, ->(user_id) { where(user_id: user_id) }
+  scope :history, ->(conversationId) { where("id < ?", conversationId) }
+  scope :latest,  ->(conversationId) { where("id > ?", conversationId) }
 
   before_save  :ensure_properties
   before_save  :ensure_current_issue_state_type

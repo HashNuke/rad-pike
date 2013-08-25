@@ -11,13 +11,21 @@ class Api::ConversationsController < ApplicationController
   #TODO to query activities, latest, unread/read
   def index
     if params[:filter] == "all" || params["filter"].blank?
-      @conversations = Conversation.all
+      conversation_scope = Conversation.all
+      puts conversation_scope.inspect
     elsif params[:filter] == "unassigned"
-      @conversations = Conversation.unassigned
+      conversation_scope = Conversation.unassigned
     else
-      @conversations = Conversation.having_participant(params[:filter])
+      conversation_scope = Conversation.having_participant(params[:filter])
     end
-    respond_with :api, @conversations
+
+    if params[:after]
+      conversation_scope = conversation_scope.latest(params[:conversation_id])
+    elsif params[:before]
+      conversation_scope = conversation_scope.history(params[:conversation_id])
+    end
+
+    respond_with :api, conversation_scope
   end
 
 
