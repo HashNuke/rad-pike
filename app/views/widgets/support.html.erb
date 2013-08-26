@@ -10,20 +10,6 @@
 
   <%= stylesheet_link_tag    "embeds/support", media: "all" %>
   <%= javascript_include_tag "embeds/base" %>
-
-  <%= javascript_tag do %>
-    $(document).ready(function(){
-      var startWidget = function() {
-        angular.bootstrap(document.body, ['RadPike']);
-        document.getElementById("support-intro").style.display="none";
-      }
-
-      $("#support-intro").on("click", startWidget);
-
-      // if(window.parent.RadPikeWidget && window.parent.RadPikeWidget.startWidget) startWidget();
-    });
-  <% end %>
-
   <%= csrf_meta_tags %>
 </head>
 
