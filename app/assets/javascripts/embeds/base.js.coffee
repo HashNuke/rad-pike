@@ -58,16 +58,6 @@ class XdmProtocol
     (@listeners[event] = callback) for event, callback of events
 
 
-
-App.xdm = new XdmProtocol(consumer: false)
-startWidget = ->
-  angular.bootstrap(document.body, ['RadPike'])
-  $("#support-intro").hide()
-
-$("#support-intro").on("click", startWidget);
-App.xdm.on "start", startWidget
-
-
 App.config ($routeProvider, $locationProvider, $httpProvider)->
 
   #NOTE Set CSRF token
@@ -101,3 +91,13 @@ App.config ($routeProvider, $locationProvider, $httpProvider)->
         conversation: App.resolvers.Conversation
     )
     .otherwise(template: "This doesn't exist")
+
+
+App.widgetInit = ->
+  App.xdm = new XdmProtocol(consumer: false)
+  startWidget = ->
+    angular.bootstrap(document.body, ['RadPike'])
+    $("#support-intro").hide()
+
+  $("#support-intro").on("click", startWidget);
+  App.xdm.on "start", startWidget
