@@ -53,6 +53,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
     if $scope.conversation.activities.length > 0 && $scope.conversation.activities[0].activity_type == "load"
       $scope.conversation.activities.shift()
 
+
   popRecentActivity = ()->
     return if viewedHistory
     return if $scope.conversation.activities.length <= activitiesThreshold
@@ -87,6 +88,52 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
     if (bottomHiddenContentSize/16) < 4
       scrollToRecentActivity()
 
+
+  prependActivities = (activities)->
+    removeHistoryActivity()
+    return if activities.length == 0
+
+    $scope.conversation.activities = activities.concat($scope.conversation.activities)
+    saveOldestActivityDetails()
+    addHistoryActivityIfNecessary()
+
+
+  appendActivties = (activities)->
+    return if activities.length == 0
+
+    for activity in activities
+      continue if isRecentlyPostedActivityId(activity.id)
+      $scope.conversation.activities.push(activity)
+      popRecentActivity()
+
+    saveLastActivityDetails()
+    scrollToRecentActivityIfNecessary()
+    addHistoryActivityIfNecessary()
+
+
+  updateConversation = (conversation, prepend = true) ->
+    $scope.conversation.attrs = conversation.attrs
+    #TODO if no more activities, also add a message for that
+
+    if prepend == true
+      prependActivities(conversation.activities)
+    else
+      appendActivties(conversation.activities)
+
+
+  setUserIfRequired = ->
+    return if Auth.isAuthenticated()
+    Auth.setUser(conversation.user)
+    $scope.triggerWidgetEvents = true if App.xdm?
+
+
+  hideInfobarIfWidget = ->
+    $scope.isInfobarVisible = false if App.xdm?
+
+
+  setActivityStamps = ->
+    saveLastActivityDetails()
+    saveOldestActivityDetails()
 
   $scope.changeState = (stateType) ->
     successCallback = (conversation) ->
@@ -127,39 +174,6 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
       }, successCallback, errorCallback)
 
 
-  prependActivities = (activities)->
-    removeHistoryActivity()
-    return if activities.length == 0
-
-    $scope.conversation.activities = activities.concat($scope.conversation.activities)
-    saveOldestActivityDetails()
-    addHistoryActivityIfNecessary()
-
-  appendActivties = (activities)->
-    return if activities.length == 0
-
-    for activity in activities
-      continue if isRecentlyPostedActivityId(activity.id)
-      $scope.conversation.activities.push(activity)
-      popRecentActivity()
-
-    saveLastActivityDetails()
-    scrollToRecentActivityIfNecessary()
-    addHistoryActivityIfNecessary()
-
-
-  updateConversation = (conversation, prepend = true) ->
-    $scope.conversation.attrs = conversation.attrs
-    #TODO if no more activities, also add a message for that
-
-    if prepend == true
-      prependActivities(conversation.activities)
-    else
-      appendActivties(conversation.activities)
-
-
-
-
   $scope.loadHistory = ->
     viewedHistory = true
     params =
@@ -174,21 +188,6 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
       console.log "error"
 
     Conversation.get(params, successCallback, errorCallback)
-
-
-  setUserIfRequired = ->
-    return if Auth.isAuthenticated()
-    Auth.setUser(conversation.user)
-    $scope.triggerWidgetEvents = true if App.xdm?
-
-
-  hideInfobarIfWidget = ->
-    $scope.isInfobarVisible = false if App.xdm?
-
-
-  setActivityStamps = ->
-    saveLastActivityDetails()
-    saveOldestActivityDetails()
 
 
   setUserIfRequired()
