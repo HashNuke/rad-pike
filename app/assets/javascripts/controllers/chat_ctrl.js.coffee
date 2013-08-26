@@ -9,6 +9,13 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
   activitiesThreshold = 10
 
 
+  emptyChatInput = ()->
+    inputText = angular.copy($scope.chatInput)
+    $scope.chatInput = ""
+    angular.element(".chat-input").val('')
+    inputText
+
+
   addToRecentlyPostedActivityIds = (activityId) ->
     if recentlyPostedActivityIds.length > 5
       recentlyPostedActivityIds.shift()
@@ -18,6 +25,23 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
   isRecentlyPostedActivityId = (activityId) ->
     return true if recentlyPostedActivityIds.indexOf(activityId) >= 0
     false
+
+
+  removeHistoryActivity = ->
+    if $scope.conversation.activities[0]? && $scope.conversation.activities[0].activity_type == "load"
+      $scope.conversation.activities.shift()
+
+  popRecentActivity = ()->
+    return if !$scope.conversation.activities[0]?
+    $scope.conversation.activities.length > activitiesThreshold
+    removeHistoryActivity()
+    $scope.conversation.activities.shift()
+    $scope.conversation.activities.unshift(historyActivity)
+
+
+  addHistoryActivityIfNecessary = ->
+    if $scope.conversation.attrs.messages_count > 0 && $scope.conversation.activities.length > activitiesThreshold
+      $scope.conversation.activities.unshift(historyActivity)
 
 
   scrollToRecentActivity = ->
@@ -56,20 +80,17 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
 
 
   $scope.postMsg = () ->
-    if $scope.chatInput.trim() == ""
-      $scope.chatInput = ""
-      #NOTE force set because angular is checking against trimmer value
-      angular.element(".chat-input").val('')
-      return
+    inputText = emptyChatInput()
+    return if inputText.trim() == ""
+
 
     successCallback = (activity) ->
       addToRecentlyPostedActivityIds(activity.id)
-
       $scope.conversation.activities.push(activity)
+      popRecentActvity()
       App.xdm.sendMsg("chatMessage", activity) if $scope.triggerWidgetEvents
-      $scope.chatInput = ""
-      angular.element(".chat-input").val('')
       scrollToRecentActivity()
+
 
     errorCallback = () ->
       #TODO highlight errorneous activity
@@ -80,7 +101,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
         activity: {
           conversation_id: $scope.conversation.id,
           receiver_id:     $scope.conversation.user.id,
-          content:         $scope.chatInput
+          content:         inputText
         }
       }, successCallback, errorCallback)
 
@@ -89,29 +110,28 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
     $scope.conversation.attrs = conversation.attrs
 
     #TODO if no more activities also add a message for that
-    $scope.conversation.activities.shift() if prepend == true
 
     return if conversation.activities.length == 0
 
     if prepend == true
+      removeHistoryActivity()
+
       $scope.conversation.activities = conversation.
         activities.concat($scope.conversation.activities)
       $scope.oldestActivityParams =
         before: conversation.activities[0].created_at
         activityId: conversation.activities[0].id
-
     else
       for activity in conversation.activities
-        $scope.conversation.activities.shift()
         continue if isRecentlyPostedActivityId(activity.id)
         $scope.conversation.activities.push(activity)
+        popRecentActivity()
 
       lastActivity = conversation.activities[conversation.activities.length - 1]
       $scope.lastActivityParams =
         after: lastActivity.created_at
         activityId: lastActivity.id
 
-    $scope.conversation.activities.unshift(historyActivity)
     scrollToRecentActivityIfNecessary()
 
 
@@ -155,8 +175,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
       $scope.oldestActivityParams =
         before: $scope.conversation.activities[0].created_at
         activityId: $scope.conversation.activities[0].id
-      if $scope.conversation.attrs.messages_count > 0 && $scope.conversation.activities.length > activitiesThreshold
-        $scope.conversation.activities.unshift(historyActivity)
+      addHistoryActivityIfNecessary()
     else
       $scope.oldestActivityParams =
         before: $scope.conversation.attrs.created_at
