@@ -21,19 +21,18 @@ class App.XdmProtocol
         return false if !message['action']? || !@listeners[message['action']]?
         @listeners[message['action']](message['data'])
 
-    if @options.consumer == true
-      xdmOptions["remote"]    = @options.remote
-      xdmOptions["container"] = @options.containerId
-      xdmOptions["onReady"] = ()=>
-        @sendMsg({action: "start"}) if @options.start == true
-      xdmOptions['props'] = @iframeProps
+    if @options.consumer
+      xdmOptions['remote']    = @options.remote
+      xdmOptions['container'] = @options.container
+      xdmOptions['onReady']   = ()=> @sendMsg({action: 'start'}) if @options.start
+      xdmOptions['props']     = @iframeProps
 
     @protocol = new easyXDM.Socket xdmOptions
 
 
-  sendMsg: (action, data="") ->
+  sendMsg: (action, data) ->
     msg = {action}
-    msg['data'] = data if !data.trim() == ""
+    msg['data'] = data if data?
     @protocol.postMessage(JSON.stringify(msg))
 
 
