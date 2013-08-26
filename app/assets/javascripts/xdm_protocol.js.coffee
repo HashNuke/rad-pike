@@ -18,13 +18,15 @@ class App.XdmProtocol
   constructor: (@options={})->
     xdmOptions =
       onMessage: (message, origin)=>
+        message = JSON.parse(message)
         return false if !message['action']? || !@listeners[message['action']]?
         @listeners[message['action']](message['data'])
 
     if @options.consumer
       xdmOptions['remote']    = @options.remote
       xdmOptions['container'] = @options.container
-      xdmOptions['onReady']   = ()=> @sendMsg({action: 'start'}) if @options.start
+      xdmOptions['onReady']   = ()=>
+        @sendMsg('onChatStart') if @options.start == true
       xdmOptions['props']     = @iframeProps
 
     @protocol = new easyXDM.Socket xdmOptions

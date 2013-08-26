@@ -54,6 +54,8 @@ App.widgetInit = ->
   startWidget = ->
     angular.bootstrap(document.body, ['RadPike'])
     $("#support-intro").hide()
+    App.xdm.sendMsg "onChatStart"
 
   $("#support-intro").on("click", startWidget);
   App.xdm.on "start", startWidget
+
