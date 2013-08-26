@@ -5,7 +5,6 @@ This is an example page that has a support widget.
 <script type="text/javascript">
   new RadPikeWidget({
     containerId: "widgets",
-    start: true,
     events: {
       chatStart: function() {
         console.log("Chat started ~!");
@@ -20,4 +19,6 @@ This is an example page that has a support widget.
   })
 </script>
 
-<div id="widgets"></div>
+<div id="widgets"
+  style="right: 0; bottom: 0; position: absolute; width: 20em; height: 2em; border: 1px solid #CCC; box-shadow: 0px -2px 3px 1px #CCC">
+</div>

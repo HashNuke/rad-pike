@@ -19,7 +19,10 @@ class window.RadPikeWidget
       container: @options.containerId
     )
 
-    @xdm.on "chatStart", ->
-      console.log "inbuilt stuff"
+    @xdm.on "chatStart", =>
+      $("##{@options.containerId}").height("20em")
+
+    @xdm.on "chatEnd", =>
+      $("##{@options.containerId}").height("2em")
 
     @xdm.registerEventListeners(@options.events)
