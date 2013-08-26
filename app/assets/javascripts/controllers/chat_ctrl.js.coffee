@@ -6,14 +6,35 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
   historyActivity  = {activity_type: "load"}
   devicePixelRatio = window.devicePixelRatio || 1
   recentlyPostedActivityIds = []
-  activitiesThreshold = 10
+  activitiesThreshold = 15
 
 
-  emptyChatInput = ()->
+  clearChatInput = ()->
     inputText = angular.copy($scope.chatInput)
     $scope.chatInput = ""
     angular.element(".chat-input").val('')
     inputText
+
+
+  saveLastActivityDetails = ()->
+    lastActivity = $scope.conversation.activities[$scope.conversation.activities.length - 1]
+    if lastActivity?
+      $scope.lastActivityParams = {after: lastActivity.created_at, activityId: lastActivity.id}
+    else
+      $scope.lastActivityParams =
+        after: $scope.conversation.attrs.created_at
+        activityId: 0
+
+
+  saveOldestActivityDetails = ()->
+    if $scope.conversation.activities.length > 0
+      $scope.oldestActivityParams =
+        before: $scope.conversation.activities[0].created_at
+        activityId: $scope.conversation.activities[0].id
+      addHistoryActivityIfNecessary()
+    else
+      $scope.oldestActivityParams =
+        before: $scope.conversation.attrs.created_at
 
 
   addToRecentlyPostedActivityIds = (activityId) ->
@@ -28,19 +49,19 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
 
 
   removeHistoryActivity = ->
-    if $scope.conversation.activities[0]? && $scope.conversation.activities[0].activity_type == "load"
+    if $scope.conversation.activities.length > 0 && $scope.conversation.activities[0].activity_type == "load"
       $scope.conversation.activities.shift()
 
   popRecentActivity = ()->
-    return if !$scope.conversation.activities[0]?
-    $scope.conversation.activities.length > activitiesThreshold
+    return if $scope.conversation.activities.length <= activitiesThreshold
     removeHistoryActivity()
     $scope.conversation.activities.shift()
-    $scope.conversation.activities.unshift(historyActivity)
+    saveLastActivityDetails()
+    addHistoryActivityIfNecessary()
 
 
   addHistoryActivityIfNecessary = ->
-    if $scope.conversation.attrs.messages_count > 0 && $scope.conversation.activities.length > activitiesThreshold
+    if $scope.conversation.activities.length >= activitiesThreshold && $scope.conversation.activities[0].activity_type!="load"
       $scope.conversation.activities.unshift(historyActivity)
 
 
@@ -80,17 +101,15 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
 
 
   $scope.postMsg = () ->
-    inputText = emptyChatInput()
+    inputText = clearChatInput()
     return if inputText.trim() == ""
-
 
     successCallback = (activity) ->
       addToRecentlyPostedActivityIds(activity.id)
       $scope.conversation.activities.push(activity)
-      popRecentActvity()
+      popRecentActivity()
       App.xdm.sendMsg("chatMessage", activity) if $scope.triggerWidgetEvents
       scrollToRecentActivity()
-
 
     errorCallback = () ->
       #TODO highlight errorneous activity
@@ -106,33 +125,37 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
       }, successCallback, errorCallback)
 
 
+  prependActivities = (activities)->
+    removeHistoryActivity()
+    return if activities.length == 0
+
+    $scope.conversation.activities = activities.concat($scope.conversation.activities)
+    saveOldestActivityDetails()
+    addHistoryActivityIfNecessary()
+
+  appendActivties = (activities)->
+    return if activities.length == 0
+
+    for activity in activities
+      continue if isRecentlyPostedActivityId(activity.id)
+      $scope.conversation.activities.push(activity)
+      popRecentActivity()
+
+    saveLastActivityDetails()
+    scrollToRecentActivityIfNecessary()
+    addHistoryActivityIfNecessary()
+
+
   updateConversation = (conversation, prepend = true) ->
     $scope.conversation.attrs = conversation.attrs
-
-    #TODO if no more activities also add a message for that
-
-    return if conversation.activities.length == 0
+    #TODO if no more activities, also add a message for that
 
     if prepend == true
-      removeHistoryActivity()
-
-      $scope.conversation.activities = conversation.
-        activities.concat($scope.conversation.activities)
-      $scope.oldestActivityParams =
-        before: conversation.activities[0].created_at
-        activityId: conversation.activities[0].id
+      prependActivities(conversation.activities)
     else
-      for activity in conversation.activities
-        continue if isRecentlyPostedActivityId(activity.id)
-        $scope.conversation.activities.push(activity)
-        popRecentActivity()
+      appendActivties(conversation.activities)
 
-      lastActivity = conversation.activities[conversation.activities.length - 1]
-      $scope.lastActivityParams =
-        after: lastActivity.created_at
-        activityId: lastActivity.id
 
-    scrollToRecentActivityIfNecessary()
 
 
   $scope.loadHistory = ->
@@ -161,24 +184,8 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
 
 
   setActivityStamps = ->
-    lastActivity = $scope.conversation.activities[$scope.conversation.activities.length - 1]
-    if lastActivity?
-      $scope.lastActivityParams =
-        after: lastActivity.created_at
-        activityId: lastActivity.id
-    else
-      $scope.lastActivityParams =
-        after: $scope.conversation.attrs.created_at
-        activityId: 0
-
-    if $scope.conversation.activities.length > 0
-      $scope.oldestActivityParams =
-        before: $scope.conversation.activities[0].created_at
-        activityId: $scope.conversation.activities[0].id
-      addHistoryActivityIfNecessary()
-    else
-      $scope.oldestActivityParams =
-        before: $scope.conversation.attrs.created_at
+    saveLastActivityDetails()
+    saveOldestActivityDetails()
 
 
   setUserIfRequired()
@@ -186,6 +193,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
   setActivityStamps()
 
 
+  #TODO move to setInterval instead. Javascript isn't tails call optimized
   poller = (->
     params = {id: $scope.conversation.id}
     params['after'] = $scope.lastActivityParams['after']
