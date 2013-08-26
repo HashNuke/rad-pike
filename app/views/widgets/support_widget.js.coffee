@@ -11,6 +11,7 @@ class window.RadPikeWidget
   #     * user_name
   #     * extras
   #   * events: {newMessage, chatStart, chatClose}
+
   constructor: (@options={})->
     @xdm = new App.XdmProtocol(
       remote:    "<%= @base_url %>/widgets/support"

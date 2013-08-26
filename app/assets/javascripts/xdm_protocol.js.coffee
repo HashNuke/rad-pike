@@ -1,13 +1,14 @@
 #= require easyxdm
 
+#NOTE because this file is also used seperately
+window.App ||= {}
+
 class App.XdmProtocol
   listeners: {}
   iframeProps:
     style:
       width: "100%"
       height: "100%"
-      border: "1px solid #CCC"
-      "box-shadow": "0px 0px 3px 1px #CCC"
 
 
   constructor: (@options={})->
