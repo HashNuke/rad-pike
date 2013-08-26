@@ -20,13 +20,15 @@ class App.XdmProtocol
       onMessage: (message, origin)=>
         message = JSON.parse(message)
         return false if !message['action']? || !@listeners[message['action']]?
-        @listeners[message['action']](message['data'])
+        listener(message['data']) for listener in @listeners[message['action']]
+
 
     if @options.consumer
       xdmOptions['remote']    = @options.remote
       xdmOptions['container'] = @options.container
       xdmOptions['onReady']   = ()=>
-        @sendMsg('onChatStart') if @options.start == true
+        #NOTE This is for the consumer to send and the provider to receive
+        @sendMsg('start') if @options.start == true
       xdmOptions['props']     = @iframeProps
 
     @protocol = new easyXDM.Socket xdmOptions
@@ -43,4 +45,5 @@ class App.XdmProtocol
     @listeners[action].push callback
 
   registerEventListeners: (events) ->
-    (@listeners[event] = callback) for event, callback of events
+    for event, callback of events
+      @on event, callback

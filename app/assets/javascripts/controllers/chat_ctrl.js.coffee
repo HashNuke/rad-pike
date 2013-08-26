@@ -66,7 +66,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
       addToRecentlyPostedActivityIds(activity.id)
 
       $scope.conversation.activities.push(activity)
-      App.xdm.sendMsg("onChatMessage", activity) if $scope.triggerWidgetEvents
+      App.xdm.sendMsg("chatMessage", activity) if $scope.triggerWidgetEvents
       $scope.chatInput = ""
       angular.element(".chat-input").val('')
       scrollToRecentActivity()

@@ -7,10 +7,10 @@ This is an example page that has a support widget.
     containerId: "widgets",
     start: true,
     events: {
-      onChatStart: function() {
+      chatStart: function() {
         console.log("Chat started ~!");
       },
-      onChatMessage: function(activity) {
+      chatMessage: function(activity) {
         console.log("New message event: ", activity);
       },
       chatClose: function() {
