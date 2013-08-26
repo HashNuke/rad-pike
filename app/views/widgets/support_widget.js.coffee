@@ -21,9 +21,9 @@ class window.RadPikeWidget
     )
 
     @xdm.on "chatStart", =>
-      $("##{@options.containerId}").height("20em")
+      document.getElementById("#{@options.containerId}").style.height = "20em"
 
     @xdm.on "chatEnd", =>
-      $("##{@options.containerId}").height("2em")
+      document.getElementById("##{@options.containerId}").style.height = "2em"
 
     @xdm.registerEventListeners(@options.events)
