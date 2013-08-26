@@ -5,6 +5,18 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
   $scope.triggerWidgetEvents = false
   historyActivity = {activity_type: "load"}
   devicePixelRatio = window.devicePixelRatio || 1
+  recentlyPostedActivityIds = []
+
+
+  addToRecentlyPostedActivityIds = (activityId) ->
+    if recentlyPostedActivityIds.length > 5
+      recentlyPostedActivityIds.shift()
+    recentlyPostedActivityIds.push(activityId)
+
+
+  isRecentlyPostedActivityId = (activityId) ->
+    return true if recentlyPostedActivityIds.indexOf(activityId) >= 0
+    false
 
 
   scrollToRecentActivity = ->
@@ -28,11 +40,11 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
       scrollToRecentActivity()
 
 
-  $scope.changeState = (stateType)->
-    successCallback = (conversation)->
+  $scope.changeState = (stateType) ->
+    successCallback = (conversation) ->
       $scope.conversation.attrs.current_issue_state_type = conversation.attrs.current_issue_state_type
 
-    errorCallback = (errorData)->
+    errorCallback = (errorData) ->
       console.log "error"
 
     Conversation.update(
@@ -42,25 +54,24 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
     )
 
 
-  $scope.postMsg = ()->
+  $scope.postMsg = () ->
     if $scope.chatInput.trim() == ""
       $scope.chatInput = ""
       #NOTE force set because angular is checking against trimmer value
       angular.element(".chat-input").val('')
       return
 
-    successCallback = (activity)->
-      $scope.lastActivityParams =
-        after: activity.created_at
-        activityId: activity.id
+    successCallback = (activity) ->
+      addToRecentlyPostedActivityIds(activity.id)
 
       $scope.conversation.activities.push(activity)
-      if $scope.triggerWidgetEvents && App.xdm?
-        App.xdm.sendMsg("onChatMessage", activity)
+      App.xdm.sendMsg("onChatMessage", activity) if $scope.triggerWidgetEvents
       $scope.chatInput = ""
+      angular.element(".chat-input").val('')
       scrollToRecentActivity()
 
-    errorCallback = ()->
+    errorCallback = () ->
+      #TODO highlight errorneous activity
       console.log "error"
 
     Activity.save({
@@ -73,7 +84,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
       }, successCallback, errorCallback)
 
 
-  updateConversation = (conversation, prepend = true)->
+  updateConversation = (conversation, prepend = true) ->
     $scope.conversation.attrs = conversation.attrs
 
     #TODO if no more activities also add a message for that
@@ -90,8 +101,9 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
 
     else
       for activity in conversation.activities
-        $scope.conversation.activities.push(activity)
         $scope.conversation.activities.shift()
+        continue if isRecentlyPostedActivityId(activity.id)
+        $scope.conversation.activities.push(activity)
 
       lastActivity = conversation.activities[conversation.activities.length - 1]
       $scope.lastActivityParams =
@@ -108,10 +120,10 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
       before: $scope.oldestActivityParams.before
       activityId: $scope.oldestActivityParams.activityId
 
-    successCallback = (conversation)->
+    successCallback = (conversation) ->
      updateConversation(conversation)
 
-    errorCallback = (errorData)->
+    errorCallback = (errorData) ->
       console.log "error"
 
     Conversation.get(params, successCallback, errorCallback)

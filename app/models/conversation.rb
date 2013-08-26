@@ -5,8 +5,9 @@ class Conversation < ActiveRecord::Base
   has_many :issue_states, dependent: :destroy
 
   default_scope -> {
-    #TODO I think this should just be last_message_at or last_activity_at
-    includes(:user).order("last_customer_message_at DESC").limit(10)
+    includes(:user).
+      where("properties @> (:key => :value)", key: 'op_updated', value: true.to_s)
+      order("updated_at DESC").limit(10)
   }
 
   scope :unassigned, -> { where("array_upper(current_participant_ids, 1) is ?", nil) }

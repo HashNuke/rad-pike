@@ -64,7 +64,9 @@ class ConversationService
   def properties_after_activity_create(activity)
     {
       "last_updated_by_user_id" => activity.sender_id,
-      "op_updated" => (@conversation.user_id == activity.sender_id)
+      "op_updated" => (
+        @conversation.user_id == activity.sender_id && activity.activity_type == "message"
+      )
     }
   end
 
