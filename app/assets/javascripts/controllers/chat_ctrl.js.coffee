@@ -3,9 +3,10 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
   $scope.page = 1
   $scope.conversation = conversation
   $scope.triggerWidgetEvents = false
-  historyActivity = {activity_type: "load"}
+  historyActivity  = {activity_type: "load"}
   devicePixelRatio = window.devicePixelRatio || 1
   recentlyPostedActivityIds = []
+  activitiesThreshold = 10
 
 
   addToRecentlyPostedActivityIds = (activityId) ->
@@ -154,7 +155,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
       $scope.oldestActivityParams =
         before: $scope.conversation.activities[0].created_at
         activityId: $scope.conversation.activities[0].id
-      if $scope.conversation.attrs.messages_count > 0 && $scope.conversation.attrs.messages_count > $scope.conversation.activities.length
+      if $scope.conversation.attrs.messages_count > 0 && $scope.conversation.activities.length > activitiesThreshold
         $scope.conversation.activities.unshift(historyActivity)
     else
       $scope.oldestActivityParams =
