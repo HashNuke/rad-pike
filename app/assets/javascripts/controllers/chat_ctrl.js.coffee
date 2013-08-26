@@ -7,6 +7,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
   devicePixelRatio = window.devicePixelRatio || 1
   recentlyPostedActivityIds = []
   activitiesThreshold = 15
+  viewedHistory = false
 
 
   clearChatInput = ()->
@@ -53,10 +54,11 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
       $scope.conversation.activities.shift()
 
   popRecentActivity = ()->
+    return if viewedHistory
     return if $scope.conversation.activities.length <= activitiesThreshold
     removeHistoryActivity()
     $scope.conversation.activities.shift()
-    saveLastActivityDetails()
+    saveOldestActivityDetails()
     addHistoryActivityIfNecessary()
 
 
@@ -159,6 +161,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
 
 
   $scope.loadHistory = ->
+    viewedHistory = true
     params =
       id: $scope.conversation.id
       before: $scope.oldestActivityParams.before
