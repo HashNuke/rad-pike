@@ -25,10 +25,9 @@ class App.XdmProtocol
       xdmOptions["remote"]    = @options.remote
       xdmOptions["container"] = @options.containerId
       xdmOptions["onReady"] = ()=>
-        @protocol.sendMsg({action: "start"}) if @options.start == true
+        @sendMsg({action: "start"}) if @options.start == true
       xdmOptions['props'] = @iframeProps
 
-    console.log xdmOptions
     @protocol = new easyXDM.Socket xdmOptions
 
 
