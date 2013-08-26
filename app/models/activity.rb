@@ -11,7 +11,7 @@ class Activity < ActiveRecord::Base
   before_save  :ensure_activity_type
 
   default_scope -> {
-    order("created_at DESC").limit(3)
+    order("created_at DESC").limit(15)
   }
 
   scope :history, ->(activityId) { where("id < ?", activityId) }

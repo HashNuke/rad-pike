@@ -142,7 +142,8 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
       $scope.oldestActivityParams =
         before: $scope.conversation.activities[0].created_at
         activityId: $scope.conversation.activities[0].id
-      $scope.conversation.activities.unshift(historyActivity)
+      if $scope.conversation.attrs.messages_count > 0 && $scope.conversation.attrs.messages_count > $scope.conversation.activities.length
+        $scope.conversation.activities.unshift(historyActivity)
     else
       $scope.oldestActivityParams =
         before: $scope.conversation.attrs.created_at

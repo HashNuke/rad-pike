@@ -41,28 +41,30 @@ class ConversationService
 
 
   def after_activity_create(activity, user)
-    conversation_params = properties_after_activity_create(activity)
+    conversation_params = {}
+    conversation_properties = properties_after_activity_create(activity)
+    conversation_properties["activities_count"] = 1 + @conversation.properties["activities_count"].to_i
 
     if user.support_team?
       add_participant_to_issue_state!(user, @conversation.current_issue_state)
-      conversation_params.merge!(
-        current_participant_ids:
-          participant_ids_for_issue_state(@conversation.current_issue_state)
-      )
+      conversation_properties["current_participant_ids"] = participant_ids_for_issue_state(@conversation.current_issue_state)
     else
-      conversation_params.merge!(last_customer_message_at: DateTime.now)
+      conversation_properties["last_customer_message_at"] = DateTime.now
     end
 
-    @conversation.update_attributes(conversation_params)
+    if activity.activity_type == "message"
+      conversation_properties["messages_count"] = 1 + @conversation.properties["messages_count"].to_i
+    end
+
+    conversation_properties = @conversation.properties_with(conversation_properties)
+    @conversation.update_attributes(conversation_params.merge({properties: conversation_properties}))
   end
 
 
   def properties_after_activity_create(activity)
     {
-      properties: {
-        "last_updated_by_user_id" => activity.sender_id,
-        "op_updated" => (@conversation.user_id == activity.sender_id)
-      }
+      "last_updated_by_user_id" => activity.sender_id,
+      "op_updated" => (@conversation.user_id == activity.sender_id)
     }
   end
 

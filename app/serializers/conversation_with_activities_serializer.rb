@@ -20,7 +20,10 @@ class ConversationWithActivitiesSerializer < ActiveModel::Serializer
     {
       current_issue_state_type: current_issue_state_type,
       created_at: object.created_at,
-      updated_at: object.updated_at
+      updated_at: object.updated_at,
+      last_message_at: object.properties["last_message_at"],
+      activities_count: object.properties["activities_count"],
+      messages_count: object.properties["messages_count"]
     }
   end
 
