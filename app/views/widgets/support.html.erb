@@ -12,18 +12,14 @@
   <%= javascript_include_tag "embeds/base" %>
 
   <%= javascript_tag do %>
-    $(document).ready(function(){
-      App.widgetInit()
-    });
+    $(document).ready(App.widgetInit);
   <% end %>
 
   <%= csrf_meta_tags %>
 </head>
 
 <body>
-
   <div id="support-intro">start</div>
   <div class="chat" ng-view></div>
-
 </body>
 </html>

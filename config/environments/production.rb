@@ -59,7 +59,7 @@ RadPike::Application.configure do
 
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-  config.assets.precompile += %w( json2.js manage.css manage.js easyxdm.js embeds/base.js )
+  config.assets.precompile += %w( json2.js manage.css manage.js xdm_protocol.js easyxdm.js embeds/base.js )
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
