@@ -8,6 +8,7 @@ RadPike::Application.routes.draw do
   devise_for :users
 
   get "widgets/support" => "widgets#support"
+  get "widgets/support-widget" => "widgets#support_widget_javascript"
 
   resources :members do
     collection do

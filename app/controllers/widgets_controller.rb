@@ -7,4 +7,11 @@ class WidgetsController < ApplicationController
     response.headers["X-Frame-Options"] = "ALLOWALL"
   end
 
+  def support_widget_javascript
+    @base_url = "#{request.protocol}#{request.host_with_port}"
+    respond_to do |format|
+      format.js { render 'support_widget' }
+    end
+  end
+
 end

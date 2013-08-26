@@ -41,7 +41,11 @@ class Api::ConversationsController < ApplicationController
   def user_conversation
     respond_to do |format|
       format.json {
-        render(json: @conversation, serializer: ConversationWithActivitiesSerializer)
+        render(
+          json: @conversation,
+          serializer: ConversationWithActivitiesSerializer,
+          query_options: @query_options
+        )
       }
     end
   end

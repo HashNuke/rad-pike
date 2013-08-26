@@ -1,4 +1,5 @@
 #= require jquery
+#= require easyxdm
 #= require angular
 #= require angular-resource
 #= require moment
@@ -11,6 +12,29 @@
 #= require_tree ../filters
 #= require_tree ../directives
 
+class XdmProtocol
+  listeners: {}
+
+  constructor: ()->
+    @protocol = new easyXDM.Socket
+      onMessage: (message, origin)=>
+        return false if !message['action']? || !@listeners[message['action']]?
+        @listeners[message['action']](message['data'])
+
+
+  sendMsg: (action, data) ->
+    @protocol.postMessage(JSON.stringify({action, data}))
+
+
+  on: (action, callback) ->
+    @listeners[action] = callback
+
+
+  removeListener: (action) ->
+    delete(@listener[action])
+
+
+App.xdm = new XdmProtocol()
 
 App.config ($routeProvider, $locationProvider, $httpProvider)->
 
@@ -35,10 +59,10 @@ App.config ($routeProvider, $locationProvider, $httpProvider)->
     deferred.promise
 
 
-  $locationProvider.html5Mode(true)
+  $locationProvider.html5Mode(false)
   $routeProvider
     .when(
-      "/widgets/support"
+      "/"
       template:   JST["conversation"]()
       controller: "ChatCtrl"
       resolve:

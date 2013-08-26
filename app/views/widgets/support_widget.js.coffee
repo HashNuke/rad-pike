@@ -1,11 +1,23 @@
-#= require easyxdm
-
 class XdmProtocol
   listeners: {}
 
-  constructor: ()->
-    @protocol = new easyXDM.Socket =>
+  iframeProps:
+    style:
+      position: "absolute"
+      bottom: 0
+      right:  0
+      width:  "20em"
+      height: "20em"
+      right:  "0em"
+      bottom: "0em"
+      border: "1px solid #CCC"
+      "box-shadow": "0px 0px 3px 1px #CCC"
+
+  constructor: (@container)->
+    @protocol = new easyXDM.Socket
       remote: "<%= @base_url %>/widgets/support"
+      container: @container
+      props: @iframeProps
       onMessage: (message, origin)=>
         return false if !message['action']? || !@listeners[message['action']]?
         @listeners[message['action']](message['data'])
@@ -31,6 +43,7 @@ class window.RadPikeWidget
  
   constructor: (options={})->
     # Options:
+    #   * containerId: inside which the element should be contained
     #   * startWidget: true/false
     #   * unique_user_id
     #   * user_name
@@ -40,13 +53,13 @@ class window.RadPikeWidget
     @constructor.events = options.events if options.events?
     @constructor.startWidget = true if options.startWidget == true
 
-    @xdm = new XdmProtocol()
+    @xdm = new XdmProtocol(options.containerId)
 
     iframeStyle = """
       position: absolute;
       bottom: 0; right: 0;
       width: 20em;
-      height: 20em;
+      height: 1em;
       right: 0em;
       bottom: 0em;
       border: 1px solid #CCC;

@@ -55,8 +55,8 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
         activityId: activity.id
 
       $scope.conversation.activities.push(activity)
-      if $scope.triggerWidgetEvents && window.parent.RadPikeWidget && typeof(window.parent.RadPikeWidget.events.onNewChatMessage) == "function"
-        window.parent.RadPikeWidget.events.onNewChatMessage()
+      if $scope.triggerWidgetEvents && App.xdm?
+        App.xdm.sendMsg("onChatMessage", activity)
       $scope.chatInput = ""
       scrollToRecentActivity()
 
@@ -120,11 +120,11 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
   setUserIfRequired = ->
     return if Auth.isAuthenticated()
     Auth.setUser(conversation.user)
-    $scope.triggerWidgetEvents = true if !conversation.user.is_support_user
+    $scope.triggerWidgetEvents = true if App.xdm?
 
 
   hideInfobarIfWidget = ->
-    $scope.isInfobarVisible = false if $scope.conversation.user.id == Auth.user()["id"]
+    $scope.isInfobarVisible = false if App.xdm?
 
 
   setActivityStamps = ->

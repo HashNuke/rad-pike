@@ -3,15 +3,19 @@ This is an example page that has a support widget.
 
 <!-- <iframe src="/widgets/support"></frame> -->
 
-
-<script src="http://localhost:3000/assets/embeds/support.js"></script>
+<script src="http://localhost:3000/assets/easyxdm.js"></script>
+<script src="http://localhost:3000/widgets/support-widget.js"></script>
 <script type="text/javascript">
   new RadPikeWidget({
+    containerId: "widgets",
     startWidget: true,
     events: {
-      onNewChatMessage: function() {
-        console.log("New message event");
+      onChatMessage: function(activity) {
+        console.log("New message event", activity);
       }
     }
   })
 </script>
+
+<div id="widgets">
+</div>
