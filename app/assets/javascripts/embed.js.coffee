@@ -3,14 +3,14 @@
 #= require angular-resource
 #= require moment
 #= require init
-#= require ../xdm_protocol
-#= require_tree ../resolvers
+#= require xdm_protocol
+#= require_tree ./resolvers
 #= require_self
-#= require_tree ../../templates
-#= require_tree ../controllers
-#= require_tree ../services
-#= require_tree ../filters
-#= require_tree ../directives
+#= require_tree ../templates
+#= require_tree ./controllers
+#= require_tree ./services
+#= require_tree ./filters
+#= require_tree ./directives
 
 
 
