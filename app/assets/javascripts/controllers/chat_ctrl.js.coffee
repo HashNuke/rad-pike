@@ -32,7 +32,6 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
       $scope.oldestActivityParams =
         before: $scope.conversation.activities[0].created_at
         activityId: $scope.conversation.activities[0].id
-      addHistoryActivityIfNecessary()
     else
       $scope.oldestActivityParams =
         before: $scope.conversation.attrs.created_at
@@ -135,6 +134,7 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
     saveLastActivityDetails()
     saveOldestActivityDetails()
 
+
   $scope.changeState = (stateType) ->
     successCallback = (conversation) ->
       $scope.conversation.attrs.current_issue_state_type = conversation.attrs.current_issue_state_type
@@ -194,6 +194,9 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
   hideInfobarIfWidget()
   setActivityStamps()
 
+
+  if $scope.conversation.activities.length < $scope.conversation.attrs.messages_count
+    $scope.conversation.activities.unshift(historyActivity)
 
   #TODO move to setInterval instead. Javascript isn't tails call optimized
   poller = (->
