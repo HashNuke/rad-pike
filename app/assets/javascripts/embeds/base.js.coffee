@@ -15,7 +15,7 @@
 class XdmProtocol
   listeners: {}
 
-  constructor: ()->
+  constructor: (@container)->
     @protocol = new easyXDM.Socket
       onMessage: (message, origin)=>
         return false if !message['action']? || !@listeners[message['action']]?
@@ -29,8 +29,11 @@ class XdmProtocol
   on: (action, callback) ->
     @listeners[action] = callback
 
+  registerEvents: (events) ->
+    (@listeners[event] = callback) for event, callback of events
 
-  removeListener: (action) ->
+
+  removeEvent: (action) ->
     delete(@listener[action])
 
 

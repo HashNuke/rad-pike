@@ -1,17 +1,20 @@
 This is an example page that has a support widget.
 
-
-<!-- <iframe src="/widgets/support"></frame> -->
-
 <script src="http://localhost:3000/assets/easyxdm.js"></script>
 <script src="http://localhost:3000/widgets/support-widget.js"></script>
 <script type="text/javascript">
   new RadPikeWidget({
     containerId: "widgets",
-    startWidget: true,
+    start: true,
     events: {
+      onChatStart: function() {
+        console.log("Chat started ~!");
+      },
       onChatMessage: function(activity) {
-        console.log("New message event", activity);
+        console.log("New message event: ", activity);
+      },
+      chatClose: function() {
+        console.log("Chat closed ~!");
       }
     }
   })

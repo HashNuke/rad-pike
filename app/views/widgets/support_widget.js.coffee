@@ -19,7 +19,9 @@ class XdmProtocol
       container: @container
       props: @iframeProps
       onMessage: (message, origin)=>
+        message = JSON.parse(message)
         return false if !message['action']? || !@listeners[message['action']]?
+        return false if !@listeners[message['action']]?
         @listeners[message['action']](message['data'])
 
 
@@ -30,10 +32,12 @@ class XdmProtocol
   on: (action, callback) ->
     @listeners[action] = callback
 
+  registerEvents: (events) ->
+    (@listeners[event] = callback) for event, callback of events
 
-  removeListener: (action) ->
+
+  removeEvent: (action) ->
     delete(@listener[action])
-
 
 
 class window.RadPikeWidget
@@ -54,6 +58,7 @@ class window.RadPikeWidget
     @constructor.startWidget = true if options.startWidget == true
 
     @xdm = new XdmProtocol(options.containerId)
+    @xdm.registerEvents(@constructor.events)
 
     iframeStyle = """
       position: absolute;
