@@ -10,9 +10,6 @@ gem 'active_model_serializers'
 gem 'delayed_job_active_record'
 
 gem 'devise', '3.0.0'
-gem 'fog'
-gem 'rmagick'
-gem 'carrierwave'
 
 gem 'toml'
 gem 'eco'
@@ -26,14 +23,8 @@ gem 'kaminari'
 
 group :development, :test do
   gem 'debugger'
-  gem 'shotgun'
   gem 'example_app', path: './example_app'
   gem 'foreman'
-end
-
-group :doc do
-  # bundle exec rake doc:rails generates the API under doc/api.
-  gem 'sdoc', require: false
 end
 
 # Use ActiveModel has_secure_password
