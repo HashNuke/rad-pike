@@ -1,1 +1,3 @@
-{{introText}}
+<div class="intro">
+  <div class="appname">RadPike</div>
+</div>

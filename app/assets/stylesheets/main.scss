@@ -28,6 +28,15 @@ input {
   float: left;
 }
 
+.intro {
+  width: 100%;
+  text-align: center;
+  .appname {
+    margin-left: 30%;
+    margin-right: 30%;
+  }
+}
+
 .mobile-show {
   display: none;
 }
