@@ -135,20 +135,6 @@ App.controller "ChatCtrl", ($scope, conversation, Auth, Conversation, Activity, 
     saveOldestActivityDetails()
 
 
-  $scope.changeState = (stateType) ->
-    successCallback = (conversation) ->
-      $scope.conversation.attrs.current_issue_state_type = conversation.attrs.current_issue_state_type
-
-    errorCallback = (errorData) ->
-      console.log "error"
-
-    Conversation.update(
-      {id: $scope.conversation.id, conversation: {state_type: stateType}},
-      successCallback,
-      errorCallback
-    )
-
-
   $scope.postMsg = () ->
     inputText = clearChatInput()
     return if inputText.trim() == ""

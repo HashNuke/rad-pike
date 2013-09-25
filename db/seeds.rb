@@ -7,11 +7,6 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 
-puts "Creating issue state types..."
-["Resolved", "Unresolved", "Unknown"].each do |issue_state_type|
-  IssueStateType.find_or_create_by_name issue_state_type
-end
-
 puts "Creating user roles..."
 ["Admin", "Staff", "Deactivated Staff", "Customer", "Guest"].each do |role_name|
   Role.find_or_create_by_name role_name

@@ -2,7 +2,7 @@ class Conversation < ActiveRecord::Base
   has_many :activities, dependent: :destroy
   belongs_to :user
 
-  has_many :issue_states, dependent: :destroy
+  has_many :participations, dependent: :destroy
 
   default_scope -> {
     includes(:user).
@@ -21,12 +21,6 @@ class Conversation < ActiveRecord::Base
   scope :latest,  ->(conversationId) { where("id > ?", conversationId) }
 
   before_save  :ensure_properties
-  before_save  :ensure_current_issue_state_type
-  after_create :ensure_issue_state!
-
-  def current_issue_state
-    self.issue_states.limit(1).try(:first)
-  end
 
   def is_for_user_id?(check_user_id)
     self.user_id == check_user_id
@@ -39,16 +33,6 @@ class Conversation < ActiveRecord::Base
   def properties_with(new_params)
     self.properties ||= {}
     self.properties.merge(new_params)
-  end
-
-  def ensure_current_issue_state_type
-    if self.properties.respond_to?(:key?) && !self.properties.key?("current_issue_state_type_id")
-      self.properties = properties_with("current_issue_state_type_id" => IssueStateType.unknown.id)
-    end
-  end
-
-  def ensure_issue_state!
-    self.issue_states.create
   end
 
 end

@@ -7,6 +7,22 @@
 * Ruby 2.0 or greater
 * Postgresql (with HStore)
 
+
+## Rethinking features
+
+* Users can chat and perform actions on chat.
+* No issue state.
+* Participant states in a conversation
+  * Present
+  * Not present
+  * Deactive (was present)
+
+#### Models
+
+User has many conversations. The first one is the default.
+Start a new conversation if the day is different.
+
+
 ## TODO
 
 * tests
