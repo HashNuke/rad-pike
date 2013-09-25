@@ -11,16 +11,11 @@
 ## Rethinking features
 
 * Users can chat and perform actions on chat.
-* No issue state.
+* No issue states - leave it to the ticketing apps
 * Participant states in a conversation
   * Present
   * Not present
   * Deactive (was present)
-
-#### Models
-
-User has many conversations. The first one is the default.
-Start a new conversation if the day is different.
 
 
 ## TODO
