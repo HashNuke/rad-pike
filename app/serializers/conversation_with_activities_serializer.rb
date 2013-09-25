@@ -18,7 +18,6 @@ class ConversationWithActivitiesSerializer < ActiveModel::Serializer
 
   def attrs
     {
-      current_issue_state_type: current_issue_state_type,
       created_at: object.created_at,
       updated_at: object.updated_at,
       last_message_at: object.properties["last_message_at"],
@@ -27,8 +26,4 @@ class ConversationWithActivitiesSerializer < ActiveModel::Serializer
     }
   end
 
-
-  def current_issue_state_type
-    IssueStateType.find(object.properties["current_issue_state_type_id"]).name
-  end
 end
